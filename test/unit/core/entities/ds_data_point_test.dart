@@ -13,7 +13,6 @@ void main() {
         timestamp: DsTimeStamp.now().toString(),
       );
       final serializedPoint = point.toJson();
-      print(serializedPoint);
       expect(serializedPoint.contains('"type":"bool"'), true);
       expect(serializedPoint.contains('"status":10'), true);
       expect(serializedPoint.contains('"value":0'), true);
