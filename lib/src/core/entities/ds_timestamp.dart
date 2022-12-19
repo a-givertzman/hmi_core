@@ -28,7 +28,7 @@ class DsTimeStamp {
     if (dateTime != null) {
       return DsTimeStamp(dateTime: dateTime);
     } else {
-      throw Failure.convertion(
+      throw Failure(
         message: 'Ошибка в методе $DsTimeStamp.parse: Недопустимый формат метки времени в:\n\t$value',
         stackTrace: StackTrace.current,
       );

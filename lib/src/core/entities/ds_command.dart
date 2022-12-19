@@ -43,7 +43,7 @@ class DsCommand<T> {
     } catch (error) {
       log(true, '[$DsCommand.fromJson] error: $error\njson: $json');
       // log(ug, '[$DsCommand.fromJson] dataPoint: $dataPoint');
-      throw Failure.convertion(
+      throw Failure(
         message: 'Ошибка в методе $DsCommand.fromJson() $error',
         stackTrace: StackTrace.current,
       );
