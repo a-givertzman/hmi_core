@@ -32,7 +32,7 @@ class Result<T> {
     }
   }
   ///
-  bool get hasData => data != null;
+  bool get hasData => _data != null;
   ///
   bool get hasError => _error != null;
   ///
