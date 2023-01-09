@@ -16,5 +16,11 @@ void main() {
         expect(DsStatus.fromValue(status.value), status);
       }
     });
+    test('values', () {
+      expect(DsStatus.ok.value, 0);
+      expect(DsStatus.obsolete.value, 2);
+      expect(DsStatus.timeInvalid.value, 3);
+      expect(DsStatus.invalid.value, 10);
+    });
   });
 }

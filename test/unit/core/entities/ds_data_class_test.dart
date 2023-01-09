@@ -12,5 +12,15 @@ void main() {
         expect(DsDataClass.fromString(dataClass.value), dataClass);
       }
     });
+    test('values', () {
+      expect(DsDataClass.requestAll.value, 'requestAll');
+      expect(DsDataClass.requestList.value, 'requestList');
+      expect(DsDataClass.requestTime.value, 'requestTime');
+      expect(DsDataClass.requestAlarms.value, 'requestAlarms');
+      expect(DsDataClass.requestPath.value, 'requestPath');
+      expect(DsDataClass.syncTime.value, 'syncTime');
+      expect(DsDataClass.commonCmd.value, 'commonCmd');
+      expect(DsDataClass.commonData.value, 'commonData');
+    });
   });
 }
