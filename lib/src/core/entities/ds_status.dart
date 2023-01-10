@@ -32,7 +32,7 @@ enum DsStatus {
       if (status == null) {
         throw Failure.connection(
           message:
-              'Ошибка в методе $DsStatus.fromString: неизвестный статус "$code"',
+              'Ошибка в методе $DsStatus.fromValue: неизвестный статус "$code"',
           stackTrace: StackTrace.current,
         );
       }
