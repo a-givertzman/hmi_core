@@ -31,6 +31,8 @@ class DsCommand<T> {
     // log(true, '[$DataPoint.fromJson] json: $json');
     try {
       final decoded = const JsonCodec().decode(json) as Map;
+      final dataType = DsDataType.fromString('${decoded['type']}');
+      if (dataType == DsDataType.)
       return DsCommand(
         dsClass: DsDataClass.fromString('${decoded['class']}'),
         type: DsDataType.fromString('${decoded['type']}'),
