@@ -33,7 +33,15 @@ class DsCommand<T> {
       final decoded = const JsonCodec().decode(json) as Map;
       final dataType = DsDataType.fromString('${decoded['type']}');
       if (dataType == DsDataType.bool) {
-        _throwNotImplementedFailure(dataType);
+        return DsCommand(
+          dsClass: DsDataClass.fromString('${decoded['class']}'),
+          type: DsDataType.fromString('${decoded['type']}'),
+          path: '${decoded['path']}',
+          name: '${decoded['name']}',
+          value: (int.parse('${decoded['value']}') > 0) as T,
+          status: DsStatus.fromString('${decoded['status']}'),
+          timestamp: DsTimeStamp.parse('${decoded['timestamp']}'),
+        );
       } else if (dataType == DsDataType.integer) {
         return DsCommand(
           dsClass: DsDataClass.fromString('${decoded['class']}'),
@@ -45,15 +53,55 @@ class DsCommand<T> {
           timestamp: DsTimeStamp.parse('${decoded['timestamp']}'),
         );
       } else if (dataType == DsDataType.uInt) {
-        _throwNotImplementedFailure(dataType);
+        return DsCommand(
+          dsClass: DsDataClass.fromString('${decoded['class']}'),
+          type: DsDataType.fromString('${decoded['type']}'),
+          path: '${decoded['path']}',
+          name: '${decoded['name']}',
+          value: int.parse('${decoded['value']}') as T,
+          status: DsStatus.fromString('${decoded['status']}'),
+          timestamp: DsTimeStamp.parse('${decoded['timestamp']}'),
+        );
       } else if (dataType == DsDataType.dInt) {
-        _throwNotImplementedFailure(dataType);
+        return DsCommand(
+          dsClass: DsDataClass.fromString('${decoded['class']}'),
+          type: DsDataType.fromString('${decoded['type']}'),
+          path: '${decoded['path']}',
+          name: '${decoded['name']}',
+          value: int.parse('${decoded['value']}') as T,
+          status: DsStatus.fromString('${decoded['status']}'),
+          timestamp: DsTimeStamp.parse('${decoded['timestamp']}'),
+        );
       } else if (dataType == DsDataType.word) {
-        _throwNotImplementedFailure(dataType);
+        return DsCommand(
+          dsClass: DsDataClass.fromString('${decoded['class']}'),
+          type: DsDataType.fromString('${decoded['type']}'),
+          path: '${decoded['path']}',
+          name: '${decoded['name']}',
+          value: int.parse('${decoded['value']}') as T,
+          status: DsStatus.fromString('${decoded['status']}'),
+          timestamp: DsTimeStamp.parse('${decoded['timestamp']}'),
+        );
       } else if (dataType == DsDataType.lInt) {
-        _throwNotImplementedFailure(dataType);
+        return DsCommand(
+          dsClass: DsDataClass.fromString('${decoded['class']}'),
+          type: DsDataType.fromString('${decoded['type']}'),
+          path: '${decoded['path']}',
+          name: '${decoded['name']}',
+          value: int.parse('${decoded['value']}') as T,
+          status: DsStatus.fromString('${decoded['status']}'),
+          timestamp: DsTimeStamp.parse('${decoded['timestamp']}'),
+        );
       } else if (dataType == DsDataType.real) {
-        _throwNotImplementedFailure(dataType);
+        return DsCommand(
+          dsClass: DsDataClass.fromString('${decoded['class']}'),
+          type: DsDataType.fromString('${decoded['type']}'),
+          path: '${decoded['path']}',
+          name: '${decoded['name']}',
+          value: double.parse('${decoded['value']}') as T,
+          status: DsStatus.fromString('${decoded['status']}'),
+          timestamp: DsTimeStamp.parse('${decoded['timestamp']}'),
+        );
       } else if (dataType == DsDataType.time) {
         _throwNotImplementedFailure(dataType);
       } else if (dataType == DsDataType.dateAndTime) {
