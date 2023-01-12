@@ -27,30 +27,6 @@ class DsCommand<T> {
     required this.timestamp,
   });
   ///
-  factory DsCommand.fromJson(String json) {
-    // log(true, '[$DataPoint.fromJson] json: $json');
-    try {
-      final decoded = const JsonCodec().decode(json) as Map;
-      return DsCommand(
-        dsClass: DsDataClass.fromString('${decoded['class']}'),
-        type: DsDataType.fromString('${decoded['type']}'),
-        path: '${decoded['path']}',
-        name: '${decoded['name']}',
-        value: int.parse('${decoded['value']}') as T,
-        status: DsStatus.fromString('${decoded['status']}'),
-        timestamp: DsTimeStamp.parse('${decoded['timestamp']}'),
-      );
-    } catch (error) {
-      log(true, '[$DsCommand.fromJson] error: $error\njson: $json');
-      // log(ug, '[$DsCommand.fromJson] dataPoint: $dataPoint');
-      throw Failure.convertion(
-        message: 'Ошибка в методе $DsCommand.fromJson() $error',
-        stackTrace: StackTrace.current,
-      );
-    }
-    // print('event: $decoded');
-  }
-  ///
   String toJson() {
     return json.encode({
       'class': dsClass.value,
