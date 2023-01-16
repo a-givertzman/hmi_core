@@ -41,11 +41,6 @@ jobs:
       - name: Update version number in the pubspec.yaml
         run: |
           sed -i -r "s/^version:\s+[0-9]+\.[0-9]+\.[0-9]+\s*$/$${{ github.run_number }}/g" ./pubspec.yaml
-      
-      - name: xxx
-        run: |
-          find . -name "*" -exec sed -i "s/__VERSION__/$(cat VERSION.md)/g" {} +
-          sed -i 's/__DB-PASSWORD__/${{ secrets.DB_PASSWORD }}/g' db_connection.php
 
       # - name: Zip artifact for deployment
       #   run: zip ./build/linux/x64/release/bundle/release.zip ./build/linux/x64/release/bundle/* -r
