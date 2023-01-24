@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:hmi_core/src/core/entities/ds_data_class.dart';
 import 'package:hmi_core/src/core/entities/ds_data_type.dart';
 import 'package:hmi_core/src/core/entities/ds_status.dart';
@@ -24,18 +23,6 @@ class DsCommand<T> {
     required this.status,
     required this.timestamp,
   });
-  ///
-  String toJson() {
-    return json.encode({
-      'class': dsClass.value,
-      'type': type.value,
-      'path': path,
-      'name': name,
-      'value': value,
-      'status': status.value,
-      'timestamp': timestamp.toString(),
-    });
-  }
   ///
   String get valueStr => '$value';
   ///
