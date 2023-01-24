@@ -55,11 +55,11 @@ done < "$path"
 if [[ !coverageExitStatus != 0 ]]; then 
     echo "#### 🔴 Some files are not enough covered by unit tests!" >> $GITHUB_STEP_SUMMARY
     echo 'Please check details on your local machine using commands:'
-    echo '```'
+    echo '```' >> $GITHUB_STEP_SUMMARY
     echo '  flutter test --coverage' >> $GITHUB_STEP_SUMMARY
     echo '  genhtml coverage/lcov.info -o coverage/html' >> $GITHUB_STEP_SUMMARY
-    echo '  open coverage/html/index.html'
-    echo '```'
+    echo '  open coverage/html/index.html' >> $GITHUB_STEP_SUMMARY
+    echo '```' >> $GITHUB_STEP_SUMMARY
     # echo 'Please check details on your local machine using command: `flutter test --coverage`.' >> $GITHUB_STEP_SUMMARY
 fi
 exit $coverageExitStatus
