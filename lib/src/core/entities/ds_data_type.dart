@@ -53,10 +53,3 @@ enum DsDataType {
     return 'DsDataType {name: $name, length: $length}';
   }
 }
-final b = DsDataType.bool;
-final c = DsDataType.integer;
-final c1 = DsDataType.uInt;
-final c2 = DsDataType.dInt;
-final c3 = DsDataType.word;
-final c4 = DsDataType.lInt;
-final c5 = DsDataType.real;
