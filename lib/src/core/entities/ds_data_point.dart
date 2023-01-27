@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:hmi_core/src/core/entities/ds_data_type.dart';
+import 'package:hmi_core/src/core/entities/ds_point_name.dart';
 import 'package:hmi_core/src/core/entities/ds_status.dart';
 
 abstract class IDataPoint<T> {
@@ -9,8 +10,7 @@ abstract class IDataPoint<T> {
 
 class DsDataPoint<T> implements IDataPoint {
   final DsDataType type;
-  final String path;
-  final String name;
+  final DsPointName name;
   final T value;
   final DsStatus status;
   final int history;
@@ -24,7 +24,6 @@ class DsDataPoint<T> implements IDataPoint {
   ///   value: current value of type depending on S7DataType
   DsDataPoint({
     required this.type,
-    required this.path,
     required this.name,
     required this.value,
     this.history = 0,
@@ -36,7 +35,6 @@ class DsDataPoint<T> implements IDataPoint {
   String toJson() {
     return json.encode({
       'type': type.value,
-      'path': path,
       'name': name,
       'value': value,
       'status': status.value,
@@ -54,7 +52,6 @@ class DsDataPoint<T> implements IDataPoint {
   bool operator ==(Object other) =>
     other is DsDataPoint
     && type == other.type
-    && path == other.path
     && name == other.name
     && value == other.value
     && status == other.status
