@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hmi_core/hmi_core.dart';
-import 'package:hmi_core/src/core/entities/ds_point_name.dart';
 
 void main() {
   final serializationData = {
