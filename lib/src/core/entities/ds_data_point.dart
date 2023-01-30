@@ -48,6 +48,7 @@ class DsDataPoint<T> implements IDataPoint {
   String toString() {
     return 'DataPoint {type: $type, name: $name, value: $value, status: $status, history: $history, alarm: $alarm}';
   }
+  ///
   @override
   bool operator ==(Object other) =>
     other is DsDataPoint
