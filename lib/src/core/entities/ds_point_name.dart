@@ -38,4 +38,10 @@ class DsPointName {
     }
     return true;
   }
+  ///
+  @override
+  bool operator ==(Object other) =>
+    other is DsPointName
+    && _fullPath == '$other';
+
 }
