@@ -6,6 +6,7 @@ class DsPointName {
   ///
   DsPointName({required String fullPath}) : 
     _fullPath = fullPath,
+    assert(DsPointName._validatePath(fullPath), 'Full path format validation is failed...'),
     _lastSeparatorIndex = _findLastMatchIndex(fullPath, '/');
   ///
   String get path => _fullPath.substring(0, _lastSeparatorIndex+1);
@@ -23,9 +24,18 @@ class DsPointName {
       }
     }
     throw Failure(
-      message:
-        'Ошибка в методе $DsPointName._findLastSeparatorIndex: неверный формат пути: "$source"',
+      message: 'Ошибка в методе $DsPointName._findLastSeparatorIndex: неверный формат пути: "$source"',
       stackTrace: StackTrace.current,
     );
+  }
+  ///
+  static bool _validatePath(String source) {
+    if (source[0] != '/') {
+      throw Failure(
+        message: 'Ошибка в методе $DsPointName._validatePath: неверный формат пути: "$source"\n\tДолжен начинаться с "/"',
+        stackTrace: StackTrace.current,
+      );
+    }
+    return true;
   }
 }

@@ -18,5 +18,24 @@ const fullPathsData = [
   {
     'path': '/Local/',
     'name': 'Local.System.Connection',
-  }
+  },
+  {
+    'path': '/server/line1/ied12/db902_panel_controls/',
+    'name': '',
+  },
+  {
+    'path': '/',
+    'name': 'Control.Common.ResetAlarms',
+  },
+];
+
+const fullPathsWrongData = [
+  {
+    'path': '',
+    'name': 'Control.Common.ResetAlarms',
+  },
+  {
+    'path': 'scsd/',
+    'name': 'Control.Common.ResetAlarms',
+  },
 ];
