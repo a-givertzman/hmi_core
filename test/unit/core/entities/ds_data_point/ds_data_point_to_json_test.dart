@@ -3,15 +3,14 @@ import 'package:hmi_core/hmi_core.dart';
 import 'package:hmi_core/src/core/entities/ds_point_name.dart';
 
 void main() {
-  final fullPath = 'path1/name1';
   final serializationData = {
     'type': {
       'object': DsDataType.bool,
       'serialization': '"type":"bool"',
     },
     'name': {
-      'object': DsPointName(fullPath: fullPath),
-      'serialization': '"name":"$fullPath"',
+      'object': DsPointName(fullPath: 'path1/name1'),
+      'serialization': '"name":"path1/name1"',
     },
     'value': {
       'object': 0,
