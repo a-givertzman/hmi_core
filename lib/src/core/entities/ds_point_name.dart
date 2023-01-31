@@ -43,5 +43,7 @@ class DsPointName {
   bool operator ==(Object other) =>
     other is DsPointName
     && _fullPath == '$other';
-
+  ///
+  @override
+  int get hashCode => _fullPath.hashCode;
 }

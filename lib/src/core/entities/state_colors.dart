@@ -11,7 +11,7 @@ class StateColors {
   final Color alarmHighLevel;
   final Color off;
   final Color on;
-  StateColors({
+  const StateColors({
     required this.error,
     required this.obsolete, 
     required this.invalid, 

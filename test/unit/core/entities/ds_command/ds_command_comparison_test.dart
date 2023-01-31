@@ -7,6 +7,7 @@ void main() {
   group('DsCommand operator == comparison', () {
     final timestamp = DsTimeStamp.now();
     test('between wrong types', () {
+      // ignore: unrelated_type_equality_checks
       expect(getCommandWith(timestamp: timestamp) == 'command', false);
     });
     test('by class', () {

@@ -50,4 +50,7 @@ class DsTimeStamp {
     other is DsTimeStamp &&
     other.runtimeType == runtimeType &&
     other.value.isAtSameMomentAs(_dateTime);
+  ///
+  @override
+  int get hashCode => _dateTime.hashCode;
 }

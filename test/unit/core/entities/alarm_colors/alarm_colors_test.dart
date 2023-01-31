@@ -5,12 +5,12 @@ import 'package:hmi_core/hmi_core.dart';
 void main() {
   test('AlarmColors test', () {
     final colors = {
-      1: Color(0xAA000001),
-      2: Color(0xAA000002),
-      3: Color(0xAA000003),
-      4: Color(0xAA000004),
-      5: Color(0xAA000005),
-      6: Color(0xAA000006),
+      1: const Color(0xAA000001),
+      2: const Color(0xAA000002),
+      3: const Color(0xAA000003),
+      4: const Color(0xAA000004),
+      5: const Color(0xAA000005),
+      6: const Color(0xAA000006),
     };
     final alarmColors = AlarmColors(
       class1: colors[1]!,

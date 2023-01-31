@@ -8,7 +8,7 @@ void main() {
       expect(() => Result(), throwsA(isA<AssertionError>()));
     });
     test('completes if data is provided', () {
-      expect(() => Result(data: 'test'), returnsNormally);
+      expect(() => const Result(data: 'test'), returnsNormally);
     });
     test('completes if error is provided', () {
       expect(

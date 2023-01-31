@@ -8,7 +8,7 @@ class AlarmColors {
   final Color class4;
   final Color class5;
   final Color class6;
-  AlarmColors({
+  const AlarmColors({
     required this.class1,
     required this.class2, 
     required this.class3, 

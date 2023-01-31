@@ -4,7 +4,7 @@ import 'package:hmi_core/hmi_core_result.dart';
 
 void main() {
   group('Result error', () {
-    final resultWithData = Result(data: 'test');
+    const resultWithData = Result(data: 'test');
     final resultWithError = Result(
       error: Failure(message: '', stackTrace: StackTrace.current),
     );

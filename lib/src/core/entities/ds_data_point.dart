@@ -22,7 +22,7 @@ class DsDataPoint<T> implements IDataPoint {
   ///   type: S7DataType
   ///   name: 'part.subpart1.sabpart...'
   ///   value: current value of type depending on S7DataType
-  DsDataPoint({
+  const DsDataPoint({
     required this.type,
     required this.name,
     required this.value,
@@ -59,4 +59,7 @@ class DsDataPoint<T> implements IDataPoint {
     && history == other.history
     && alarm == other.alarm
     && timestamp == other.timestamp;
+  ///
+  @override
+  int get hashCode => type.hashCode ^ name.hashCode ^ value.hashCode ^ status.hashCode ^ history.hashCode ^ alarm.hashCode ^ timestamp.hashCode;
 }

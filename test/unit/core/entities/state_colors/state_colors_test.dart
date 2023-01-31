@@ -5,16 +5,16 @@ import 'package:hmi_core/hmi_core.dart';
 void main() {
   test('StateColors test', () {
     final colors = {
-      'error': Color(0xAA000001),
-      'obsolete': Color(0xAA000002),
-      'invalid': Color(0xAA000003),
-      'timeInvalid': Color(0xAA000004),
-      'lowLevel': Color(0xAA000005),
-      'alarmLowLevel': Color(0xAA000006),
-      'highLevel': Color(0xAA000007),
-      'alarmHighLevel': Color(0xAA000008),
-      'off': Color(0xAA000009),
-      'on': Color(0xAA0000010),
+      'error': const Color(0xAA000001),
+      'obsolete': const Color(0xAA000002),
+      'invalid': const Color(0xAA000003),
+      'timeInvalid': const Color(0xAA000004),
+      'lowLevel': const Color(0xAA000005),
+      'alarmLowLevel': const Color(0xAA000006),
+      'highLevel': const Color(0xAA000007),
+      'alarmHighLevel': const Color(0xAA000008),
+      'off': const Color(0xAA000009),
+      'on': const Color(0xAA000010),
     };
     final stateColors = StateColors(
       error: colors['error']!,
