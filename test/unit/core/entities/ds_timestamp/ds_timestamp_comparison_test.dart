@@ -6,6 +6,7 @@ void main() {
     final datetime = DateTime.now();
     final timestamp = DsTimeStamp(dateTime: datetime);
     
+    // ignore: unrelated_type_equality_checks
     expect(timestamp == 'test', false);
     expect(timestamp == DsTimeStamp(dateTime: datetime), true);
     expect(timestamp == DsTimeStamp(dateTime: DateTime.now()), false);
