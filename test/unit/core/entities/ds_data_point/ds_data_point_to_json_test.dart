@@ -9,7 +9,7 @@ void main() {
     },
     'name': {
       'object': DsPointName(fullPath: '/path1/name1'),
-      'serialization': '"name":"/path1/name1"',
+      'serialization': '"path":"/path1/","name":"name1"',
     },
     'value': {
       'object': 0,
