@@ -35,7 +35,8 @@ class DsDataPoint<T> implements IDataPoint {
   String toJson() {
     return json.encode({
       'type': type.value,
-      'name': name.toString(),
+      'path': name.path,
+      'name': name.name,
       'value': value,
       'status': status.value,
       'history': history,
