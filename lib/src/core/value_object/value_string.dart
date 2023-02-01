@@ -29,7 +29,7 @@ class ValueString extends ValueObject<String> {
     ).join('; ') ;
   }
   @override
-  ValueObject<String> toDomain(String v) {
-    return ValueString(v);
+  ValueObject<String> toDomain(String value) {
+    return ValueString(value);
   }
 }
