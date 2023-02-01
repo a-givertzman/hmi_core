@@ -17,4 +17,7 @@ export 'src/core/result/result.dart';
 export 'src/core/value_object/value_object.dart';
 export 'src/core/value_object/value_string.dart';
 export 'src/core/value_object/value_validation.dart';
+export 'src/core/validation_result.dart';
 export 'src/local_store/local_store.dart';
+export 'src/auth/user_login.dart';
+export 'src/auth/user_password.dart';
