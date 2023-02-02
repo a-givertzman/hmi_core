@@ -1,6 +1,6 @@
 import 'app_lang.dart';
 ///
-abstract class Localization {
+abstract class Localizations {
   ///
   String tr(String value, {AppLang? lng});
 }

@@ -21,3 +21,5 @@ export 'src/core/validation_result.dart';
 export 'src/local_store/local_store.dart';
 export 'src/auth/user_login.dart';
 export 'src/auth/user_password.dart';
+export 'src/translate/app_lang.dart';
+export 'src/translate/localizations.dart';
