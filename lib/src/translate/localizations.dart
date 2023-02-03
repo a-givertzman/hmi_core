@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:hmi_core/src/core/string_loader.dart';
-import 'app_lang.dart';
 ///
 // abstract class Localizations {
 //   ///
