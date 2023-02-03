@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:flutter/services.dart';
 ///
 abstract class StringLoader {
   const factory StringLoader.fromFile(String filePath) = _FileStringLoader;
@@ -11,7 +13,8 @@ class _FileStringLoader implements StringLoader {
   // TODO to be implemented
   @override
   Future<String> load() => Future.value('{}');
-  //uture<String> load() => File(_filePath).readAsString();
+  /// Do not use! It is stub!
+  Future<String> loadImplementation() => File(_filePath).readAsString();
 }
 ///
 class _AssetStringLoader implements StringLoader {
@@ -20,5 +23,6 @@ class _AssetStringLoader implements StringLoader {
   // TODO to be implemented
   @override
   Future<String> load() => Future.value('{}');
-  // Future<String> load() => rootBundle.loadString(_assetPath);
+  /// Do not use! It is stub!
+  Future<String> loadImplementation() => rootBundle.loadString(_assetPath);
 }

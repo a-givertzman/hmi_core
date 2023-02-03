@@ -1,12 +1,6 @@
 import 'dart:convert';
-
 import 'package:hmi_core/src/core/string_loader.dart';
 ///
-// abstract class Localizations {
-//   ///
-//   String tr(String value, {AppLang? lng});
-// }
-
 class Localizations {
   final StringLoader _stringLoader;
   static final _map = <String, List<String>>{
