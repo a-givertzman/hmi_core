@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'package:hmi_core/src/core/error/failure.dart';
 import 'package:hmi_core/src/core/string_loader.dart';
 ///
-class AppUiSettingsString {
-}
 class AppUiSettingsNum {
   static final _map = <String, num>{
     'displaySizeWidth': 1024,
@@ -18,17 +16,24 @@ class AppUiSettingsNum {
     'floatingActionIconSize': 45.0,
   };
   ///
-  static Future<void> load(StringLoader stringLoader) {
+  static Future<void> initialize({StringLoader? stringLoader}) async {
+    if (stringLoader != null) {
+      await AppUiSettingsNum._load(stringLoader);
+    }
+  }
+  ///
+  static Future<void> _load(StringLoader stringLoader) {
     return stringLoader.load()
-      .then((string) => const JsonCodec().decode(string) as Map<String, num>)
+      .then((string) => const JsonCodec().decode(string) as Map<String, dynamic>)
+      .then((map) => map.cast<String, num>())
       .then((map) => _map.addAll(map));
   }
   ///
-  static num getSetting(String key) {
-    final setting = _map[key];
-    if(setting == null) {
+  static num getSetting(String settingName) {
+    final setting = _map[settingName];
+    if (setting == null) {
       throw Failure(
-        message: 'Ошибка в методе $AppUiSettingsNum.getSetting(): Не найдена настройка "$key"',
+        message: 'Ошибка в методе $AppUiSettingsNum.getSetting(): Не найдена настройка "$settingName"',
         stackTrace: StackTrace.current,
       );
     }
