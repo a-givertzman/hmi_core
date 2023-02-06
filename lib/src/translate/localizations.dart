@@ -1,8 +1,11 @@
 import 'dart:convert';
-import 'package:hmi_core/src/core/error/failure.dart';
+import 'package:hmi_core/hmi_core_log.dart';
 import 'package:hmi_core/src/core/string_loader.dart';
+import 'package:hmi_core/src/translate/app_lang.dart';
 ///
 class Localizations {
+  static const _debug = true;
+  static AppLang _appLang = AppLang.en;
   static final _map = <String, List<String>>{
     'Ok': ['Ok', 'Ok',],
     'Cancel': ['Cancel', 'Отмена'],
@@ -236,20 +239,27 @@ class Localizations {
     // '': ['', ''],
   };
   ///
-  static Future<void> load(StringLoader stringLoader) {
+  /// First initialization of application language
+  static Future<void> initialize(AppLang appLang, {StringLoader? stringLoader}) async {
+    _appLang = appLang;
+    if (stringLoader != null) {
+      await Localizations._load(stringLoader);
+    }
+  }
+  ///
+  static Future<void> _load(StringLoader stringLoader) {
     return stringLoader.load()
       .then((string) => const JsonCodec().decode(string) as Map<String, List<String>>)
       .then((map) => _map.addAll(map));
   }
   ///
-  static List<String> getTranslations(String key) {
-    final translations = _map[key];
+  /// returns translation for current lang 
+  /// - To customize translation language call Localizations.initialize 
+  static String getTranslation(String text) {
+    final translations = _map[text];
     if(translations == null) {
-      throw Failure(
-        message: 'Ошибка в методе $Localizations.getTranslations(): Не задан перевод для "$key"',
-        stackTrace: StackTrace.current,
-      );
+      log(_debug, 'Ошибка в методе $Localizations.getTranslations(): Не задан перевод для "$text"');
     }
-    return translations;
+    return translations?[_appLang.index] ?? text;
   }
 }
