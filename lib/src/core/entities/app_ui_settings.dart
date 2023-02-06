@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'package:hmi_core/src/core/error/failure.dart';
 import 'package:hmi_core/src/core/string_loader.dart';
 ///
-class AppUiSettings {
-  static final _map = <String, dynamic>{
-    'displaySize': {
-      'width': 1024,
-      'height': 768,
-    },
+class AppUiSettingsString {
+}
+class AppUiSettingsNum {
+  static final _map = <String, num>{
+    'displaySizeWidth': 1024,
+    'displaySizeHeight': 768,
     // Place Durations in milliseconds!
     'flushBarDurationLong': 8000,
     'flushBarDurationMedium': 4000,
@@ -20,15 +20,15 @@ class AppUiSettings {
   ///
   static Future<void> load(StringLoader stringLoader) {
     return stringLoader.load()
-      .then((string) => const JsonCodec().decode(string) as Map<String, dynamic>)
+      .then((string) => const JsonCodec().decode(string) as Map<String, num>)
       .then((map) => _map.addAll(map));
   }
   ///
-  static List<String> getSetting(String key) {
+  static num getSetting(String key) {
     final setting = _map[key];
     if(setting == null) {
       throw Failure(
-        message: 'Ошибка в методе $AppUiSettings.getSetting(): Не найдена настройка "$key"',
+        message: 'Ошибка в методе $AppUiSettingsNum.getSetting(): Не найдена настройка "$key"',
         stackTrace: StackTrace.current,
       );
     }
