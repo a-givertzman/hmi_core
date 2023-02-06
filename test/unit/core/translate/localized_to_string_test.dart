@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hmi_core/hmi_core.dart';
 
-void main() {
+void main() async {
   final translatedItems = [
     {
       'en_text': 'Crane monitoring',
@@ -40,44 +40,37 @@ void main() {
     },
   ];
   group('Localized toString', () {
-    test('translates text if translation exists', () async {
+    setUpAll(() async {
+      await Localizations.initialize(AppLang.ru);
+    });
+    test('translates text if translation exists', () {
       for(final entry in translatedItems) {
         final englishText = entry['en_text']!;
         final russianText = entry['ru_text']!;
         expect(
           Localized(englishText).toString(), 
           russianText,
-          reason: 'Wrong translation to default language!',
+          reason: 'Wrong translation to custom ru language!',
         );
         expect(
-          Localized(englishText, lang: AppLang.ru).toString(), 
+          Localized(englishText).v, 
           russianText,
-          reason: 'Wrong translation to russian language!',
-        );
-        expect(
-          Localized(englishText, lang: AppLang.en).toString(), 
-          englishText,
-          reason: 'Wrong translation to english language!',
+          reason: 'Wrong translation to custom ru language!',
         );
       }
     });
-    test('throws if translation does not exist', () async {
+    test('returns origin if translation does not exist', () {
       for(final entry in notTranslatedItems) {
-        final englishText = entry['not_translated_text']!;
+        final inputText = entry['not_translated_text']!;
         expect(
-          () => Localized(englishText).toString(), 
-          throwsA(isA<Failure>()),
-          reason: 'Wrong translation to default language!',
+          Localized(inputText).v, 
+          inputText,
+          reason: 'Wrong origin to for input: "$inputText"!',
         );
         expect(
-          () => Localized(englishText, lang: AppLang.ru).toString(), 
-          throwsA(isA<Failure>()),
-          reason: 'Wrong translation to russian language!',
-        );
-        expect(
-          () => Localized(englishText, lang: AppLang.en).toString(), 
-          throwsA(isA<Failure>()),
-          reason: 'Wrong translation to english language!',
+          Localized(inputText).toString(), 
+          inputText,
+          reason: 'Wrong origin to for input: "$inputText"!',
         );
       }
     });
