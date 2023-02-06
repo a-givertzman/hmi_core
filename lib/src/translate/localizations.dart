@@ -1,8 +1,8 @@
 import 'dart:convert';
+import 'package:hmi_core/src/core/error/failure.dart';
 import 'package:hmi_core/src/core/string_loader.dart';
 ///
 class Localizations {
-  final StringLoader _stringLoader;
   static final _map = <String, List<String>>{
     'Ok': ['Ok', 'Ok',],
     'Cancel': ['Cancel', 'Отмена'],
@@ -236,21 +236,20 @@ class Localizations {
     // '': ['', ''],
   };
   ///
-  const Localizations._internal(this._stringLoader);
-  ///
-  static const Localizations _localizations = Localizations._internal(
-    StringLoader.fromAsset('someAssetName'),
-  );
-  ///
-  factory Localizations() {
-    return _localizations;
-  }
-  ///
-  Future<void> load() {
-    return _stringLoader.load()
+  static Future<void> load(StringLoader stringLoader) {
+    return stringLoader.load()
       .then((string) => const JsonCodec().decode(string) as Map<String, List<String>>)
       .then((map) => _map.addAll(map));
   }
   ///
-  List<String> getTranslations(String key) => _map[key] ?? [];
+  static List<String> getTranslations(String key) {
+    final translations = _map[key];
+    if(translations == null) {
+      throw Failure(
+        message: 'Ошибка в методе $Localizations.getTranslations(): Не задан перевод для "$key"',
+        stackTrace: StackTrace.current,
+      );
+    }
+    return translations;
+  }
 }

@@ -12,12 +12,5 @@ class Localized {
     _lang = lang; 
   ///
   @override
-  String toString() {
-    final translations = Localizations().getTranslations(_text);
-    if (translations.isNotEmpty) {
-      return translations[_lang.index];
-    } else {
-      return _text;
-    }
-  }
+  String toString() => Localizations.getTranslations(_text)[_lang.index];
 }
