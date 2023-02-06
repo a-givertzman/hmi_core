@@ -41,7 +41,11 @@ void main() async {
   ];
   group('Localized toString', () {
     setUpAll(() async {
-      await Localizations.initialize(AppLang.ru);
+      await Localizations.initialize(
+        AppLang.ru,
+        // TODO to be implemented
+        // stringLoader: const StringLoader.fromAsset('tobeimplemented'),
+      );
     });
     test('translates text if translation exists', () {
       for(final entry in translatedItems) {
