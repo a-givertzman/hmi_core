@@ -1,9 +1,11 @@
 import 'localizations.dart';
 
+///
+/// Translates [text] to the current application language
 class Localized {
   final String _text;
   ///
-  /// Translates 
+  /// Translates [text] to the current application language
   const Localized(String text) : _text = text;
   ///
   @override
