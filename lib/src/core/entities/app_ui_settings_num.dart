@@ -1,6 +1,6 @@
-import 'dart:convert';
 import 'package:hmi_core/src/core/error/failure.dart';
-import 'package:hmi_core/src/core/string_loader.dart';
+import 'package:hmi_core/src/core/json/json_map.dart';
+import 'package:hmi_core/src/core/text_file.dart';
 ///
 class AppUiSettingsNum {
   static final _map = <String, num>{
@@ -16,16 +16,14 @@ class AppUiSettingsNum {
     'floatingActionIconSize': 45.0,
   };
   ///
-  static Future<void> initialize({StringLoader? stringLoader}) async {
-    if (stringLoader != null) {
-      await AppUiSettingsNum._load(stringLoader);
+  static Future<void> initialize({TextFile? textFile}) async {
+    if (textFile != null) {
+      await AppUiSettingsNum._load(textFile);
     }
   }
   ///
-  static Future<void> _load(StringLoader stringLoader) {
-    return stringLoader.load()
-      .then((string) => const JsonCodec().decode(string) as Map<String, dynamic>)
-      .then((map) => map.cast<String, num>())
+  static Future<void> _load(TextFile textFile) {
+    return JsonMap<num>.fromTextFile(textFile).decoded
       .then((map) => _map.addAll(map));
   }
   ///

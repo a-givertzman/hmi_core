@@ -1,6 +1,6 @@
-import 'dart:convert';
 import 'package:hmi_core/hmi_core_log.dart';
-import 'package:hmi_core/src/core/string_loader.dart';
+import 'package:hmi_core/src/core/json/json_map.dart';
+import 'package:hmi_core/src/core/text_file.dart';
 import 'package:hmi_core/src/translate/app_lang.dart';
 ///
 class Localizations {
@@ -240,16 +240,15 @@ class Localizations {
   };
   ///
   /// First initialization of application language
-  static Future<void> initialize(AppLang appLang, {StringLoader? stringLoader}) async {
+  static Future<void> initialize(AppLang appLang, {TextFile? stringLoader}) async {
     _appLang = appLang;
     if (stringLoader != null) {
       await Localizations._load(stringLoader);
     }
   }
   ///
-  static Future<void> _load(StringLoader stringLoader) {
-    return stringLoader.load()
-      .then((string) => const JsonCodec().decode(string) as Map<String, List<String>>)
+  static Future<void> _load(TextFile textFile) {
+    return JsonMap<List<String>>.fromTextFile(textFile).decoded
       .then((map) => _map.addAll(map));
   }
   ///

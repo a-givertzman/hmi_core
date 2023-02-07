@@ -45,12 +45,12 @@ void main() {
         'text_file': '{"test":123',
       },
     ];
-    test('sets data normaly with valid json format and valid data', () async {
+    test('sets data normally with valid json format and valid data', () async {
       for (final settings in validSettings) {
         final textFile = settings['text_file'] as String;
         final setSettings = settings['set_settings'] as Map<String, num>;
         await AppUiSettingsNum.initialize(
-          stringLoader: FakeTextFile(textFile),
+          textFile: FakeTextFile(textFile),
         );
         expect(AppUiSettingsNum.getSetting('test_setting_1'), setSettings['test_setting_1']);
         expect(AppUiSettingsNum.getSetting('test_setting_2'), setSettings['test_setting_2']);
@@ -62,7 +62,7 @@ void main() {
         final textFile = settings['text_file'] as String;
         expect(
           () => AppUiSettingsNum.initialize(
-            stringLoader: FakeTextFile(textFile),
+            textFile: FakeTextFile(textFile),
           ),
           throwsA(isA<TypeError>()),
         );
@@ -73,7 +73,7 @@ void main() {
         final textFile = invalidJson['text_file'] as String;
         expect(
           () => AppUiSettingsNum.initialize(
-            stringLoader: FakeTextFile(textFile),
+            textFile: FakeTextFile(textFile),
           ),
           throwsA(isA<FormatException>()),
         );

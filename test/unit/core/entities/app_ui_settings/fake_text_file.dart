@@ -1,8 +1,8 @@
-import 'package:hmi_core/src/core/string_loader.dart';
+import 'package:hmi_core/src/core/text_file.dart';
 ///
-class FakeTextFile implements StringLoader {
+class FakeTextFile implements TextFile {
   final String text;
   const FakeTextFile(this.text);
   @override
-  Future<String> load() => Future.value(text);
+  Future<String> get content => Future.value(text);
 }
