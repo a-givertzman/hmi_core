@@ -59,7 +59,9 @@ void main() {
         final textFile = settings['text_file'] as String;
         final setSettings = settings['set_settings'] as Map<String, String>;
         await AppUiSettingsString.initialize(
-          textFile: FakeTextFile(textFile),
+          jsonMap: JsonMap.fromTextFile(
+            FakeTextFile(textFile),
+          ),
         );
         expect(AppUiSettingsString.getSetting('test_setting_1'), setSettings['test_setting_1']);
         expect(AppUiSettingsString.getSetting('test_setting_2'), setSettings['test_setting_2']);
@@ -71,7 +73,9 @@ void main() {
         final textFile = settings['text_file'] as String;
         expect(
           () => AppUiSettingsString.initialize(
-            textFile: FakeTextFile(textFile),
+            jsonMap: JsonMap.fromTextFile(
+              FakeTextFile(textFile),
+            ),
           ),
           throwsA(isA<TypeError>()),
         );
@@ -81,7 +85,9 @@ void main() {
       for (final invalidJson in invalidJsons) {
         expect(
           () => AppUiSettingsString.initialize(
-            textFile: FakeTextFile(invalidJson),
+            jsonMap: JsonMap.fromTextFile(
+              FakeTextFile(invalidJson),
+            ),
           ),
           throwsA(isA<FormatException>()),
         );

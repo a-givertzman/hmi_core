@@ -1,6 +1,5 @@
 import 'package:hmi_core/src/core/error/failure.dart';
 import 'package:hmi_core/src/core/json/json_map.dart';
-import 'package:hmi_core/src/core/text_file.dart';
 ///
 class AppUiSettingsNum {
   static final _map = <String, num>{
@@ -16,15 +15,11 @@ class AppUiSettingsNum {
     'floatingActionIconSize': 45.0,
   };
   ///
-  static Future<void> initialize({TextFile? textFile}) async {
-    if (textFile != null) {
-      await AppUiSettingsNum._load(textFile);
+  static Future<void> initialize({JsonMap<num>? jsonMap}) async {
+    if (jsonMap != null) {
+      await jsonMap.decoded
+        .then((map) => _map.addAll(map));
     }
-  }
-  ///
-  static Future<void> _load(TextFile textFile) {
-    return JsonMap<num>.fromTextFile(textFile).decoded
-      .then((map) => _map.addAll(map));
   }
   ///
   static num getSetting(String settingName) {
