@@ -8,10 +8,10 @@ export 'package:logging/logging.dart' hide Logger, Level;
 /// - First call initialize with optional root loging Level, default LogLevel.all
 /// - [Log]s are named using a hierarchical dot-separated name convention.
 class Log {
-  final Logger _delegate;
+  final String _name;
   ///
   /// Create or find a Log by name.
-  Log(String name) : _delegate = Logger(name);
+  const Log(String name) : _name = name;
   ///
   /// Call to first initialization of the Log
   static void initialize({LogLevel? level}) {
@@ -47,27 +47,27 @@ class Log {
   /// See [log] for information on how non-String [message] arguments are
   /// handled.
   void debug(Object? message, [Object? error, StackTrace? stackTrace]) =>
-    _delegate.log(LogLevel.debug, message, error, stackTrace);
+    Logger(_name).log(LogLevel.debug, message, error, stackTrace);
   ///
   /// Log message at level [LogLevel.info].
   ///
   /// See [log] for information on how non-String [message] arguments are
   /// handled.
   void info(Object? message, [Object? error, StackTrace? stackTrace]) =>
-    _delegate.log(LogLevel.info, message, error, stackTrace);
+    Logger(_name).log(LogLevel.info, message, error, stackTrace);
   ///
   /// Log message at level [LogLevel.warning].
   ///
   /// See [log] for information on how non-String [message] arguments are
   /// handled.
   void warning(Object? message, [Object? error, StackTrace? stackTrace]) =>
-    _delegate.log(LogLevel.warning, message, error, stackTrace);
+    Logger(_name).log(LogLevel.warning, message, error, stackTrace);
   ///
   /// Log message at level [LogLevel.error].
   ///
   /// See [log] for information on how non-String [message] arguments are handled.
   void error(Object? message, [Object? error, StackTrace? stackTrace]) =>
-    _delegate.log(LogLevel.error, message, error, stackTrace);
+    Logger(_name).log(LogLevel.error, message, error, stackTrace);
   ///
   /// Effective level considering the levels established in this logger's
   /// parents (when [hierarchicalLoggingEnabled] is true).
