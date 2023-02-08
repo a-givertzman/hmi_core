@@ -38,10 +38,6 @@ class Log {
     });
   }
   ///
-  @override
-  noSuchMethod(Invocation invocation) =>
-        super.noSuchMethod(invocation);  
-  ///
   /// Log message at level [LogLevel.debug].
   ///
   /// See [log] for information on how non-String [message] arguments are
@@ -90,21 +86,22 @@ void log(
     Object? message4,
   ]
 ) {
-  if (debug) {
-    final String s1 = message1 != null ? message1.toString() : '';
-    final String s2 = message2 != null ? message2.toString() : '';
-    final String s3 = message3 != null ? message3.toString() : '';
-    final String s4 = message4 != null ? message4.toString() : '';
-    assert(
-      () {
+  assert(
+    () {
+      if (debug) {
+        final String s1 = message1 != null ? message1.toString() : '';
+        final String s2 = message2 != null ? message2.toString() : '';
+        final String s3 = message3 != null ? message3.toString() : '';
+        final String s4 = message4 != null ? message4.toString() : '';
         try {
+          // ignore: avoid_print
           print(s1 + s2 + s3 + s4);
         } catch (e) {
           throw Exception('Ошибка в методе log(): $e');
         }
-        return true;
-      }(),
-      'Только в отладке',
-    );
-  }
+      }
+      return true;
+    } (),
+    'Только в отладке',
+  );
 }
