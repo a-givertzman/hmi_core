@@ -1,28 +1,28 @@
 import 'dart:math';
+import 'package:hmi_core/src/core/entities/app_ui_settings_string.dart';
 import 'package:hmi_core/src/core/validation_result.dart';
-
+///
 class UserPassword {
   final minLength = 1;
   final maxLength = 30;
   final String _value;
-  final String _key;
   UserPassword({
     required String value,
-    required String key,
   }):
-    _value = value,
-    _key = key;
-  factory UserPassword.generate(int length1, int length2, String key) {
+    _value = value;
+  factory UserPassword.generate(int length1, int length2) {
     final part1 = _generateRandomString(length1);
     final part2 = _generateRandomString(length2);
-    return UserPassword(value: '$part1-$part2', key: key);
+    return UserPassword(value: '$part1-$part2');
   }
   String value() => _value;
   String encrypted() {
-    return _encrypt(_value, _key);
+    final key = AppUiSettingsString.getSetting('passwordKey');
+    return _encrypt(_value, key);
   }
   String decrypted() {
-    return _decrypt(_value, _key);
+    final key = AppUiSettingsString.getSetting('passwordKey');
+    return _decrypt(_value, key);
   }
   ValidationResult validate() {
     final regex = RegExp('^.{$minLength,$maxLength}\$');
