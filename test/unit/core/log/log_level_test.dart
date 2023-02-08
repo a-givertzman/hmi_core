@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hmi_core/hmi_core_log.dart';
-import 'package:hmi_core/src/core/log/log_level.dart';
 
 void main() {
   group('LogLevel test', () {
