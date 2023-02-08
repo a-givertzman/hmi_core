@@ -21,25 +21,25 @@ class Log {
       if (record.level == LogLevel.all) {
         _logColored(ConsoleColors.fgGray, '${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
       } else if (record.level == LogLevel.debug) {
-        _logColored(ConsoleColors.fgBlue, '{record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
+        _logColored(ConsoleColors.fgBlue, '${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
       } else if (record.level == LogLevel.config) {
-        _logColored(ConsoleColors.fgPurple, '{record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
+        _logColored(ConsoleColors.fgPurple, '${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
       } else if (record.level == LogLevel.info) {
-        _logColored(ConsoleColors.fgGray, '{record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
+        _logColored(ConsoleColors.fgGray, '${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
       } else if (record.level == LogLevel.warning) {
-        _logColored(ConsoleColors.fgYellow, '{record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
+        _logColored(ConsoleColors.fgYellow, '${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
       } else if (record.level == LogLevel.error) {
-        _logColored(ConsoleColors.fgRed, '{record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
+        _logColored(ConsoleColors.fgRed, '${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
       } else if (record.level == LogLevel.off) {
-        _logColored(ConsoleColors.fgGray, '{record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
+        _logColored(ConsoleColors.fgGray, '${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
       } else {
-        _logColored(ConsoleColors.fgGray, '{record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
+        _logColored(ConsoleColors.fgGray, '${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
       }
     });
   }
   ///
   static void _logColored(String color, String message) {
-      log(true, '${ConsoleColors.fgGray}$message${ConsoleColors.reset}');
+      log(true, '$color$message${ConsoleColors.reset}');
   }
   ///
   /// Log message at level [LogLevel.debug].
