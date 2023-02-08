@@ -19,23 +19,27 @@ class Log {
     Logger.root.level = level ?? LogLevel.all; // defaults to Level.INFO
     Logger.root.onRecord.listen((record) {
       if (record.level == LogLevel.all) {
-        log(true, '${ConsoleColors.fgGray}${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}${ConsoleColors.reset}');
+        _logColored(ConsoleColors.fgGray, '${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
       } else if (record.level == LogLevel.debug) {
-        log(true, '${ConsoleColors.fgBlue}${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}${ConsoleColors.reset}');
+        _logColored(ConsoleColors.fgBlue, '{record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
       } else if (record.level == LogLevel.config) {
-        log(true, '${ConsoleColors.fgPurple}${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}${ConsoleColors.reset}');
+        _logColored(ConsoleColors.fgPurple, '{record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
       } else if (record.level == LogLevel.info) {
-        log(true, '${ConsoleColors.fgGray}${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}${ConsoleColors.reset}');
+        _logColored(ConsoleColors.fgGray, '{record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
       } else if (record.level == LogLevel.warning) {
-        log(true, '${ConsoleColors.fgYellow}${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}${ConsoleColors.reset}');
+        _logColored(ConsoleColors.fgYellow, '{record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
       } else if (record.level == LogLevel.error) {
-        log(true, '${ConsoleColors.fgRed}${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}${ConsoleColors.reset}');
+        _logColored(ConsoleColors.fgRed, '{record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
       } else if (record.level == LogLevel.off) {
-        log(true, '${ConsoleColors.fgGray}${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}${ConsoleColors.reset}');
+        _logColored(ConsoleColors.fgGray, '{record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
       } else {
-        log(true, '${ConsoleColors.fgGray}${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}${ConsoleColors.reset}');
+        _logColored(ConsoleColors.fgGray, '{record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
       }
     });
+  }
+  ///
+  static void _logColored(String color, String message) {
+      log(true, '${ConsoleColors.fgGray}$message${ConsoleColors.reset}');
   }
   ///
   /// Log message at level [LogLevel.debug].
