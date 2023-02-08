@@ -15,6 +15,7 @@ export 'src/core/entities/app_ui_settings_num.dart';
 export 'src/core/entities/app_ui_settings_string.dart';
 export 'src/core/error/failure.dart';
 export 'src/core/log/log.dart';
+export 'src/core/log/log_level.dart';
 export 'src/core/result/result.dart';
 export 'src/core/value_object/value_object.dart';
 export 'src/core/value_object/value_string.dart';
