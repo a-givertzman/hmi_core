@@ -239,10 +239,13 @@ class Localizations {
   };
   ///
   /// First initialization of application language
-  static Future<void> initialize(AppLang appLang, {JsonMap<List<String>>? jsonMap}) async {
+  static Future<void> initialize(AppLang appLang, {JsonMap<List>? jsonMap}) async {
     _appLang = appLang;
     if (jsonMap != null) {
       await jsonMap.decoded
+        .then((map) => map.map(
+          (key, value) => MapEntry(key, value.cast<String>())),
+        )
         .then((map) => _map.addAll(map));
     }
   }
