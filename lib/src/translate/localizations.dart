@@ -259,7 +259,10 @@ class Localizations {
       return _map.entries
         .firstWhere(
           (entry) => entry.key.toLowerCase().trim() == normalizedText,
-          orElse: () => MapEntry(text, [text, text]),
+          orElse: () => MapEntry(
+            text, 
+            List.filled(AppLang.values.length, text),
+          ),
         ).value[_appLang.index];
     }
     return translations[_appLang.index];
