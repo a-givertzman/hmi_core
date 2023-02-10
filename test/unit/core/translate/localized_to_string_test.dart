@@ -16,7 +16,7 @@ void main() async {
       'ru_text': 'Лебедка 3',
     },
     {
-      'en_text': 'Knukle jib',
+      'en_text': 'Knuckle jib',
       'ru_text': 'Хобот',
     },
     {
