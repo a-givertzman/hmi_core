@@ -1,7 +1,7 @@
 import 'package:hmi_core/src/core/error/failure.dart';
 import 'package:hmi_core/src/core/json/json_map.dart';
 ///
-class AppUiSettingsNum {
+class AppSettings {
   static final _map = <String, num>{
     'displaySizeWidth': 1024,
     'displaySizeHeight': 768,
@@ -26,7 +26,7 @@ class AppUiSettingsNum {
     final setting = _map[settingName];
     if (setting == null) {
       throw Failure(
-        message: 'Ошибка в методе $AppUiSettingsNum.getSetting(): Не найдена настройка "$settingName"',
+        message: 'Ошибка в методе $AppSettings.getSetting(): Не найдена настройка "$settingName"',
         stackTrace: StackTrace.current,
       );
     }
