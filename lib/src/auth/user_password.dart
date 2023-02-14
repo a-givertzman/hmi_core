@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:hmi_core/src/core/entities/app_ui_settings_string.dart';
+import 'package:hmi_core/src/app_settings/setting.dart';
 import 'package:hmi_core/src/core/validation_result.dart';
 ///
 class UserPassword {
@@ -17,12 +17,12 @@ class UserPassword {
   }
   String value() => _value;
   String encrypted() {
-    final key = AppUiSettingsString.getSetting('passwordKey');
-    return _encrypt(_value, key);
+    const key = Setting('passwordKey');
+    return _encrypt(_value, '$key');
   }
   String decrypted() {
-    final key = AppUiSettingsString.getSetting('passwordKey');
-    return _decrypt(_value, key);
+    const key = Setting('passwordKey');
+    return _decrypt(_value, '$key');
   }
   ValidationResult validate() {
     final regex = RegExp('^.{$minLength,$maxLength}\$');
