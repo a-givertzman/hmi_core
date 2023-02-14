@@ -3,7 +3,7 @@ import 'package:hmi_core/src/core/json/json_map.dart';
 import 'package:hmi_core/src/translate/app_lang.dart';
 ///
 class Localizations {
-  static const _debug = true;
+  static final _log = const Log('Localizations')..level=LogLevel.warning;
   static AppLang _appLang = AppLang.en;
   static final _map = <String, List<String>>{
     'Ok': ['Ok', 'Ok',],
@@ -43,7 +43,7 @@ class Localizations {
       'Please enter your password', 
       'Введите ваш пароль',
     ],
-    'User already authenticated': ['User already authenticated', 'Пользоваатель уже авторизован'],
+    'User already authenticated': ['User already authenticated', 'Пользователь уже авторизован'],
     'Your number': ['Your number', 'Ваш номер',],
     'Your login': ['Your login', 'Ваш логин',],
     'Your password': ['Your password', 'Ваш пароль',],
@@ -87,8 +87,8 @@ class Localizations {
     'Winch 3': ['Winch 3', 'Лебедка 3'],
     'Main winch': ['Main winch', 'Главная лебедка'],
     'Main boom': ['Main boom', 'Основная стрела'],
-    'Main boom angle': ['Main boom angle', 'Уголо наклона основной стрелы'],
-    'Knuckle jib ': ['Knuckle jib', 'Хобот'],
+    'Main boom angle': ['Main boom angle', 'Угол наклона основной стрелы'],
+    'Knuckle jib': ['Knuckle jib', 'Хобот'],
     'Knuckle jib angle': ['Knuckle jib angle', 'Угол наклона хобота'],
     'Crane slewing angle': ['Crane slewing angle', 'Угол поворота крана'],
     'Accumulator': ['Accumulator', 'Аккумулятор'],
@@ -131,11 +131,10 @@ class Localizations {
     'Hydraulic power unit': ['Hydraulic power unit', 'Гидравлический силовой агрегат'],
     'Emergency hydraulic power unit': ['Emergency hydraulic power unit', 'Аварийный гидравлический силовой агрегат'],
     'Cooler': ['Cooler', 'Теплообменник'],
-    'Knukle jib': ['Knukle jib', 'Хобот'],
     'Slewing': ['Slewing', 'Поворот'],
     'Radius': ['Radius', 'Вылет'],
     'MarchingMode': ['MarchingMode', 'По походному'],
-    'Rotarion': ['Rotarion', 'Поворот'],
+    'Rotation': ['Rotation', 'Поворот'],
 
     'Date from': ['Date from', 'Дата от'],
     'To': ['To', 'До'],
@@ -158,12 +157,12 @@ class Localizations {
     'Welcome': ['Welcome', 'Добро пожаловать',],
     'Under development': ['Under development', 'В разработке',],
     'Loading...': ['Loading...', 'Загружаю...',],
-    'No noties': ['No noties', 'Сообщений нет',],
+    'No notices': ['No notices', 'Сообщений нет',],
     'Canceled by user': ['Canceled by user', 'Отменено пользователем'],
     'Try to check network connection': ['Try to check network connection', 'Проверьте сетевое подключение'],
     'to the database': ['to the database', 'к базе данных'],
     'No events': ['No events', 'Нет событий'],
-    'No alarms': ['No alarms', 'Нет ававрий'],
+    'No alarms': ['No alarms', 'Нет аварий'],
 
     // Предупредительные сообщения
     'This function not implemented': [
@@ -226,23 +225,26 @@ class Localizations {
     'Piston max limit': ['Piston max limit', 'Верхний предел поршня'],
     'Piston min limit': ['Piston min limit', 'Нижний предел поршня'],
     'Pressure of nitro': ['Pressure of nitro', 'Давление азота'],
-    'Emergency high nitro pressure': ['Emergency high nitro pressure', 'Аварино высокое давление азота'],
+    'Emergency high nitro pressure': ['Emergency high nitro pressure', 'Аварийно высокое давление азота'],
     
     // Экран Лебедка | Winch_n_Page
     'Hydromotor': ['Hydromotor', 'Гидромотор'],
     'Rotation speed': ['Rotation speed', 'Скорость вращения'],
     'Rope length': ['Rope length', 'Длина каната'],
     'LVDT': ['LVDT', 'LVDT'],
-    'Presure of brake': ['Presure of brake', 'Давление тормоза'],
+    'Pressure of brake': ['Pressure of brake', 'Давление тормоза'],
     'Hydromotor state': ['Hydromotor state', 'Состояние гидромотора'],
     // '': ['', ''],
   };
   ///
   /// First initialization of application language
-  static Future<void> initialize(AppLang appLang, {JsonMap<List<String>>? jsonMap}) async {
+  static Future<void> initialize(AppLang appLang, {JsonMap<List>? jsonMap}) async {
     _appLang = appLang;
     if (jsonMap != null) {
       await jsonMap.decoded
+        .then((map) => map.map(
+          (key, value) => MapEntry(key, value.cast<String>())),
+        )
         .then((map) => _map.addAll(map));
     }
   }
@@ -252,8 +254,17 @@ class Localizations {
   static String getTranslation(String text) {
     final translations = _map[text];
     if(translations == null) {
-      log(_debug, 'Ошибка в методе $Localizations.getTranslations(): Не задан перевод для "$text"');
+      _log.warning('Ошибка в методе $Localizations.getTranslations(): Не задан перевод для "$text"');
+      final normalizedText = text.toLowerCase().trim();
+      return _map.entries
+        .firstWhere(
+          (entry) => entry.key.toLowerCase().trim() == normalizedText,
+          orElse: () => MapEntry(
+            text, 
+            List.filled(AppLang.values.length, text),
+          ),
+        ).value[_appLang.index];
     }
-    return translations?[_appLang.index] ?? text;
+    return translations[_appLang.index];
   }
 }
