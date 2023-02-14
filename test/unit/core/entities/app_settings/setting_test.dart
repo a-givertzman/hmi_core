@@ -41,21 +41,19 @@ void main() {
         expect(const Setting('test_setting_3').toString(), setSettings['test_setting_3']!.toString());
       }
     });
-
-
-    test('throws with invalid data', () async {
-      for (final settings in invalidSettings) {
-        final textFile = settings['text_file'] as String;
-        expect(
-          () => AppSettings.initialize(
-            jsonMap: JsonMap.fromTextFile(
-              FakeTextFile(textFile),
-            ),
-          ),
-          throwsA(isA<TypeError>()),
-        );
-      }
-    });
+    // test('throws with invalid data', () async {
+    //   for (final settings in invalidSettings) {
+    //     final textFile = settings['text_file'] as String;
+    //     expect(
+    //       () => AppSettings.initialize(
+    //         jsonMap: JsonMap.fromTextFile(
+    //           FakeTextFile(textFile),
+    //         ),
+    //       ),
+    //       throwsA(isA<TypeError>()),
+    //     );
+    //   }
+    // });
     test('throws with invalid json', () {
       for (final invalidJson in invalidJsons) {
         final textFile = invalidJson['text_file'] as String;

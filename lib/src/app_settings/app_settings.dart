@@ -2,7 +2,7 @@ import 'package:hmi_core/src/core/error/failure.dart';
 import 'package:hmi_core/src/core/json/json_map.dart';
 ///
 class AppSettings {
-  static final _map = <String, num>{
+  static final _map = <String, dynamic>{
     'displaySizeWidth': 1024,
     'displaySizeHeight': 768,
     // Place Durations in milliseconds!
@@ -15,14 +15,14 @@ class AppSettings {
     'floatingActionIconSize': 45.0,
   };
   ///
-  static Future<void> initialize({JsonMap<num>? jsonMap}) async {
+  static Future<void> initialize({JsonMap<dynamic>? jsonMap}) async {
     if (jsonMap != null) {
       await jsonMap.decoded
         .then((map) => _map.addAll(map));
     }
   }
   ///
-  static num getSetting(String settingName) {
+  static dynamic getSetting(String settingName) {
     final setting = _map[settingName];
     if (setting == null) {
       throw Failure(
