@@ -41,19 +41,37 @@ void main() {
         expect(const Setting('test_setting_3').toString(), setSettings['test_setting_3']!.toString());
       }
     });
-    // test('throws with invalid data', () async {
-    //   for (final settings in invalidSettings) {
-    //     final textFile = settings['text_file'] as String;
-    //     expect(
-    //       () => AppSettings.initialize(
-    //         jsonMap: JsonMap.fromTextFile(
-    //           FakeTextFile(textFile),
-    //         ),
-    //       ),
-    //       throwsA(isA<TypeError>()),
-    //     );
-    //   }
-    // });
+    test('valid data with factor', () async {
+      const factors = [0.123, -0.123, 3.54, -5.12];
+      for (final factor in factors) {
+        for (final settings in validSettings) {
+          final textFile = settings['text_file'] as String;
+          final setSettings = settings['set_settings'] as Map<String, num>;
+          await AppSettings.initialize(
+            jsonMap: JsonMap.fromTextFile(
+              FakeTextFile(textFile),
+            ),
+          );
+          for (final setting in setSettings.entries) {
+            final int testSetting = Setting(setting.key, factor: factor).toInt;
+            log.debug('as Int | ${setting.key} * $factor: $testSetting');
+          }
+          for (final setting in setSettings.entries) {
+            final double testSetting = Setting(setting.key, factor: factor).toDouble;
+            log.debug('as Double | ${setting.key} * $factor: $testSetting');
+          }
+          const factorConst = 0.123;
+          const setting = Setting('test_setting_1', factor: factorConst);
+          expect(setting.toInt, (setSettings['test_setting_1']! * factor).toInt());
+          expect(Setting('test_setting_1', factor: factor).toInt, (setSettings['test_setting_1']! * factor).toInt());
+          expect(Setting('test_setting_2', factor: factor).toInt, (setSettings['test_setting_2']! * factor).toInt());
+          expect(Setting('test_setting_3', factor: factor).toInt, (setSettings['test_setting_3']! * factor).toInt());
+          expect(Setting('test_setting_1', factor: factor).toDouble, (setSettings['test_setting_1']! * factor).toDouble());
+          expect(Setting('test_setting_2', factor: factor).toDouble, (setSettings['test_setting_2']! * factor).toDouble());
+          expect(Setting('test_setting_3', factor: factor).toDouble, (setSettings['test_setting_3']! * factor).toDouble());
+        }
+      }
+    });
     test('throws with invalid json', () {
       for (final invalidJson in invalidJsons) {
         final textFile = invalidJson['text_file'] as String;
