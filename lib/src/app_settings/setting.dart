@@ -11,7 +11,7 @@ class Setting {
   /// - [factor] - returned value int or double will by multiplied by factor
   const Setting(
     String name, {
-    double factor = 1.0
+    double factor = 1.0,
   }) : 
     _name = name,
     _factor = factor;
@@ -47,8 +47,10 @@ class _SettingValue implements Setting {
   final dynamic _value;
   //
   const _SettingValue(dynamic value) : _value = value;
+  //
   @override
   double get _factor => throw UnimplementedError();
+  //
   @override
   String get _name => throw UnimplementedError();
   //

@@ -2,8 +2,11 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 ///
 abstract class TextFile {
+  ///
   const factory TextFile.path(String filePath) = _PathTextFile;
+  ///
   const factory TextFile.asset(String assetPath) = _AssetTextFile;
+  ///
   Future<String> get content;
 }
 ///

@@ -40,7 +40,7 @@ class Queue<E> {
   List<E> toList() {
     return _list;
   }
-  ///
+  //
   @override
   String toString() => _list.toString();
 }

@@ -10,7 +10,7 @@ void main() {
             'value1': 0,
             'value2': 27,
             'value3': -123,
-          }
+          },
         },
         {
           'text_json': '{"value1":4294967295,"value2":2147483647,"value3":-2147483648}',
@@ -18,7 +18,7 @@ void main() {
             'value1': 4294967295,
             'value2': 2147483647,
             'value3': -2147483648,
-          }
+          },
         },
       ];
       for (final validData in validIntJsons) {
@@ -36,7 +36,7 @@ void main() {
             'value1': true,
             'value2': false,
             'value3': true,
-          }
+          },
         },
         {
           'text_json': '{"value1":false,"value2":false,"value3":false}',
@@ -44,7 +44,7 @@ void main() {
             'value1': false,
             'value2': false,
             'value3': false,
-          }
+          },
         },
       ];
       for (final validData in validIntJsons) {
@@ -62,7 +62,7 @@ void main() {
             'value1': 0.0,
             'value2': 123.45,
             'value3': -1.80e308,
-          }
+          },
         },
         {
           'text_json': '{"value1":2.23e-308,"value2":-2.23e-308,"value3":1.80e308}',
@@ -70,7 +70,7 @@ void main() {
             'value1': 2.23e-308,
             'value2': -2.23e-308,
             'value3': 1.80e308,
-          }
+          },
         },
       ];
       for (final validData in validIntJsons) {
@@ -88,7 +88,7 @@ void main() {
             'value1': '0.0',
             'value2': '123.45',
             'value3': '-1.80e308',
-          }
+          },
         },
         {
           'text_json': '{"value1":"abcdefghijklmnopqrstuvwxyz","value2":"1234567890","value3":"!@#\$%^&*()_+-="}',
@@ -96,7 +96,7 @@ void main() {
             'value1': 'abcdefghijklmnopqrstuvwxyz',
             'value2': '1234567890',
             'value3': '!@#\$%^&*()_+-=',
-          }
+          },
         },
       ];
       for (final validData in validIntJsons) {

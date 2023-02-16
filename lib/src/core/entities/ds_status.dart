@@ -38,7 +38,7 @@ enum DsStatus {
       }
       return status;
   }
-  ///
+  //
   @override
   String toString() {
     return 'DsStatus {name: $value}';

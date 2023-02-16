@@ -7,8 +7,6 @@ void main() async {
       Log.initialize(level: LogLevel.off);
       await Localizations.initialize(
         AppLang.ru,
-        // TODO to be implemented
-        // stringLoader: const StringLoader.fromAsset('tobeimplemented'),
       );
     });
     test('translates text if translation exists', () {

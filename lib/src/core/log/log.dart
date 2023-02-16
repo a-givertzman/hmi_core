@@ -30,8 +30,6 @@ class Log {
         _logColored(ConsoleColors.fgYellow, '${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
       } else if (record.level == LogLevel.error) {
         _logColored(ConsoleColors.fgRed, '${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
-      } else if (record.level == LogLevel.off) {
-        _logColored(ConsoleColors.fgGray, '${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
       } else {
         _logColored(ConsoleColors.fgGray, '${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
       }
@@ -87,7 +85,6 @@ void log(
   [
     Object? message2, 
     Object? message3, 
-    Object? message4,
   ]
 ) {
   assert(
@@ -96,10 +93,9 @@ void log(
         final String s1 = message1 != null ? message1.toString() : '';
         final String s2 = message2 != null ? message2.toString() : '';
         final String s3 = message3 != null ? message3.toString() : '';
-        final String s4 = message4 != null ? message4.toString() : '';
         try {
           // ignore: avoid_print
-          print(s1 + s2 + s3 + s4);
+          print(s1 + s2 + s3);
         } catch (e) {
           throw Exception('Ошибка в методе log(): $e');
         }

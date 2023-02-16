@@ -45,12 +45,13 @@ class DsTimeStamp {
   String toString() {
     return _dateTime.toIso8601String();
   }
+  //
   @override
   bool operator ==(Object other) =>
     other is DsTimeStamp &&
     other.runtimeType == runtimeType &&
     other.value.isAtSameMomentAs(_dateTime);
-  ///
+  //
   @override
   int get hashCode => _dateTime.hashCode;
 }
