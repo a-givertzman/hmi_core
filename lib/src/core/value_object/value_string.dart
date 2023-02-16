@@ -9,16 +9,20 @@ class ValueString extends ValueObject<String> {
   ):
     _validationList = validationList,
     super(value);
+  //
   @override
   String toString() {
     return super.value;
   }
+  ///
   bool isEmpty() {
     return super.value.isEmpty;
   }
+  ///
   bool isNotEmpty() {
     return super.value.isNotEmpty;
   }
+  ///
   String valid() {
     final vList = _validationList;
     if (vList == null) {
@@ -28,6 +32,7 @@ class ValueString extends ValueObject<String> {
       (validation) => validation.validate(value),
     ).join('; ') ;
   }
+  //
   @override
   ValueObject<String> toDomain(String value) {
     return ValueString(value);

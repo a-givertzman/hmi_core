@@ -3,11 +3,10 @@ import 'package:hmi_core/src/core/entities/ds_data_type.dart';
 import 'package:hmi_core/src/core/entities/ds_point_name.dart';
 import 'package:hmi_core/src/core/entities/ds_status.dart';
 
-abstract class IDataPoint<T> {
+///
+abstract class IDataPoint<T> {}
 
-}
-
-
+///
 class DsDataPoint<T> implements IDataPoint {
   final DsDataType type;
   final DsPointName name;
@@ -43,12 +42,12 @@ class DsDataPoint<T> implements IDataPoint {
       'timestamp': timestamp,
     });
   }
-  ///
+  //
   @override
   String toString() {
     return 'DataPoint {type: $type, name: $name, value: $value, status: $status, history: $history, alarm: $alarm}';
   }
-  ///
+  //
   @override
   bool operator ==(Object other) =>
     other is DsDataPoint
@@ -59,7 +58,7 @@ class DsDataPoint<T> implements IDataPoint {
     && history == other.history
     && alarm == other.alarm
     && timestamp == other.timestamp;
-  ///
+  //
   @override
   int get hashCode => type.hashCode ^ name.hashCode ^ value.hashCode ^ status.hashCode ^ history.hashCode ^ alarm.hashCode ^ timestamp.hashCode;
 }

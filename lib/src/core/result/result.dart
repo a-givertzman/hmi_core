@@ -52,7 +52,7 @@ class Result<T> {
       }
     }
   }
-  ///
+  //
   @override
   String toString() {
     return 'Result{\n\thasData: $hasData; hasError: $hasError\n\tdata:$_data\n\terror:$_error}';

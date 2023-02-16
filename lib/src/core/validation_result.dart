@@ -7,9 +7,11 @@ class ValidationResult {
   }):
     _valid = valid, 
     _message = message;
+  //
   bool valid() {
     return _valid;
   }
+  //
   String? message() {
     return _message;
   }
