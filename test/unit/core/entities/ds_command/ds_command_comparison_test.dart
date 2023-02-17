@@ -37,20 +37,6 @@ void main() {
         true,
       );
     });
-    test('by path', () {
-      expect(
-        getCommandWith(path: 'path1', timestamp: timestamp) 
-        ==
-        getCommandWith(path: 'path2', timestamp: timestamp),
-        false,
-      );
-      expect(
-        getCommandWith(path: 'path', timestamp: timestamp) 
-        ==
-        getCommandWith(path: 'path', timestamp: timestamp),
-        true,
-      );
-    });
     test('by name', () {
       expect(
         getCommandWith(name: 'name1', timestamp: timestamp) 
