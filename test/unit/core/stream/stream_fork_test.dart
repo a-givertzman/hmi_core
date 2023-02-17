@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hmi_core/src/core/stream/buffered_stream_fork.dart';
+import 'package:hmi_core/src/core/stream/stream_fork.dart';
 
 void main() {
-  group('BufferedStreamFork', () {
+  group('StreamFork', () {
     const inputStreamData = [123, 321, 456, 987, 42];
     test('buffering all incoming events before any subscription occurs', () async {
       const listenersCount = 5;
