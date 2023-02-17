@@ -3,7 +3,7 @@ import 'package:hmi_core/src/core/json/json_map.dart';
 import 'package:hmi_core/src/translate/app_lang.dart';
 ///
 class Localizations {
-  static const _debug = true;
+  static final _log = const Log('Localizations')..level=LogLevel.warning;
   static AppLang _appLang = AppLang.en;
   static final _map = <String, List<String>>{
     'Ok': ['Ok', 'Ok',],
@@ -13,13 +13,13 @@ class Localizations {
     'Reload': ['Reload', 'Перезагрузить',],
     'Send error report': ['Send error report', 'Отправить отчет об ошибке'],
     'and': ['and', 'и'],
-
+    //
     // Авторизация
     'Admin': ['Admin', 'Админ'],
     'Administrator': ['Administrator', 'Администратор'],
     'Operator': ['Operator', 'Оператор'],
     'Guest': ['Guest', 'Гость'],
-
+    //
     'Login must be..': [
       'Login must 5...255 chars like a..z, A..Z, 0..9, "-", "_", "."', 
       'Логин должен содержать состоять 5...255 символов a..z, A..Z, 0..9, "-", "_", "."',
@@ -43,7 +43,7 @@ class Localizations {
       'Please enter your password', 
       'Введите ваш пароль',
     ],
-    'User already authenticated': ['User already authenticated', 'Пользоваатель уже авторизован'],
+    'User already authenticated': ['User already authenticated', 'Пользователь уже авторизован'],
     'Your number': ['Your number', 'Ваш номер',],
     'Your login': ['Your login', 'Ваш логин',],
     'Your password': ['Your password', 'Ваш пароль',],
@@ -61,18 +61,18 @@ class Localizations {
     'User logout': ['User logout', 'Выйти из профиля',],
     'Editing is not permitted for current user': ['Editing is not permitted for current user', 'Изменение не разрешено для текущего пользователя'],
     'Logged out': ['Logged out', 'Вышел из системы'],
-
-
+    //
+    //
     'Acknowledge the event': ['Acknowledge the event', 'Квитировать событие'],
-    
-
+    //
+    //
     'Home': ['Home', 'Домашний',],
     'Main page': ['Main page', 'Главная'],
     'Alarm page': ['Alarm page', 'Аварии'],
     'Event page': ['Event page', 'События'],
     'Settings page': ['Settings page', 'Уставки',],
     'Preferences page': ['Preferences page', 'Настройки',],
-
+    //
     'Connection': ['Connection', 'Связь'],
     'Crane monitoring': ['Crane monitoring', 'Диагностика крана',],
     'Mode': ['Mode', 'Режим'],
@@ -87,8 +87,8 @@ class Localizations {
     'Winch 3': ['Winch 3', 'Лебедка 3'],
     'Main winch': ['Main winch', 'Главная лебедка'],
     'Main boom': ['Main boom', 'Основная стрела'],
-    'Main boom angle': ['Main boom angle', 'Уголо наклона основной стрелы'],
-    'Knuckle jib ': ['Knuckle jib', 'Хобот'],
+    'Main boom angle': ['Main boom angle', 'Угол наклона основной стрелы'],
+    'Knuckle jib': ['Knuckle jib', 'Хобот'],
     'Knuckle jib angle': ['Knuckle jib angle', 'Угол наклона хобота'],
     'Crane slewing angle': ['Crane slewing angle', 'Угол поворота крана'],
     'Accumulator': ['Accumulator', 'Аккумулятор'],
@@ -131,17 +131,15 @@ class Localizations {
     'Hydraulic power unit': ['Hydraulic power unit', 'Гидравлический силовой агрегат'],
     'Emergency hydraulic power unit': ['Emergency hydraulic power unit', 'Аварийный гидравлический силовой агрегат'],
     'Cooler': ['Cooler', 'Теплообменник'],
-    'Knukle jib': ['Knukle jib', 'Хобот'],
     'Slewing': ['Slewing', 'Поворот'],
     'Radius': ['Radius', 'Вылет'],
     'MarchingMode': ['MarchingMode', 'По походному'],
-    'Rotarion': ['Rotarion', 'Поворот'],
-
+    'Rotation': ['Rotation', 'Поворот'],
+    //
     'Date from': ['Date from', 'Дата от'],
     'To': ['To', 'До'],
     'Find': ['Find', 'Поиск'],
-    // '': ['', ''],
-
+    //
     // Единицы измерения
     't': ['t', 'т'],
     's': ['s', 'с'],
@@ -152,25 +150,24 @@ class Localizations {
     '% of SWL': ['% of SWL', '% от SWL'],
     'ms': ['ms', 'мс'],
     'rpm': ['rpm', 'об/мин'],
-
-
+    //
     // Информационные сообщения 
     'Welcome': ['Welcome', 'Добро пожаловать',],
     'Under development': ['Under development', 'В разработке',],
     'Loading...': ['Loading...', 'Загружаю...',],
-    'No noties': ['No noties', 'Сообщений нет',],
+    'No notices': ['No notices', 'Сообщений нет',],
     'Canceled by user': ['Canceled by user', 'Отменено пользователем'],
     'Try to check network connection': ['Try to check network connection', 'Проверьте сетевое подключение'],
     'to the database': ['to the database', 'к базе данных'],
     'No events': ['No events', 'Нет событий'],
-    'No alarms': ['No alarms', 'Нет ававрий'],
-
+    'No alarms': ['No alarms', 'Нет аварий'],
+    //
     // Предупредительные сообщения
     'This function not implemented': [
       'This function not implemented', 
       'Данный функционал еще не реализован',
     ],
-    
+    //
     // Ошибки
     'Error': ['Error', 'Ошибка',],
     'Reading data error': ['Reading data error', 'Ошибка при чтении данных'],
@@ -183,13 +180,13 @@ class Localizations {
       'Please check connection to the database', 
       'Пожалуйста, проверьте подключение к базе данных',
     ],
-
+    //
     // Экран настроек | SettingsBasicProtectionsTab
     'Basic protections': ['Basic protections', 'Основные защиты'],
     'ART Torque limitation': ['ART Torque limitation', 'ART Ограничение крутящего момента'],
     'AOPS Rotation angle limit 5/7.5t': ['AOPS Rotation angle limit 5/7.5t', 'AOPS Ограничение угла поворота 5/7.5t'],
     'AOPS Rotation angle limit 20/23t': ['AOPS Rotation angle limit 20/23t', 'AOPS Ограничение угла поворота 20/23t'],
-
+    //
     // Экран настроек | SettingsHpuTab
     'Oil Type': ['Oil Type', 'Тип масла'],
     'Emergency high oil level': ['Emergency high oil level', 'Аварийно высокий уровень масла'],
@@ -202,7 +199,7 @@ class Localizations {
     'Oil cooling': ['Oil cooling', 'Охлаждение масла'],
     'Oil temperature hysteresis': ['Oil temperature hysteresis', 'Гистерезис температуры масла'],
     'Water flow tracking timeout': ['Water flow tracking timeout', 'Тайм-аут отслеживания потока воды'],
-    
+    //
     // Экран настроек | SettingsMainWinchTab | SettingsMainBoomTab | SettingsRotaryBoomTab | SettingsRotationTab
     'Speed deceleration on one pump': ['Speed deceleration on one pump', 'Замедление скорости на одном насосе'],
     'Speed limit for slow types of work': ['Speed limit for slow types of work', 'Ограничение скорости при медленных видах работ'],
@@ -219,30 +216,32 @@ class Localizations {
     'Reset position': ['Reset position', 'Положение сброса'],
     'Position': ['Position', 'Положение'],
     'Speed limit at position': ['Speed limit at position', 'Ограничение скорости у положения'],
-
+    //
     // Экран Аккумулятор | AccumulatorPage
     'High pressure accumulator': ['High pressure accumulator', 'Аккумулятор высокого давления'],
     'Low pressure accumulator': ['Low pressure accumulator', 'Аккумулятор низкого давления'],
     'Piston max limit': ['Piston max limit', 'Верхний предел поршня'],
     'Piston min limit': ['Piston min limit', 'Нижний предел поршня'],
     'Pressure of nitro': ['Pressure of nitro', 'Давление азота'],
-    'Emergency high nitro pressure': ['Emergency high nitro pressure', 'Аварино высокое давление азота'],
-    
+    'Emergency high nitro pressure': ['Emergency high nitro pressure', 'Аварийно высокое давление азота'],
+    //
     // Экран Лебедка | Winch_n_Page
     'Hydromotor': ['Hydromotor', 'Гидромотор'],
     'Rotation speed': ['Rotation speed', 'Скорость вращения'],
     'Rope length': ['Rope length', 'Длина каната'],
     'LVDT': ['LVDT', 'LVDT'],
-    'Presure of brake': ['Presure of brake', 'Давление тормоза'],
+    'Pressure of brake': ['Pressure of brake', 'Давление тормоза'],
     'Hydromotor state': ['Hydromotor state', 'Состояние гидромотора'],
-    // '': ['', ''],
   };
   ///
   /// First initialization of application language
-  static Future<void> initialize(AppLang appLang, {JsonMap<List<String>>? jsonMap}) async {
+  static Future<void> initialize(AppLang appLang, {JsonMap<List>? jsonMap}) async {
     _appLang = appLang;
     if (jsonMap != null) {
       await jsonMap.decoded
+        .then((map) => map.map(
+          (key, value) => MapEntry(key, value.cast<String>()),
+        ))
         .then((map) => _map.addAll(map));
     }
   }
@@ -252,8 +251,17 @@ class Localizations {
   static String getTranslation(String text) {
     final translations = _map[text];
     if(translations == null) {
-      log(_debug, 'Ошибка в методе $Localizations.getTranslations(): Не задан перевод для "$text"');
+      _log.warning('Ошибка в методе $Localizations.getTranslations(): Не задан перевод для "$text"');
+      final normalizedText = text.toLowerCase().trim();
+      return _map.entries
+        .firstWhere(
+          (entry) => entry.key.toLowerCase().trim() == normalizedText,
+          orElse: () => MapEntry(
+            text, 
+            List.filled(AppLang.values.length, text),
+          ),
+        ).value[_appLang.index];
     }
-    return translations?[_appLang.index] ?? text;
+    return translations[_appLang.index];
   }
 }

@@ -3,13 +3,13 @@
 class ConsoleColors {
     static const reset = '\x1b[0m';           // reset
     static const bright = '\x1b[1m';
-
+    //
     static const dim = '\x1b[2m';
     static const underscore = '\x1b[4m';
     static const blink = '\x1b[5m';
     static const reverse = '\x1b[7m';
     static const hidden = '\x1b[8m';
-    
+    //
     // Regular foreground
     static const fgBlack = '\x1b[0;30m';        // Black
     static const fgRed = '\x1b[0;31m';          // Red
@@ -20,7 +20,7 @@ class ConsoleColors {
     static const fgCyan = '\x1b[0;36m';         // Cyan
     static const fgWhite = '\x1b[0;37m';        // White
     static const fgGray = '\x1b[90m';
-
+    //
     // Bold
     static const fgBoldBlack = '\x1b[1;30m';    // Black
     static const fgBoldRed = '\x1b[1;31m';      // Red
@@ -30,7 +30,7 @@ class ConsoleColors {
     static const fgBoldPurple = '\x1b[1;35m';   // Purple
     static const fgBoldCyan = '\x1b[1;36m';     // Cyan
     static const fgBoldWhite = '\x1b[1;37m';    // White
-
+    //
     // Regular background
     static const bgBlack = '\x1b[40m';
     static const bgRed = '\x1b[41m';

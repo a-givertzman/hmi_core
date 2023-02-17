@@ -8,6 +8,7 @@ abstract class ValueObject<T> {
   /// if was created ValueObject<Int>(123), then value returns 123
   /// or you can override it behavior
   T get value => _v;
+  //
   @override
   bool operator ==(Object other) {
     if (other is ValueObject) {
@@ -15,6 +16,7 @@ abstract class ValueObject<T> {
     }
     return false;
   }
+  //
   @override
   int get hashCode => _v.hashCode;
 }

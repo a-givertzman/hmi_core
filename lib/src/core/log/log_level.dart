@@ -34,28 +34,28 @@ class LogLevel extends Level {
   ///
   /// Special key to turn off all logging ([value] = 2000).
   static const LogLevel off = LogLevel('OFF', 2000);
-  ///
+  //
   @override
   bool operator ==(Object other) => other is LogLevel && value == other.value;
-  ///
+  //
   @override
   bool operator <(Level other) => value < other.value;
-  ///
+  //
   @override
   bool operator <=(Level other) => value <= other.value;
-  ///
+  //
   @override
   bool operator >(Level other) => value > other.value;
-  ///
+  //
   @override
   bool operator >=(Level other) => value >= other.value;
-  ///
+  //
   @override
   int compareTo(Level other) => value - other.value;
-  ///
+  //
   @override
   int get hashCode => value;
-  ///
+  //
   @override
   String toString() => name;
   ///
@@ -68,5 +68,4 @@ class LogLevel extends Level {
     error,
     off,
   ];
-
 }

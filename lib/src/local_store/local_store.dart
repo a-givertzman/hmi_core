@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:hmi_core/hmi_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
