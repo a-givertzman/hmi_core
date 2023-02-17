@@ -44,7 +44,7 @@ void main() {
         streamController1.add(
           DsDataPoint<bool>(
             type: DsDataType.bool,
-            name: DsPointName(fullPath:'s.s.s/sss'),
+            name: DsPointName('/line/ied/db/point.name'),
             value: value > 0,
             status: DsStatus.ok,
             timestamp: DateTime.now().toIso8601String(),
@@ -76,7 +76,7 @@ void main() {
         streamController1.add(
           DsDataPoint<bool>(
             type: DsDataType.bool,
-            name: DsPointName(fullPath:'s.s.s/sss1'),
+            name: DsPointName('/line/ied/db/point.name1'),
             value: values1[index] > 0,
             status: DsStatus.ok,
             timestamp: DateTime.now().toIso8601String(),
@@ -85,7 +85,7 @@ void main() {
         streamController2.add(
           DsDataPoint<bool>(
             type: DsDataType.bool,
-            name: DsPointName(fullPath:'s.s.s/sss2'),
+            name: DsPointName('/line/ied/db/point.name2'),
             value: values2[index] > 0,
             status: DsStatus.ok,
             timestamp: DateTime.now().toIso8601String(),
@@ -119,7 +119,7 @@ void main() {
         streamController1.add(
           DsDataPoint<bool>(
             type: DsDataType.bool,
-            name: DsPointName(fullPath:'s.s.s/sss1'),
+            name: DsPointName('/line/ied/db/point.name1'),
             value: values1[index] > 0,
             status: DsStatus.ok,
             timestamp: DateTime.now().toIso8601String(),
@@ -128,7 +128,7 @@ void main() {
         streamController2.add(
           DsDataPoint<bool>(
             type: DsDataType.bool,
-            name: DsPointName(fullPath:'s.s.s/sss2'),
+            name: DsPointName('/line/ied/db/point.name2'),
             value: values2[index] > 0,
             status: DsStatus.ok,
             timestamp: DateTime.now().toIso8601String(),
@@ -137,7 +137,7 @@ void main() {
         streamController3.add(
           DsDataPoint<bool>(
             type: DsDataType.bool,
-            name: DsPointName(fullPath: 's.s.s/sss3'),
+            name: DsPointName('/line/ied/db/point.name3'),
             value: values3[index] > 0,
             status: DsStatus.ok,
             timestamp: DateTime.now().toIso8601String(),

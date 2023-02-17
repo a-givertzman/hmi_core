@@ -6,10 +6,10 @@ void main() {
   test('DsPointName comparation', () { 
     for(final data in fullPathsData) {
       final fullPath = '${data['path']}/${data['name']}';
-      expect(DsPointName(fullPath: fullPath) == DsPointName(fullPath: fullPath), true);
+      expect(DsPointName(fullPath) == DsPointName(fullPath), true);
     }
     final fullPath0 = '${fullPathsData[0]['path']}/${fullPathsData[0]['name']}';
     final fullPath1 = '${fullPathsData[1]['path']}/${fullPathsData[1]['name']}';
-    expect(DsPointName(fullPath: fullPath0) == DsPointName(fullPath: fullPath1), false);
+    expect(DsPointName(fullPath0) == DsPointName(fullPath1), false);
   });
 }
