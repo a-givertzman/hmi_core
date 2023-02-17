@@ -24,11 +24,23 @@ class BufferedStreamFork<T> {
       ),
       growable: false,
     );
-    _subscription = stream.listen((event) {
-      for (final controller in _controllers) {
-        controller.add(event);
-      }
-    });
+    _subscription = stream.listen(
+      (event) {
+        for (final controller in _controllers) {
+          controller.add(event);
+        }
+      },
+      onDone: () {
+        for (final controller in _controllers) {
+          controller.close();
+        }
+      },
+      onError: (error, stackTrace) {
+        for (final controller in _controllers) {
+          controller.addError(error, stackTrace);
+        }
+      },
+    );
   }
   ///
   /// Returns one of the forks of incoming stream.
