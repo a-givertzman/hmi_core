@@ -6,7 +6,7 @@ void main() {
   test('DsPointName toString returns full path', () { 
     for(final data in fullPathsData) {
       final fullPath = '${data['path']}/${data['name']}';
-      final pointName = DsPointName(fullPath: fullPath);
+      final pointName = DsPointName(fullPath);
       expect(pointName.toString(), fullPath);
     }
   });

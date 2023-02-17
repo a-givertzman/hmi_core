@@ -8,7 +8,7 @@ void main() {
       'serialization': '"type":"bool"',
     },
     'name': {
-      'object': DsPointName(fullPath: '/path1/name1'),
+      'object': DsPointName('/path1/name1'),
       'serialization': '"name":"/path1/name1"',
     },
     'value': {

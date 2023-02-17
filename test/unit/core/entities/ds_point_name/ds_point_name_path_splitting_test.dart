@@ -8,7 +8,7 @@ void main() {
       final path = data['path'];
       final name = data['name'];
       final fullPath = '$path$name';
-      final pointName = DsPointName(fullPath: fullPath);
+      final pointName = DsPointName(fullPath);
       expect(pointName.path, path, reason: 'DsPointName returns incorrect path');
       expect(pointName.name, name, reason: 'DsPointName returns incorrect name of full path');
     }
@@ -18,7 +18,7 @@ void main() {
       final path = data['path'];
       final name = data['name'];
       final fullPath = '$path$name';
-      expect(() => DsPointName(fullPath: fullPath), throwsA(isA<Failure>()), reason: 'Full path format is incorrect');
+      expect(() => DsPointName(fullPath), throwsA(isA<Failure>()), reason: 'Full path format is incorrect');
     }
   });
 }

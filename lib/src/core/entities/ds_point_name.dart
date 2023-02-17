@@ -4,7 +4,7 @@ class DsPointName {
   final String _fullPath;
   final int _lastSeparatorIndex;
   ///
-  DsPointName({required String fullPath}) : 
+  DsPointName(String fullPath) : 
     _fullPath = fullPath,
     assert(DsPointName._validatePath(fullPath), 'Full path format validation is failed...'),
     _lastSeparatorIndex = _findLastMatchIndex(fullPath, '/');
