@@ -8,7 +8,6 @@ import 'package:hmi_core/src/core/entities/ds_timestamp.dart';
 class DsCommand<T> {
   final DsDataClass dsClass;
   final DsDataType type;
-  final String path;
   final String name;
   final T value;
   final DsStatus status;
@@ -17,7 +16,6 @@ class DsCommand<T> {
   const DsCommand({
     required this.dsClass,
     required this.type,
-    required this.path,
     required this.name,
     required this.value,
     required this.status,
@@ -40,7 +38,6 @@ class DsCommand<T> {
     other.runtimeType == runtimeType &&
     other.dsClass == dsClass &&
     other.type == type &&
-    other.path == path &&
     other.name == name &&
     other.value == value &&
     other.status == status &&
