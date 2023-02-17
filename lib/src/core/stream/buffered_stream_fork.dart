@@ -1,16 +1,16 @@
 import 'dart:async';
 
 /// Forks input stream on a given number of output streams.
-/// Each output stream buffers incoming events before any subscribtion occurs on it.
-class BufferedStreamFork<T> {
+/// Each output stream buffers incoming events before subscribtion occurs on it.
+class StreamFork<T> {
   late final List<StreamController<T>> _controllers;
   late final StreamSubscription<T> _subscription;
   int _listenersCount;
   /// 
   /// Forks input [stream] on [listenersCount] of output streams.
-  /// Each output stream buffers incoming events before any subscribtion occurs on it.
-  BufferedStreamFork({
-    required Stream<T> stream, 
+  /// Each output stream buffers incoming events before subscribtion occurs on it.
+  StreamFork(
+    Stream<T> stream, { 
     int listenersCount = 1,
   }) : _listenersCount = listenersCount {
     _controllers = List.generate(
