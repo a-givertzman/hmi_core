@@ -29,3 +29,4 @@ export 'src/auth/user_password.dart';
 export 'src/translate/app_lang.dart';
 export 'src/translate/localizations.dart';
 export 'src/translate/localized.dart';
+export 'src/core/stream/stream_fork.dart';
