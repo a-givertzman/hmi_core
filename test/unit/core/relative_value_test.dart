@@ -3,7 +3,6 @@ import 'package:hmi_core/hmi_core_log.dart';
 import 'package:hmi_core/hmi_core_relative_value.dart';
 
 void main() {
-  const debug = true;
   Log.initialize(level: LogLevel.all);
   const log = Log('RelativeValueTest');
   group('RelativeValueTest', () {

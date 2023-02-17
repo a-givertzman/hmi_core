@@ -1,1 +1,1 @@
-export 'src/core/entities/relative_value.dart';
+export 'src/core/relative_value.dart';
