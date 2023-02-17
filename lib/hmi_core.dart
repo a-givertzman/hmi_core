@@ -13,6 +13,7 @@ export 'src/core/entities/state_colors.dart';
 export 'src/core/entities/queue.dart';
 export 'src/core/entities/app_ui_settings_num.dart';
 export 'src/core/entities/app_ui_settings_string.dart';
+export 'src/core/entities/relative_value.dart';
 export 'src/core/error/failure.dart';
 export 'src/core/log/log.dart';
 export 'src/core/log/log_level.dart';
