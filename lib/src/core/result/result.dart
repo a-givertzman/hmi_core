@@ -36,10 +36,10 @@ class Result<T> {
   ///
   bool get hasError => _error != null;
   ///
-  S fold<S>(
-    S Function(T data) onData,
-    S Function(Failure error) onError, 
-  ) {
+  S fold<S>({
+    required S Function(T data) onData,
+    required S Function(Failure error) onError, 
+  }) {
     final data = _data;
     if (data != null) {
       return onData(data);
