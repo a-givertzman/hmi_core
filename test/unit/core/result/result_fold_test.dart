@@ -17,13 +17,13 @@ void main() {
     int onData<T>(T data) => valueIfData;
     int onError(Failure error) => valueIfError;
     test('calls onData if data is provided', () {
-      expect(resultWithData.fold(onData, onError), valueIfData);
+      expect(resultWithData.fold(onData: onData, onError: onError), valueIfData);
     });
     test('calls onError if no data', () {
-      expect(resultWithError.fold(onData, onError), valueIfError);
+      expect(resultWithError.fold(onData: onData, onError: onError), valueIfError);
     });
     test('calls onData if both data and error are provided', () {
-      expect(resultWithDataAndError.fold(onData, onError), valueIfData);
+      expect(resultWithDataAndError.fold(onData: onData, onError: onError), valueIfData);
     });
   });
 }
