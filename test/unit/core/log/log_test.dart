@@ -26,11 +26,15 @@ void main() {
       }
     });
     test('prints messages', () {
-      const log = Log('test');
-      expect(() => log.debug('debug test message'), returnsNormally);
-      expect(() => log.info('info test message'), returnsNormally);
-      expect(() => log.warning('warning test message'), returnsNormally);
-      expect(() => log.error('error test message'), returnsNormally);
+      for (final level in target.values) {
+        final log = Log('test Level $level');
+        log.level = level;
+        log.debug('current level: ${log.level}');
+        expect(() => log.debug('debug test message'), returnsNormally);
+        expect(() => log.info('info test message'), returnsNormally);
+        expect(() => log.warning('warning test message'), returnsNormally);
+        expect(() => log.error('error test message'), returnsNormally);
+      }
     });
   });
 }

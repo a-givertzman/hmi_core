@@ -69,14 +69,13 @@ class Log {
   ///
   /// Effective level considering the levels established in this logger's
   /// parents (when [hierarchicalLoggingEnabled] is true).
-  LogLevel get level => Logger('name').level as LogLevel;
+  LogLevel get level => Logger(_name).level as LogLevel;
   ///
   /// Override the level for this particular [Logger] and its children.
   ///
   /// Setting this to `null` makes it inherit the [parent]s level.
-  set level(LogLevel? value) => Logger('name').level = value;
+  set level(LogLevel? value) => Logger(_name).level = value;
 }
-
 /// if debug = true method prints messages to the debug consol 
 /// works only in the debug mode
 void log(
