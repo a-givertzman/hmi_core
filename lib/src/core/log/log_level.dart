@@ -36,7 +36,7 @@ class LogLevel extends Level {
   static const LogLevel off = LogLevel('OFF', 2000);
   //
   @override
-  bool operator ==(Object other) => other is LogLevel && value == other.value;
+  bool operator ==(Object other) => (other is Level) && value == other.value;
   //
   @override
   bool operator <(Level other) => value < other.value;
