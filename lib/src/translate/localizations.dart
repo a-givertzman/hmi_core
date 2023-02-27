@@ -251,15 +251,17 @@ class Localizations {
   static String getTranslation(String text) {
     final translations = _map[text];
     if(translations == null) {
-      _log.warning('Ошибка в методе $Localizations.getTranslations(): Не задан перевод для "$text"');
       final normalizedText = text.toLowerCase().trim();
       return _map.entries
         .firstWhere(
           (entry) => entry.key.toLowerCase().trim() == normalizedText,
-          orElse: () => MapEntry(
-            text, 
-            List.filled(AppLang.values.length, text),
-          ),
+          orElse: () {
+            _log.warning('Ошибка в методе $Localizations.getTranslations(): Не задан перевод для "$text"');
+            return MapEntry(
+              text, 
+              List.filled(AppLang.values.length, text),
+            );
+          },
         ).value[_appLang.index];
     }
     return translations[_appLang.index];

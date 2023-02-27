@@ -2,11 +2,11 @@ import 'package:hmi_core/src/core/log/log.dart';
 
 class Failure<T> {
   static const _debug = true;
-  late T message;
+  final T message;
 ///
 /// Ganeral Failures
   Failure({
-    required T message, 
+    required this.message, 
     required StackTrace stackTrace,
   }) {
     log(_debug, message);
@@ -60,4 +60,9 @@ class Failure<T> {
     required T message,
     required StackTrace stackTrace,
   }) => Failure(message: message, stackTrace: stackTrace);
+
+  @override
+  String toString() {
+    return message.toString();
+  }
 }
