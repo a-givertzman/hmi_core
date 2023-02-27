@@ -26,6 +26,7 @@ export 'src/core/json/json_list.dart';
 export 'src/core/stream/stream_fork.dart';
 export 'src/core/stream/stream_mearged.dart';
 export 'src/core/stream/stream_mearged_or.dart';
+export 'src/core/stream/buffered_stream.dart';
 export 'src/app_settings/app_settings.dart';
 export 'src/auth/user_login.dart';
 export 'src/auth/user_password.dart';
