@@ -6,7 +6,7 @@ class BufferedStream<T> {
   final _log = Log('${BufferedStream<T>}')..level = LogLevel.debug;
   final StreamController<T> _controller;
   late final StreamSubscription<T> _subscription;
-  final T? initalValue;
+  final T? _initalValue;
   T? _lastValue;
   bool _isUpdated = false;
   ///
@@ -16,7 +16,7 @@ class BufferedStream<T> {
   }) :
     _controller = StreamController<T>(),
     _lastValue = initValue,
-    initalValue = initValue
+    _initalValue = initValue
   {
     _subscription = stream.listen((event) {
       _log.debug('[.stream.listen] event: $event');
@@ -26,7 +26,7 @@ class BufferedStream<T> {
     });
     _controller.onCancel =  () {
       _log.debug('[._controller.onCancel] canceleing subscription...');
-      _subscription.cancel().then((value) {
+      return _subscription.cancel().then((value) {
         _log.debug('[._controller.onCancel] subscription canceled.');
       });
     };
@@ -36,7 +36,7 @@ class BufferedStream<T> {
   ///
   T? get value => _lastValue;
   ///
-  T? get initialValue => initalValue;
+  T? get initialValue => _initalValue;
   ///
   bool get isUpdated => _isUpdated;
   ///
