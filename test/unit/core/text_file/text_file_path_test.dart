@@ -4,7 +4,7 @@ import 'package:hmi_core/src/core/text_file.dart';
 
 void main() {
   const testFilePath = 'test.txt';
-  const originalContent = 'some test text 12345';
+  const originalContent = 'first line some test text 12345\nsecond line some test text 12345';
   late final File testFile;
   setUpAll(() {
     testFile = File(testFilePath)..writeAsString(originalContent, flush: true);
