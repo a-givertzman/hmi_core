@@ -1,3 +1,3 @@
-library hmi_core;
+library hmi_core_result;
 
 export 'src/core/result/result.dart';
