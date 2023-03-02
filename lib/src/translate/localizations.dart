@@ -230,7 +230,7 @@ class Localizations {
     'Rotation speed': ['Rotation speed', 'Скорость вращения'],
     'Rope length': ['Rope length', 'Длина каната'],
     'LVDT': ['LVDT', 'LVDT'],
-    'Pressure of brake': ['Pressure of brake', 'Давление тормоза'],
+    'Pressure of break': ['Pressure of break', 'Давление тормоза'],
     'Hydromotor state': ['Hydromotor state', 'Состояние гидромотора'],
   };
   ///
