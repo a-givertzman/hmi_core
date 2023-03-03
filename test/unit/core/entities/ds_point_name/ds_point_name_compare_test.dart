@@ -5,11 +5,11 @@ import 'full_paths_data.dart';
 void main() {
   test('DsPointName comparation', () { 
     for(final data in fullPathsData) {
-      final fullPath = '${data['path']}/${data['name']}';
+      final fullPath = '${data['path']}${data['name']}';
       expect(DsPointName(fullPath) == DsPointName(fullPath), true);
     }
-    final fullPath0 = '${fullPathsData[0]['path']}/${fullPathsData[0]['name']}';
-    final fullPath1 = '${fullPathsData[1]['path']}/${fullPathsData[1]['name']}';
+    final fullPath0 = '${fullPathsData[0]['path']}${fullPathsData[0]['name']}';
+    final fullPath1 = '${fullPathsData[1]['path']}${fullPathsData[1]['name']}';
     expect(DsPointName(fullPath0) == DsPointName(fullPath1), false);
   });
 }
