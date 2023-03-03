@@ -63,6 +63,7 @@ class Localizations {
     'Logged out': ['Logged out', 'Вышел из системы'],
     //
     //
+    'Reset alarms': ['Reset alarms', 'Сброс аварий'],
     'Acknowledge the event': ['Acknowledge the event', 'Квитировать событие'],
     //
     //
