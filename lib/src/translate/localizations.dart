@@ -3,7 +3,7 @@ import 'package:hmi_core/src/core/json/json_map.dart';
 import 'package:hmi_core/src/translate/app_lang.dart';
 ///
 class Localizations {
-  static final _log = const Log('Localizations')..level=LogLevel.warning;
+  static final _log = const Log('Localizations')..level=LogLevel.info;
   static AppLang _appLang = AppLang.en;
   static final _map = <String, List<String>>{
     'Ok': ['Ok', 'Ok',],
@@ -253,17 +253,20 @@ class Localizations {
     final translations = _map[text];
     if(translations == null) {
       final normalizedText = text.toLowerCase().trim();
-      return _map.entries
+      final similarTranslations = _map.entries
         .firstWhere(
           (entry) => entry.key.toLowerCase().trim() == normalizedText,
           orElse: () {
-            _log.warning('Ошибка в методе $Localizations.getTranslations(): Не задан перевод для "$text"');
+            _log.warning('Ошибка в методе .getTranslations(): Не задан перевод для "$text"');
             return MapEntry(
               text, 
               List.filled(AppLang.values.length, text),
             );
           },
-        ).value[_appLang.index];
+        );
+      _log.info('Для "$text" закэшированы переводы: ${similarTranslations.value}');
+      _map.putIfAbsent(text, () => similarTranslations.value);
+      return similarTranslations.value[_appLang.index];
     }
     return translations[_appLang.index];
   }
