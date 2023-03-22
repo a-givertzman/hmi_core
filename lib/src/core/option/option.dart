@@ -3,9 +3,9 @@ part 'none.dart';
 ///
 abstract class Option<T> {
   ///
-  const factory Option.some(T v) = Some;
+  const factory Option.some(T value) = Some<T>;
   ///
-  const factory Option.none() = None;
+  const factory Option.none() = None<T>;
   ///
   R fold<R>({
     required R Function(T v) onSome,
