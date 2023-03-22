@@ -10,12 +10,12 @@ abstract class Option<T> {
   /// Creates object that holds nothing.
   const factory Option.none() = None<T>;
   /// 
-  /// Returns value of type [R] based on condition 
-  /// that object is holding some value or not.
+  /// Computes value of type [R] from provided functions 
+  /// based on condition that object is holding some value.
   /// 
-  /// Example interpetations of provided function:
+  /// Example interpetations of provided functions:
   ///   - [onSome] - transforms holded value to another of type [R],
-  ///   - [onNone] - returns default of type [R].
+  ///   - [onNone] - returns any default of type [R].
   R fold<R>({
     required R Function(T v) onSome,
     required R Function() onNone,
