@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   logging: ^1.1.1
-  shared_preferences: ^2.0.17
+  shared_preferences: ^2.0.20
 
 dev_dependencies:
   flutter_test:
