@@ -1,8 +1,9 @@
 part of 'option.dart';
-///
+/// [Option] that holds some value.
 class Some<T> implements Option<T> {
   final T _value;
   ///
+  /// Create [Option] object that holds some [value].
   const Some(T value) : _value = value;
   //
   @override

@@ -1,7 +1,7 @@
 part of 'option.dart';
-///
+/// [Option] that holds nothing.
 class None<T> implements Option<T> {
-  ///
+  /// Create [Option] object that holds nothing.
   const None();
   //
   @override
