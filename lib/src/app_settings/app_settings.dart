@@ -9,6 +9,7 @@ class AppSettings {
     'flushBarDurationLong': 8000,
     'flushBarDurationMedium': 4000,
     'flushBarDurationShort': 2000,
+    'smallPadding': 4.0,
     'padding': 8.0,
     'blockPadding': 16.0,
     'floatingActionButtonSize': 60.0,
