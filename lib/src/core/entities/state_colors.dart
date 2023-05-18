@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 ///
 class StateColors {
   final Color error;
+  final Color alarm;
   final Color obsolete;
   final Color invalid;
   final Color timeInvalid;
@@ -13,6 +14,7 @@ class StateColors {
   final Color on;
   const StateColors({
     required this.error,
+    required this.alarm,
     required this.obsolete, 
     required this.invalid, 
     required this.timeInvalid, 
