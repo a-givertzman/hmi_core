@@ -5,6 +5,7 @@ import 'package:hmi_core/hmi_core.dart';
 void main() {
   test('StateColors test', () {
     final colors = {
+      'alarm': const Color(0xAA000000),
       'error': const Color(0xAA000001),
       'obsolete': const Color(0xAA000002),
       'invalid': const Color(0xAA000003),
@@ -18,6 +19,7 @@ void main() {
     };
     final stateColors = StateColors(
       error: colors['error']!,
+      alarm: colors['alarm']!,
       obsolete: colors['obsolete']!,
       invalid: colors['invalid']!,
       timeInvalid: colors['timeInvalid']!,
@@ -30,6 +32,7 @@ void main() {
     );
     expect(stateColors, isA<StateColors>());
     expect(stateColors.error, colors['error']!);
+    expect(stateColors.alarm, colors['alarm']!); 
     expect(stateColors.obsolete, colors['obsolete']!);
     expect(stateColors.invalid, colors['invalid']!);
     expect(stateColors.timeInvalid, colors['timeInvalid']!);
