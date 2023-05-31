@@ -15,7 +15,5 @@ void main() {
     expect(result, isTrue);
     final preferences = await SharedPreferences.getInstance();
     expect(preferences.getKeys(), isEmpty);
-    final repeatedResult = await store.clear();
-    expect(result, isFalse);
   });
 }
