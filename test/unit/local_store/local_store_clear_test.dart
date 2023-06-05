@@ -3,11 +3,15 @@ import 'package:hmi_core/src/local_store/local_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   test('LocalStore clear removes all entries from SharedPreferences', () async {
+    // Adding prefixes to keys to not rewrite or read existing values 
+    // in SharedPreferences (or values from another tests).
+    const keyPrefix = 'test.local_store_clear.';
     final initialValues = {
-      'test1': 'value1',
-      'test2': 2,
-      'test3': true,
+      '${keyPrefix}test1': 'value1',
+      '${keyPrefix}test2': 2,
+      '${keyPrefix}test3': true,
     };
     SharedPreferences.setMockInitialValues(initialValues);
     final store = LocalStore();

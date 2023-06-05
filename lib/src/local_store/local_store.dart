@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// так же поддерживает шифрование данных 
 /// в юникод utf8 и затем в base64 string 
 class LocalStore {
-  static const _debug = false;
+  static const _debug = true;
   LocalStore();
   Future<SharedPreferences> _getPrefs() {
     return SharedPreferences
