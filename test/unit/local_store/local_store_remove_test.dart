@@ -22,6 +22,7 @@ void main() {
       final result = await store.remove(key);
       expect(result, isTrue);
       currentLocalStoreValues.remove(key);
+      expect(await store.readString(key), equals(''));
       for (final key in initialKeys) {
         expect(currentLocalStoreValues[key], preferences.get(key));
       }
