@@ -7,12 +7,6 @@ void main() {
   const log = Log('RelativeValueTest');
   group('RelativeValueTest', () {
     // const _debug = true;
-    setUp(() async {
-      // TODO add implementation or remove this block
-      // return 0;
-      // WidgetsFlutterBinding.ensureInitialized();
-      // SharedPreferences.setMockInitialValues({});
-    });
     test('basis', () async {
       expect(
         RelativeValue(min: 0, max: 100),
