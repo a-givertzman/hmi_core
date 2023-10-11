@@ -11,7 +11,7 @@ void main() {
     const valueIfData = 1;
     const valueIfError = 0;
     int onData<T>(T data) => valueIfData;
-    int onError(Failure error) => valueIfError;
+    int onError<T>(T error) => valueIfError;
     test('calls onData if data is provided', () {
       final foldResult = switch(resultWithData) {
         Ok(:final value) => onData(value),
@@ -21,6 +21,22 @@ void main() {
     });
     test('calls onError if no data', () {
       final foldResult = switch(resultWithError) {
+        Ok(:final value) => onData(value),
+        Err(:final error) => onError(error),
+      };
+      expect(foldResult, valueIfError);
+    });
+    test('works perfectly even if data is void', () {
+      const Result<void, void> result = Ok(null);
+      final foldResult = switch(result) {
+        Ok(:final value) => onData(value),
+        Err(:final error) => onError(error),
+      };
+      expect(foldResult, valueIfData);
+    });
+    test('works perfectly even if error is void', () {
+      const Result<void, void> result = Err(null);
+      final foldResult = switch(result) {
         Ok(:final value) => onData(value),
         Err(:final error) => onError(error),
       };
