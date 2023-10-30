@@ -4,7 +4,7 @@ import 'package:hmi_core/src/core/error/failure.dart';
 sealed class Result<V, E> {}
 ///
 /// Containing either value of type [V] or [Failure]
-typedef FailableResult<V> = Result<V, Failure>;
+typedef ResultF<V> = Result<V, Failure>;
 /// 
 /// Successful [Result] with [value].
 final class Ok<V, E> implements Result<V, E> {
