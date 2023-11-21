@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hmi_core/hmi_core_option.dart';
+import 'test_data.dart';
 
 void main() {
   group('Option None constructor', () {
@@ -13,6 +14,7 @@ void main() {
       expect(none, isA<Option<bool>>());
       expect(none, isA<Option<double>>());
       expect(none, isA<Option<String>>());
+      expect(none, isA<Option<ForTestOptionOnly>>());
     });
   });
 }

@@ -1,10 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hmi_core/hmi_core_option.dart';
-
-class ForTestOptionOnly {
-  final String value;
-  ForTestOptionOnly(this.value);
-}
+import 'test_data.dart';
 
 void main() {
   group('Option fold strong typed', () {
@@ -12,38 +8,28 @@ void main() {
       for(int i=-50; i<=50; i++) {
         final Option<int> option = Some(i);
         final foldResult = switch(option) {
-          Some<int>(:final value) => '$value',
-          None() => 'None',
+          Some<int>(:final value) => value,
+          None() => null,
         };
-        expect(foldResult, equals('$i'));
+        expect(foldResult, equals(i));
       }
     });
     test('calls onNone function if it is instance of None', () {
       const Option<int> option = None();
       final foldResult = switch(option) {
-        Some<int>(:final value) => '$value',
-        None() => 'None',
+        Some<int>(:final value) => value,
+        None() => null,
       };
-      expect(foldResult, equals('None'));
+      expect(foldResult, equals(null));
     });
   });
   group('Option fold different types', () {
-    final testData = [
-      0x7FFFFFFFFFFFFFFF,
-      -0x8000000000000000,
-      ForTestOptionOnly("value"),
-      true,
-      false,
-      double.maxFinite,
-      double.minPositive
-      -double.maxFinite,
-    ];
     test('calls onSome function if it is instance of Some', () {
       for(final value in testData) {
         final Option option = Some(value);
         final foldResult = switch(option) {
           Some(:final value) => value,
-          None() => None,
+          None() => null,
         };
         expect(foldResult, equals(value));
       }
@@ -52,13 +38,9 @@ void main() {
       const Option option = None();
       final foldResult = switch(option) {
         Some(:final value) => value,
-        None() => None,
+        None() => null,
       };
-      expect(foldResult, equals(None));
+      expect(foldResult, equals(null));
     });
   });
 }
-
-
-
-
