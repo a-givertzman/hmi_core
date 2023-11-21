@@ -1,46 +1,59 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hmi_core/hmi_core_failure.dart';
 import 'package:hmi_core/hmi_core_result_new.dart';
+import 'test_data.dart';
 
 void main() {
   group('Result fold', () {
-    const Result<String,Failure> resultWithData = Ok('test');
-    final Result<String,Failure> resultWithError = Err(
-      Failure(message: '', stackTrace: StackTrace.current),
-    );
-    const valueIfData = 1;
-    const valueIfError = 0;
-    int onData<T>(T data) => valueIfData;
-    int onError<T>(T error) => valueIfError;
-    test('calls onData if data is provided', () {
-      final foldResult = switch(resultWithData) {
-        Ok(:final value) => onData(value),
-        Err(:final error) => onError(error),
-      };
-      expect(foldResult, valueIfData);
+    test('matches Ok if data is provided', () {
+      for (final value in testData) {
+        final Result<dynamic, Failure> result = Ok(value);
+        final foldResult = switch(result) {
+          Ok(:final value) => value,
+          Err(:final error) => error,
+        };
+        expect(foldResult, value);
+      }
     });
-    test('calls onError if no data', () {
-      final foldResult = switch(resultWithError) {
-        Ok(:final value) => onData(value),
-        Err(:final error) => onError(error),
-      };
-      expect(foldResult, valueIfError);
+    test('matches Err if no data', () {
+      for (final error in testData) {
+        final Result result = Err(error);
+        final foldResult = switch(result) {
+          Ok(:final value) => value,
+          Err(:final error) => error,
+        };
+        expect(foldResult, error);
+      }
     });
     test('works perfectly even if data is void', () {
-      const Result<void, void> result = Ok(null);
-      final foldResult = switch(result) {
-        Ok(:final value) => onData(value),
-        Err(:final error) => onError(error),
-      };
-      expect(foldResult, valueIfData);
+      for (final value in testData) {
+        // ignore: void_checks
+        final Result<void, Failure> result = Ok(value);
+        expect(
+          () {
+            return switch(result) {
+              Ok(:final value) => value,
+              Err(:final error) => error,
+            };
+          },
+          returnsNormally,
+        );
+      }
     });
     test('works perfectly even if error is void', () {
-      const Result<void, void> result = Err(null);
-      final foldResult = switch(result) {
-        Ok(:final value) => onData(value),
-        Err(:final error) => onError(error),
-      };
-      expect(foldResult, valueIfError);
+      for (final error in testData) {
+        // ignore: void_checks
+        final Result<dynamic, void> result = Err(error);
+        expect(
+          () {
+            return switch(result) {
+              Ok(:final value) => value,
+              Err(:final error) => error,
+            };
+          },
+          returnsNormally,
+        );
+      }
     });
   });
 }
