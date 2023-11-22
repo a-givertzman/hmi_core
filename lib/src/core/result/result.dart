@@ -3,6 +3,11 @@ import 'package:hmi_core/src/core/error/failure.dart';
 
 /// 
 /// Result contains or data of type T or error
+@Deprecated(
+  'Use implementation from hmi_core_result_new. '
+  'The current implementation will be removed as soon as '
+  'the new one if fully integrated with other libraries and projects.',
+)
 class Result<T> {
   final T? _data;
   final Failure? _error;
