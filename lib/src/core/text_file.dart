@@ -1,14 +1,20 @@
 import 'dart:io';
 import 'package:flutter/services.dart';
-///
-abstract class TextFile {
-  ///
+/// The interface for reading and writing a text file.
+abstract interface class TextFile {
+  /// Text file from the file system.
+  /// 
+  /// `filePath` - file system valid relative or full path to the file.
   const factory TextFile.path(String filePath) = _PathTextFile;
-  ///
+  /// Text file from application asset bundle. 
+  /// 
+  /// `assetPath` - path to the file according to your `assets` section in `pubspec.yaml`.
   const factory TextFile.asset(String assetPath) = _AssetTextFile;
   ///
+  /// Internal file contents as text.
   Future<String> get content;
-  ///
+  /// 
+  /// Rewrites the entire file with provided `text`.
   Future<void> write(String text);
 }
 ///
