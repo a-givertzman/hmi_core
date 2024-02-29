@@ -3,18 +3,35 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hmi_core/src/core/text_file.dart';
 
 void main() {
-  const testFilePath = 'test.txt';
-  const originalContent = 'first line some test text 12345\nsecond line some test text 12345';
-  late final File testFile;
-  setUpAll(() {
-    testFile = File(testFilePath)..writeAsString(originalContent, flush: true);
+  const testFileNamePrefix = 'text_file_path_write_test';
+  const contentToWrite = [
+    'first line some test text 12345\nsecond line some test text 12345\n',
+    '',
+    '0123456789',
+    'abcdefghijklmnopqrstuvwxyz',
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    'абвгдеёжзийклмнопрстуфхцчшщъыьэюя',
+    'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ',
+    '!@#\$%^&*()_+=-"№;:?./\\|[]{}',
+  ];
+  setUpAll(() async {
+    await Future.wait([
+      for(int i=0; i < contentToWrite.length; i++) 
+        File('$testFileNamePrefix-$i.txt').create(),
+    ]);
   });
-  tearDownAll(() {
-    testFile.delete();
+  tearDownAll(() async {
+    await Future.wait([
+      for(int i=0; i < contentToWrite.length; i++) 
+        File('$testFileNamePrefix-$i.txt').delete(),
+    ]);
   });
-  test('TextFile path reads local file correctly', () async {
-    const textFile = TextFile.path(testFilePath);
-    final receivedContent = await textFile.content;
-    expect(originalContent, equals(receivedContent));
+  test('TextFile.path(...).write() writes local file correctly', () async {
+    for(int i=0; i < contentToWrite.length; i++) {
+      final testFilePath = '$testFileNamePrefix-$i.txt';
+      final textFile = TextFile.path(testFilePath);
+      await textFile.write(contentToWrite[i]);
+      expect(await File(testFilePath).readAsString(), equals(contentToWrite[i]));
+    }
   });
 }
