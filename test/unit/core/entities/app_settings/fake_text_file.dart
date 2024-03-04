@@ -1,3 +1,4 @@
+import 'package:hmi_core/src/core/result_new/result.dart';
 import 'package:hmi_core/src/core/text_file.dart';
 ///
 class FakeTextFile implements TextFile {
@@ -6,7 +7,7 @@ class FakeTextFile implements TextFile {
   const FakeTextFile(this.text, {this.writeFuture});
   //
   @override
-  Future<String> get content => Future.value(text);
+  Future<ResultF<String>> get content => Future.value(Ok(text));
   //
   @override
   Future<void> write(String text) => writeFuture ?? Future(() {return;});

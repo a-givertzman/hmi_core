@@ -1,5 +1,6 @@
 import 'package:hmi_core/hmi_core_log.dart';
 import 'package:hmi_core/src/core/json/json_map.dart';
+import 'package:hmi_core/src/core/result_new/result.dart';
 import 'package:hmi_core/src/translate/app_lang.dart';
 ///
 class Localizations {
@@ -240,10 +241,19 @@ class Localizations {
     _appLang = appLang;
     if (jsonMap != null) {
       await jsonMap.decoded
-        .then((map) => map.map(
-          (key, value) => MapEntry(key, value.cast<String>()),
-        ))
-        .then((map) => _map.addAll(map));
+        .then((result) {
+          switch(result) {
+            case Ok(value:final map): 
+              final localizationsMap = map.map(
+                (key, value) => MapEntry(key, value.cast<String>()),
+              );
+              _map.addAll(localizationsMap);
+              break;
+            case Err():
+              _log.warning('Failed to initialize localizations from file.');
+              break;
+          }
+        });
     }
   }
   ///

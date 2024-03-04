@@ -1,8 +1,11 @@
 import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hmi_core/src/core/log/log.dart';
+import 'package:hmi_core/src/core/result_new/result.dart';
 import 'package:hmi_core/src/core/text_file.dart';
 
 void main() {
+  Log.initialize();
   const testFileNamePrefix = 'text_file_path_write_test';
   const contentToWrite = [
     'first line some test text 12345\nsecond line some test text 12345\n',
@@ -31,13 +34,16 @@ void main() {
       for(int i=0; i < contentToWrite.length; i++) {
         final fileName = '$testFileNamePrefix-$i.txt';
         final textFile = TextFile.path(fileName);
-        final receivedContent = await textFile.content;
+        final result = await textFile.content;
+        expect(result, isA<Ok>());
+        final receivedContent = (result as Ok<String, dynamic>).value;
         expect(receivedContent, equals(contentToWrite[i]));
       }
     });
-    test('throws error on unexisting file', () async {
+    test('returns Err on unexisting file', () async {
       const textFile = TextFile.path('unexisting_asset_file.txt');
-      expect(() async => await textFile.content, throwsA(isA<PathNotFoundException>()));
+      final result = await textFile.content;
+      expect(result, isA<Err>());
     });
   });
 }

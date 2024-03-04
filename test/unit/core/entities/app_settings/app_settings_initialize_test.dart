@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hmi_core/hmi_core.dart';
-
 import 'fake_text_file.dart';
 import 'settings_data.dart';
 
 void main() {
+  Log.initialize();
   group('AppUiSettings initialize', () {
     test('sets data normally with valid json format and valid data', () async {
       for (final settings in validSettings) {
@@ -33,16 +33,15 @@ void main() {
     //     );
     //   }
     // });
-    test('throws with invalid json format', () {
+    test('does not throw with invalid json format', () {
       for (final invalidJson in invalidJsons) {
         final textFile = invalidJson['text_file'] as String;
-        expect(
-          () => AppSettings.initialize(
+        expectLater(AppSettings.initialize(
             jsonMap: JsonMap.fromTextFile(
               FakeTextFile(textFile),
             ),
           ),
-          throwsA(isA<FormatException>()),
+          completes,
         );
       }
     });
