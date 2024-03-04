@@ -7,7 +7,7 @@ void main() {
     Log.initialize(level: LogLevel.all);
     const log = Log('UserPassword');
     AppSettings.initialize(
-      jsonMap: const JsonMap('{"passwordKey": "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNMЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЁЯЧСМИТЬБЮйцукенгшщзхъфывапролджэёячсмитьбю"}'),
+      jsonMap: JsonMap.fromString('{"passwordKey": "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNMЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЁЯЧСМИТЬБЮйцукенгшщзхъфывапролджэёячсмитьбю"}'),
     );
     test('value', () async {
       const rawPassValue = '123qwe';
