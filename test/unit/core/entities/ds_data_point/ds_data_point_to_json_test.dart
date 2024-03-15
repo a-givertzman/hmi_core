@@ -19,17 +19,23 @@ void main() {
       'object': DsStatus.invalid,
       'serialization': '"status":10',
     },
+    'cot': {
+      'object': DsCot.inf,
+      'serialization': '"cot":"Inf"',
+    },
   };
   test('DsDataPoint toJson', () {
     final type = serializationData['type']!;
     final name = serializationData['name']!;
     final value = serializationData['value']!;
     final status = serializationData['status']!;
+    final cot = serializationData['cot']!;
     final point = DsDataPoint(
       type: type['object'] as DsDataType,
       name: name['object'] as DsPointName,
       value: value['object'] as int,
       status: status['object'] as DsStatus,
+      cot: cot['object'] as DsCot,
       timestamp: DsTimeStamp.now().toString(),
     );
     final serializedPoint = point.toJson();
@@ -37,5 +43,6 @@ void main() {
     expect(serializedPoint.contains(name['serialization'] as String), true);
     expect(serializedPoint.contains(value['serialization'] as String), true);
     expect(serializedPoint.contains(status['serialization'] as String), true);
+    expect(serializedPoint.contains(cot['serialization'] as String), true);
   });
 }

@@ -43,6 +43,7 @@ class StreamMergedOr {
               name: event.name,
               value: resultValue,
               status: _resultStatus(),
+              cot: event.cot,
               timestamp: event.timestamp,
             ),
           );

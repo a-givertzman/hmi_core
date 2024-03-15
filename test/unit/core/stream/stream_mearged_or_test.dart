@@ -47,6 +47,7 @@ void main() {
             name: DsPointName('/line/ied/db/point.name'),
             value: value > 0,
             status: DsStatus.ok,
+            cot: DsCot.inf,
             timestamp: DateTime.now().toIso8601String(),
           ),
         );
@@ -79,6 +80,7 @@ void main() {
             name: DsPointName('/line/ied/db/point.name1'),
             value: values1[index] > 0,
             status: DsStatus.ok,
+            cot: DsCot.inf,
             timestamp: DateTime.now().toIso8601String(),
           ),
         );
@@ -88,6 +90,7 @@ void main() {
             name: DsPointName('/line/ied/db/point.name2'),
             value: values2[index] > 0,
             status: DsStatus.ok,
+            cot: DsCot.inf,
             timestamp: DateTime.now().toIso8601String(),
           ),
         );
@@ -122,6 +125,7 @@ void main() {
             name: DsPointName('/line/ied/db/point.name1'),
             value: values1[index] > 0,
             status: DsStatus.ok,
+            cot: DsCot.inf,
             timestamp: DateTime.now().toIso8601String(),
           ),
         );
@@ -131,6 +135,7 @@ void main() {
             name: DsPointName('/line/ied/db/point.name2'),
             value: values2[index] > 0,
             status: DsStatus.ok,
+            cot: DsCot.inf,
             timestamp: DateTime.now().toIso8601String(),
           ),
         );
@@ -140,6 +145,7 @@ void main() {
             name: DsPointName('/line/ied/db/point.name3'),
             value: values3[index] > 0,
             status: DsStatus.ok,
+            cot: DsCot.inf,
             timestamp: DateTime.now().toIso8601String(),
           ),
         );

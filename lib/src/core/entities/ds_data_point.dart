@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'package:hmi_core/src/core/entities/ds_cot.dart';
 import 'package:hmi_core/src/core/entities/ds_data_type.dart';
 import 'package:hmi_core/src/core/entities/ds_point_name.dart';
 import 'package:hmi_core/src/core/entities/ds_status.dart';
+import 'package:hmi_core/src/core/error/failure.dart';
+import 'package:hmi_core/src/core/result_new/result.dart';
 
 ///
 abstract class IDataPoint<T> {}
@@ -14,6 +17,7 @@ class DsDataPoint<T> implements IDataPoint {
   final DsStatus status;
   final int history;
   final int alarm;
+  final DsCot cot;
   final String timestamp;
   ///
   /// Represent a data received from SocketDataServer
@@ -29,6 +33,7 @@ class DsDataPoint<T> implements IDataPoint {
     this.alarm = 0,
     required this.status,
     required this.timestamp,
+    required this.cot,
   });
   ///
   String toJson() {
@@ -39,6 +44,7 @@ class DsDataPoint<T> implements IDataPoint {
       'status': status.value,
       'history': history,
       'alarm': alarm,
+      'cot': cot.toString(),
       'timestamp': timestamp,
     });
   }
@@ -57,8 +63,24 @@ class DsDataPoint<T> implements IDataPoint {
     && status == other.status
     && history == other.history
     && alarm == other.alarm
+    && cot == other.cot
     && timestamp == other.timestamp;
   //
   @override
-  int get hashCode => type.hashCode ^ name.hashCode ^ value.hashCode ^ status.hashCode ^ history.hashCode ^ alarm.hashCode ^ timestamp.hashCode;
+  int get hashCode => type.hashCode ^ name.hashCode ^ value.hashCode ^ status.hashCode ^ history.hashCode ^ alarm.hashCode ^ timestamp.hashCode ^ cot.hashCode;
+  ///
+  ResultF<DsDataPoint<T>> toResult() => switch(cot) {
+    DsCot.act    ||
+    DsCot.req    ||
+    DsCot.inf    ||
+    DsCot.reqCon ||
+    DsCot.actCon => Ok(this),
+    DsCot.reqErr || DsCot.actErr => Err(
+      Failure(
+        message: value, 
+        stackTrace: 
+        StackTrace.current,
+      ),
+    )
+  };
 }

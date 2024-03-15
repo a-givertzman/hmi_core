@@ -26,7 +26,8 @@ enum DsDataType {
   real('real', 4),
   /// Possible values:
   time('time', 4),
-  dateAndTime('date_and_time', 8);
+  dateAndTime('date_and_time', 8),
+  string('string', 255);
   ///
   const DsDataType(this.value, this.length);
   final String value;
