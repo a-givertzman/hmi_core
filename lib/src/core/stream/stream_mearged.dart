@@ -31,7 +31,7 @@ class StreamMerged<T> {
       _streams.asMap().forEach((index, stream) { 
         _closed.add(false);
         _lastEvents.add(null);
-        _log.debug('[$runtimeType._onListen] stream: ${stream}');
+        _log.debug('[$runtimeType._onListen] stream: $stream');
         stream.listen(
           (event) {
             _lastEvents[index] = event;
@@ -45,7 +45,7 @@ class StreamMerged<T> {
     } else {
       for (final stream in _streams) {
         _closed.add(false);
-        _log.debug('[$runtimeType._onListen] stream: ${stream}');
+        _log.debug('[$runtimeType._onListen] stream: $stream');
         stream.listen(
           (event) {
             _streamController.add(event);
@@ -70,7 +70,7 @@ class StreamMerged<T> {
       }
     }
     
-    _log.debug('[$runtimeType.onDone] _closed: ${_closed}');
+    _log.debug('[$runtimeType.onDone] _closed: $_closed');
   }
   ///
   /// Событие завершения обединенного потока
