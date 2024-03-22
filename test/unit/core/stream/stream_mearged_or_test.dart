@@ -69,7 +69,6 @@ void main() {
       var count = 0;
       final resultList = <int>[];
       streamMearged.stream.listen((event) {
-        // log(_debug, '2 streams: event: ', event);
         resultList.add(event.value ? 1 : 0);
         count++;
       });
@@ -114,7 +113,6 @@ void main() {
       var count = 0;
       final resultList = <int>[];
       streamMearged.stream.listen((event) {
-        // log(_debug, '2 streams: event: ', event);
         resultList.add(event.value ? 1 : 0);
         count++;
       });

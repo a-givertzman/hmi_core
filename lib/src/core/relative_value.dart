@@ -21,7 +21,7 @@ import 'package:hmi_core/hmi_core.dart';
 /// 90    -   1.0
 /// ```
 class RelativeValue {
-  static const _debug = true;
+  static const _log = Log('RelativeValue');
   final double _basis;
   final double _k;
   final double _b;
@@ -35,7 +35,7 @@ class RelativeValue {
     _k = basis / (max - min),
     _b = -basis * min / (max - min)
   {
-    log(_debug, '[$RelativeValue] ');
+    _log.debug('[$RelativeValue] ');
   }
   ///
   double get basis => _basis;

@@ -28,11 +28,8 @@ class StreamMergedOr {
       // _values[stream.hashCode] = false;
       stream.listen(
         (event) {
-          // log(_debug, 'event.value: ', event.value);
-          // log(_debug, 'event.status: ', event.status);
           _values[event.name.toString()] = event.value;
           _statuses[event.name.toString()] = event.status;
-          // log(_debug, 'values: ', _values);
           bool resultValue = false;
           for (final value in _values.values) {
             resultValue = resultValue || value;
