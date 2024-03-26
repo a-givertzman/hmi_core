@@ -1,7 +1,7 @@
 import 'package:hmi_core/src/core/log/log.dart';
 
 class Failure<T> {
-  static const _debug = true;
+  static const _log = Log('Failure');
   final T message;
 ///
 /// Ganeral Failures
@@ -9,9 +9,7 @@ class Failure<T> {
     required this.message, 
     required StackTrace stackTrace,
   }) {
-    log(_debug, message);
-    log(_debug, stackTrace);
-    // throw UnimplementedError(message.toString());
+    _log.warning(message, this, stackTrace);
   }
   //
   // dataSource failure

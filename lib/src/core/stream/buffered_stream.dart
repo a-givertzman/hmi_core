@@ -3,7 +3,7 @@ import 'package:hmi_core/hmi_core.dart';
 
 ///
 class BufferedStream<T> {
-  final _log = Log('${BufferedStream<T>}')..level = LogLevel.debug;
+  final _log = Log('${BufferedStream<T>}');
   final StreamController<T> _controller;
   late final StreamSubscription<T> _subscription;
   final T? _initalValue;
@@ -18,12 +18,17 @@ class BufferedStream<T> {
     _lastValue = initValue,
     _initalValue = initValue
   {
-    _subscription = stream.listen((event) {
-      _log.debug('[.stream.listen] event: $event');
-      _lastValue = event;
-      if (!_isUpdated) _isUpdated = true;
-      _controller.add(event);
-    });
+    _subscription = stream.listen(
+      (event) {
+        _log.debug('[.stream.listen] event: $event');
+        _lastValue = event;
+        if (!_isUpdated) _isUpdated = true;
+        _controller.add(event);
+      },
+      onError: (error, stackTrace) {
+        _controller.addError(error, stackTrace);
+      },
+    );
     _controller.onCancel =  () {
       _log.debug('[._controller.onCancel] canceleing subscription...');
       return _subscription.cancel().then((value) {

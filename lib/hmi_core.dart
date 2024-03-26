@@ -1,8 +1,8 @@
 library hmi_core;
 
-export 'src/core/entities/ds_command.dart';
 export 'src/core/entities/ds_data_class.dart';
 export 'src/core/entities/ds_data_point.dart';
+export 'src/core/entities/ds_cot.dart';
 export 'src/core/entities/ds_point_name.dart';
 export 'src/core/entities/ds_data_type.dart';
 export 'src/core/entities/ds_status.dart';
