@@ -51,7 +51,7 @@ class DsDataPoint<T> implements IDataPoint {
   //
   @override
   String toString() {
-    return 'DataPoint {type: $type, name: $name, value: $value, status: $status, history: $history, alarm: $alarm}';
+    return 'DataPoint {type: $type, name: $name, value: $value, status: $status, cot: $cot, history: $history, alarm: $alarm}';
   }
   //
   @override
