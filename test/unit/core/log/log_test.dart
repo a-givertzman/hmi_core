@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hmi_core/hmi_core_log.dart';
+import 'package:hmi_core/src/core/log/log.dart';
+import 'package:hmi_core/src/core/log/log_level.dart';
 
 int count = 0;
 List<Object> logContent = [];

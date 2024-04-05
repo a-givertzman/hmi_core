@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/services.dart';
-import 'package:hmi_core/hmi_core.dart';
+import 'package:hmi_core/src/core/error/failure.dart';
+import 'package:hmi_core/src/core/log/log.dart';
 import 'package:hmi_core/src/core/result_new/result.dart';
 /// The interface for reading and writing a text file.
 abstract interface class TextFile {
@@ -23,7 +24,7 @@ abstract interface class TextFile {
 }
 ///
 class _PathTextFile implements TextFile {
-  static final _log = const Log('_PathTextFile')..level=LogLevel.info;
+  static const _log = Log('_PathTextFile');
   final String _filePath;
   const _PathTextFile(this._filePath);
   //
@@ -49,7 +50,7 @@ class _PathTextFile implements TextFile {
 }
 ///
 class _AssetTextFile implements TextFile {
-  static final _log = const Log('_AssetTextFile')..level=LogLevel.info;
+  static const _log = Log('_AssetTextFile');
   final String _assetPath;
   const _AssetTextFile(this._assetPath);
   //
