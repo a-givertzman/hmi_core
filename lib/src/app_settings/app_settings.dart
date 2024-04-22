@@ -1,11 +1,10 @@
 import 'package:hmi_core/src/core/error/failure.dart';
 import 'package:hmi_core/src/core/json/json_map.dart';
 import 'package:hmi_core/src/core/log/log.dart';
-import 'package:hmi_core/src/core/log/log_level.dart';
 import 'package:hmi_core/src/core/result_new/result.dart';
 ///
 class AppSettings {
-  static final _log = const Log('AppSettings')..level=LogLevel.info;
+  static const _log = Log('AppSettings');
   static final _map = <String, dynamic>{
     'displaySizeWidth': 1024,
     'displaySizeHeight': 768,

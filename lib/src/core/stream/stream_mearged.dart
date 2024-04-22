@@ -4,7 +4,7 @@ import 'package:hmi_core/hmi_core.dart';
 
 /// Поток объединяющий события из нескольких потоков без трансформации
 class StreamMerged<T> {
-  static const _debug = true;
+  static const _log = Log('StreamMerged');
   final List<bool> _closed = [];
   final List<Stream<T>>_streams;
   final T Function(List<T?> values)? _handler;
@@ -31,7 +31,7 @@ class StreamMerged<T> {
       _streams.asMap().forEach((index, stream) { 
         _closed.add(false);
         _lastEvents.add(null);
-        log(_debug, '[$StreamMerged._onListen] stream: ', stream);
+        _log.debug('[$runtimeType._onListen] stream: $stream');
         stream.listen(
           (event) {
             _lastEvents[index] = event;
@@ -45,7 +45,7 @@ class StreamMerged<T> {
     } else {
       for (final stream in _streams) {
         _closed.add(false);
-        log(_debug, '[$StreamMerged._onListen] stream: ', stream);
+        _log.debug('[$runtimeType._onListen] stream: $stream');
         stream.listen(
           (event) {
             _streamController.add(event);
@@ -69,7 +69,8 @@ class StreamMerged<T> {
         _completer.complete();
       }
     }
-    log(_debug, '[$runtimeType.onDone] _closed: ', _closed);
+    
+    _log.debug('[$runtimeType.onDone] _closed: $_closed');
   }
   ///
   /// Событие завершения обединенного потока

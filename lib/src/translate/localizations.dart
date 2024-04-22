@@ -1,10 +1,10 @@
-import 'package:hmi_core/hmi_core_log.dart';
 import 'package:hmi_core/src/core/json/json_map.dart';
+import 'package:hmi_core/src/core/log/log.dart';
 import 'package:hmi_core/src/core/result_new/result.dart';
 import 'package:hmi_core/src/translate/app_lang.dart';
 ///
 class Localizations {
-  static final _log = const Log('Localizations')..level=LogLevel.info;
+  static const _log = Log('Localizations');
   static AppLang _appLang = AppLang.en;
   static final _map = <String, List<String>>{
     'Ok': ['Ok', 'Ok',],

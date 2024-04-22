@@ -17,7 +17,7 @@ class Setting {
     _factor = factor;
   ///
   /// 
-  factory Setting.from(dynamic value) => _SettingValue(value);
+  const factory Setting.from(dynamic value) = _SettingValue;
   /// 
   /// Returns setting value in int represantation
   int get toInt {

@@ -2,12 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:hmi_core/src/core/error/failure.dart';
 import 'package:hmi_core/src/core/log/log.dart';
-import 'package:hmi_core/src/core/log/log_level.dart';
 import 'package:hmi_core/src/core/result_new/result.dart';
 import 'package:hmi_core/src/core/text_file.dart';
 ///
 class JsonMap<T> {
-  static final _log = const Log('JsonMap')..level=LogLevel.info;
+  static const _log = Log('JsonMap');
   final FutureOr<ResultF<String>> _content;
   const JsonMap._(FutureOr<ResultF<String>> content) : _content = content;
   JsonMap.fromString(String content) : this._(Ok(content));

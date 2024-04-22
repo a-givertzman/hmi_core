@@ -157,17 +157,14 @@ void main() {
       },
       );
       for (final value in values1) {
-        // log(_debug, '1: event: ', value);
         streamController1.add(value);
       }
       streamController1.close();
       for (final value in values2) {
-        // log(_debug, '2: event: ', value);
         streamController2.add(value);
       }
       streamController2.close();
       for (final value in values3) {
-        // log(_debug, '3: event: ', value);
         streamController3.add(value);
       }
       streamController3.close();

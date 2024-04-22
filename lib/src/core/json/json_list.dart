@@ -2,12 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:hmi_core/src/core/error/failure.dart';
 import 'package:hmi_core/src/core/log/log.dart';
-import 'package:hmi_core/src/core/log/log_level.dart';
 import 'package:hmi_core/src/core/result_new/result.dart';
 import 'package:hmi_core/src/core/text_file.dart';
 ///
 class JsonList<T> {
-  static final _log = const Log('JsonList')..level=LogLevel.info;
+  static const _log = Log('JsonList');
   final FutureOr<ResultF<String>> _content;
   const JsonList._(FutureOr<ResultF<String>> content) : _content = content;
   JsonList.fromString(String content) : this._(Ok(content));
