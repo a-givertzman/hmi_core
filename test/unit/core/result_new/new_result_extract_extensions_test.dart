@@ -9,22 +9,142 @@ void main() {
     () {
       //
       test(
-        'unwrapOr returns the contained Ok value or the default value for Err',
+        'unwrapOr returns the contained value for Ok',
         () {
-          const ok = Ok(1);
-          const err = Err<int, String>('error');
-          expect(ok.unwrapOr(2), equals(1));
-          expect(err.unwrapOr(2), equals(2));
+          const resultList = <(Ok<dynamic, dynamic>, dynamic, dynamic)>[
+            (Ok(1), 1, 2), // int
+            (Ok(1.0), 1.0, 2.0), // double
+            (Ok('1'), '1', '2'), // String
+            (Ok(true), true, false), // bool
+            (Ok([1, 2, 3]), [1, 2, 3], [-1, -2, -3]), // List
+            (Ok({'a': 1, 'b': 2}), {'a': 1, 'b': 2}, {'y': -2, 'z': -1}), // Map
+          ];
+          for (final result in resultList) {
+            final (ok, value, or) = result;
+            final unwrapOrValue = ok.unwrapOr(or);
+            expect(unwrapOrValue, equals(value));
+          }
         },
       );
       //
       test(
-        'unwrapOrElse returns the contained Ok value or the computed value for Err',
+        'unwrapOr returns the `or` value for Err',
         () {
-          const ok = Ok(1);
-          const err = Err<int, String>('error');
-          expect(ok.unwrapOrElse((_) => 5), equals(1));
-          expect(err.unwrapOrElse((error) => error.length), equals(5));
+          const resultList = <(Err<dynamic, dynamic>, dynamic, dynamic)>[
+            (Err(1), 1, 2), // int
+            (Err(1.0), 1.0, 2.0), // double
+            (Err('1'), '1', '2'), // String
+            (Err(true), true, false), // bool
+            (Err([1, 2, 3]), [1, 2, 3], [-1, -2, -3]), // List
+            (
+              Err({'a': 1, 'b': 2}),
+              {'a': 1, 'b': 2},
+              {'y': -2, 'z': -1}
+            ), // Map
+          ];
+          for (final result in resultList) {
+            final (ok, value, or) = result;
+            final unwrapOrValue = ok.unwrapOr(or);
+            expect(unwrapOrValue, equals(or));
+          }
+        },
+      );
+      //
+      test(
+        'unwrapOrElse returns the contained value for Ok',
+        () {
+          final resultList = <Map<String, dynamic>>[
+            {
+              'before': const Ok(1),
+              'after': 1,
+              'elseFunction': (err) => err + 1,
+            }, // int
+            {
+              'before': const Ok(1.0),
+              'after': 1.0,
+              'elseFunction': (err) => err + 1.0,
+            }, // double
+            {
+              'before': const Ok('1'),
+              'after': '1',
+              'elseFunction': (err) => err + '1',
+            }, // String
+            {
+              'before': const Ok(true),
+              'after': true,
+              'elseFunction': (err) => !err,
+            }, // bool
+            {
+              'before': const Ok([1, 2, 3]),
+              'after': [1, 2, 3],
+              'elseFunction': (err) => err.reversed.toList(),
+            }, // List
+            ({
+              'before': const Ok({'a': 1, 'b': 2}),
+              'after': {'a': 1, 'b': 2},
+              'elseFunction': (err) => {
+                    for (var entry in err.entries) entry.key: -entry.value,
+                  },
+            }), // Map
+          ];
+          for (final result in resultList) {
+            final (ok, value, elseFunction) = (
+              result['before'] as Ok,
+              result['after'] as dynamic,
+              result['elseFunction'] as dynamic Function(dynamic),
+            );
+            final unwrapOrElseResult = ok.unwrapOrElse(elseFunction);
+            expect(unwrapOrElseResult, equals(value));
+          }
+        },
+      );
+      //
+      test(
+        'unwrapOrElse returns the computed value for Err',
+        () {
+          final resultList = <Map<String, dynamic>>[
+            {
+              'before': const Err(1),
+              'after': 2,
+              'elseFunction': (err) => err + 1,
+            }, // int
+            {
+              'before': const Err(1.0),
+              'after': 2.0,
+              'elseFunction': (err) => err + 1.0,
+            }, // double
+            {
+              'before': const Err('1'),
+              'after': '11',
+              'elseFunction': (err) => err + '1',
+            }, // String
+            {
+              'before': const Err(true),
+              'after': false,
+              'elseFunction': (err) => !err,
+            }, // bool
+            {
+              'before': const Err([1, 2, 3]),
+              'after': [3, 2, 1],
+              'elseFunction': (err) => err.reversed.toList(),
+            }, // List
+            ({
+              'before': const Err({'a': 1, 'b': 2}),
+              'after': {'a': -1, 'b': -2},
+              'elseFunction': (err) => {
+                    for (var entry in err.entries) entry.key: -entry.value,
+                  },
+            }), // Map
+          ];
+          for (final result in resultList) {
+            final (err, value, elseFunction) = (
+              result['before'] as Err,
+              result['after'] as dynamic,
+              result['elseFunction'] as dynamic Function(dynamic),
+            );
+            final unwrapOrElseResult = err.unwrapOrElse(elseFunction);
+            expect(unwrapOrElseResult, equals(value));
+          }
         },
       );
     },
