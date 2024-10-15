@@ -37,8 +37,20 @@ void main() {
       test(
         'intoOk returns the contained Ok value',
         () {
-          const ok = Ok<int, Never>(1);
-          expect(ok.intoOk(), equals(1));
+          const resultList = <(Ok<dynamic, Never>, dynamic)>[
+            (Ok(1), 1), // int
+            (Ok(1.0), 1.0), // double
+            (Ok('1'), '1'), // String
+            (Ok(true), true), // bool
+            (Ok(null), null), // null
+            (Ok([1, 2, 3]), [1, 2, 3]), // List
+            (Ok({'a': 1, 'b': 2}), {'a': 1, 'b': 2}), // Map
+          ];
+          for (final result in resultList) {
+            final (ok, value) = result;
+            final intoOkValue = ok.intoOk();
+            expect(intoOkValue, equals(value));
+          }
         },
       );
     },
@@ -47,12 +59,23 @@ void main() {
   group(
     'Result ExtractErr extension',
     () {
-      //
       test(
-        'intoErr returns the contained Err value',
+        'intoOk returns the contained Ok value',
         () {
-          const err = Err<Never, String>('error');
-          expect(err.intoErr(), equals('error'));
+          const resultList = <(Err<Never, dynamic>, dynamic)>[
+            (Err(1), 1), // int
+            (Err(1.0), 1.0), // double
+            (Err('1'), '1'), // String
+            (Err(true), true), // bool
+            (Err(null), null), // null
+            (Err([1, 2, 3]), [1, 2, 3]), // List
+            (Err({'a': 1, 'b': 2}), {'a': 1, 'b': 2}), // Map
+          ];
+          for (final result in resultList) {
+            final (err, value) = result;
+            final intoErrValue = err.intoErr();
+            expect(intoErrValue, equals(value));
+          }
         },
       );
     },

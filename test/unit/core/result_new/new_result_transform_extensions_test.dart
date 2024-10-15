@@ -62,7 +62,7 @@ void main() {
       );
       //
       test(
-        'returns untouched Err value for Err',
+        'returns Err with untouched value for Err',
         () {
           const resultList = <(Err, dynamic)>[
             (Err(1), 1), // int
@@ -317,7 +317,7 @@ void main() {
       );
       //
       test(
-        'returns untouched Ok value for Ok',
+        'returns Ok with untouched value for Ok',
         () {
           const resultList = <(Ok, dynamic)>[
             (Ok(1), 1), // int
@@ -334,6 +334,124 @@ void main() {
             expect(mappedOk, isA<Ok>());
             expect((mappedOk as Ok).value, equals(ok.value));
           }
+        },
+      );
+    },
+  );
+  //
+  group(
+    'Result Transform extension inspect',
+    () {
+      //
+      test(
+        'calls the function with the contained value if the result is Ok',
+        () {
+          const ok = Ok(1);
+          var called = false;
+          ok.inspect(
+            (value) {
+              expect(value, equals(1));
+              called = true;
+            },
+          );
+          expect(called, isTrue);
+        },
+      );
+      //
+      test(
+        'does not call the function if the result is Err',
+        () {
+          const err = Err('error');
+          var called = false;
+          err.inspect(
+            (value) {
+              called = true;
+            },
+          );
+          expect(called, isFalse);
+        },
+      );
+      //
+      test(
+        'returns the original result if the result is Ok',
+        () {
+          const ok = Ok(1);
+          final result = ok.inspect(
+            (value) {
+              return;
+            },
+          );
+          expect(result, equals(ok));
+        },
+      );
+      //
+      test(
+        'returns the original result if the result is Err',
+        () {
+          const err = Err(1);
+          final result = err.inspect(
+            (value) {
+              return;
+            },
+          );
+          expect(result, equals(err));
+        },
+      );
+    },
+  );
+  //
+  group(
+    'Result Transform extension inspectErr',
+    () {
+      //
+      test(
+        'calls the function with the contained error if the result is Err',
+        () {
+          const err = Err('error');
+          var called = false;
+          err.inspectErr(
+            (error) {
+              expect(error, equals('error'));
+              called = true;
+            },
+          );
+          expect(called, isTrue);
+        },
+      );
+      //
+      test(
+        'does not call the function if the result is Ok',
+        () {
+          const ok = Ok(1);
+          var called = false;
+          ok.inspectErr(
+            (error) {
+              called = true;
+            },
+          );
+          expect(called, isFalse);
+        },
+      );
+      //
+      test(
+        'returns the original result if the result is Ok',
+        () {
+          const ok = Ok(1);
+          final result = ok.inspectErr((error) {
+            return;
+          });
+          expect(result, equals(ok));
+        },
+      );
+      //
+      test(
+        'returns the original result if the result is Err',
+        () {
+          const err = Err(1);
+          final result = err.inspectErr((error) {
+            return;
+          });
+          expect(result, equals(err));
         },
       );
     },
