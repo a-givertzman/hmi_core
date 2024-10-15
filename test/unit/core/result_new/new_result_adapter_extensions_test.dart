@@ -15,7 +15,7 @@ void main() {
     });
     //
     test('ok returns Some with value inside for Ok', () {
-      const resultList = <(Ok, dynamic)>[
+      const testCaseList = <(Ok, dynamic)>[
         (Ok(1), 1), // int
         (Ok(1.0), 1.0), // double
         (Ok('1'), '1'), // String
@@ -24,8 +24,8 @@ void main() {
         (Ok([1, 2, 3]), [1, 2, 3]), // List
         (Ok({'a': 1, 'b': 2}), {'a': 1, 'b': 2}), // Map
       ];
-      for (final result in resultList) {
-        final (ok, value) = result;
+      for (final testCase in testCaseList) {
+        final (ok, value) = testCase;
         expect(ok.ok(), isA<Some>());
         expect((ok.ok() as Some).value, equals(value));
       }
@@ -39,7 +39,7 @@ void main() {
     });
     //
     test('err returns Some with value inside for Err', () {
-      const resultList = <(Err, dynamic)>[
+      const testCaseList = <(Err, dynamic)>[
         (Err(1), 1), // int
         (Err(1.0), 1.0), // double
         (Err('1'), '1'), // String
@@ -48,8 +48,8 @@ void main() {
         (Err([1, 2, 3]), [1, 2, 3]), // List
         (Err({'a': 1, 'b': 2}), {'a': 1, 'b': 2}), // Map
       ];
-      for (final result in resultList) {
-        final (err, value) = result;
+      for (final testCase in testCaseList) {
+        final (err, value) = testCase;
         expect(err.err(), isA<Some>());
         expect((err.err() as Some).value, equals(value));
       }

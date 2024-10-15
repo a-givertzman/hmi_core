@@ -23,7 +23,7 @@ void main() {
       test(
         'returns passed `result` if the result is Ok',
         () {
-          final resultList = <Map<String, dynamic>>[
+          final testCaseList = <Map<String, dynamic>>[
             {
               'before': const Ok(1),
               'after': const Ok(2),
@@ -50,15 +50,15 @@ void main() {
               'result': const Err(null),
             }, // Ok(null) -> Err(null)
           ];
-          for (final result in resultList) {
-            final (before, after, result_) = (
-              result['before'] as Ok,
-              result['after'] as Result,
-              result['result'] as Result
+          for (final testCase in testCaseList) {
+            final (before, after, passedResult) = (
+              testCase['before'] as Ok,
+              testCase['after'] as Result,
+              testCase['result'] as Result
             );
-            final andResult = before.and(after);
+            final andResult = before.and(passedResult);
             expect(andResult, isA<Result>());
-            switch (result_) {
+            switch (after) {
               case Ok(:final value):
                 expect(andResult, isA<Ok>());
                 expect((andResult as Ok).value, equals(value));
@@ -75,7 +75,7 @@ void main() {
       test(
         'returns Err with untouched value for Err',
         () {
-          const resultList = <(Err, dynamic)>[
+          const testCaseList = <(Err, dynamic)>[
             (Err(1), 1), // int
             (Err(1.0), 1.0), // double
             (Err('1'), '1'), // String
@@ -84,8 +84,8 @@ void main() {
             (Err([1, 2, 3]), [1, 2, 3]), // List
             (Err({'a': 1, 'b': 2}), {'a': 1, 'b': 2}), // Map
           ];
-          for (final result in resultList) {
-            final (err, value) = result;
+          for (final testCase in testCaseList) {
+            final (err, value) = testCase;
             final andResult = err.and(const Ok(null));
             expect(andResult, isA<Err>());
             expect((andResult as Err).error, equals(err.error));
@@ -124,7 +124,7 @@ void main() {
       test(
         'returns Ok with new value by applying op to original Ok value',
         () {
-          final resultList = <Map<String, dynamic>>[
+          final testCaseList = <Map<String, dynamic>>[
             {
               'before': const Ok(1),
               'after': const Ok(2),
@@ -151,11 +151,11 @@ void main() {
               'op': (value) => Ok(value),
             }, // null -> null
           ];
-          for (final result in resultList) {
+          for (final testCase in testCaseList) {
             final (before, after, op) = (
-              result['before'] as Ok,
-              result['after'] as Ok,
-              result['op'] as Result Function(dynamic),
+              testCase['before'] as Ok,
+              testCase['after'] as Ok,
+              testCase['op'] as Result Function(dynamic),
             );
             final andThenResult = before.andThen(op);
             expect(andThenResult, isA<Ok>());
@@ -167,7 +167,7 @@ void main() {
       test(
         'returns Err with new value by applying op to original Ok value',
         () {
-          final resultList = <Map<String, dynamic>>[
+          final testCaseList = <Map<String, dynamic>>[
             {
               'before': const Ok(1),
               'after': const Err(2),
@@ -194,11 +194,11 @@ void main() {
               'op': (value) => Err(value),
             }, // null -> null
           ];
-          for (final result in resultList) {
+          for (final testCase in testCaseList) {
             final (before, after, op) = (
-              result['before'] as Ok,
-              result['after'] as Err,
-              result['op'] as Result Function(dynamic),
+              testCase['before'] as Ok,
+              testCase['after'] as Err,
+              testCase['op'] as Result Function(dynamic),
             );
             final andThenResult = before.andThen(op);
             expect(andThenResult, isA<Err>());
@@ -210,7 +210,7 @@ void main() {
       test(
         'returns Err with untouched value for Err',
         () {
-          const resultList = <(Err, dynamic)>[
+          const testCaseList = <(Err, dynamic)>[
             (Err(1), 1), // int
             (Err(1.0), 1.0), // double
             (Err('1'), '1'), // String
@@ -219,8 +219,8 @@ void main() {
             (Err([1, 2, 3]), [1, 2, 3]), // List
             (Err({'a': 1, 'b': 2}), {'a': 1, 'b': 2}), // Map
           ];
-          for (final result in resultList) {
-            final (err, value) = result;
+          for (final testCase in testCaseList) {
+            final (err, value) = testCase;
             final andThenResult = err.andThen((value) => Ok(value));
             expect(andThenResult, isA<Err>());
             expect((andThenResult as Err).error, equals(err.error));
@@ -248,7 +248,7 @@ void main() {
       test(
         'returns passed `result` if the result is Err',
         () {
-          final resultList = <Map<String, dynamic>>[
+          final testCaseList = <Map<String, dynamic>>[
             {
               'before': const Err(1),
               'after': const Ok(2),
@@ -275,15 +275,15 @@ void main() {
               'result': const Err(null),
             }, // Err(null) -> Err(null)
           ];
-          for (final result in resultList) {
-            final (before, after, result_) = (
-              result['before'] as Err,
-              result['after'] as Result,
-              result['result'] as Result
+          for (final testCase in testCaseList) {
+            final (before, after, passedResult) = (
+              testCase['before'] as Err,
+              testCase['after'] as Result,
+              testCase['result'] as Result
             );
-            final orResult = before.or(after);
+            final orResult = before.or(passedResult);
             expect(orResult, isA<Result>());
-            switch (result_) {
+            switch (after) {
               case Ok(:final value):
                 expect(orResult, isA<Ok>());
                 expect((orResult as Ok).value, equals(value));
@@ -300,7 +300,7 @@ void main() {
       test(
         'returns Ok with untouched value for Ok',
         () {
-          const resultList = <(Ok, dynamic)>[
+          const testCaseList = <(Ok, dynamic)>[
             (Ok(1), 1), // int
             (Ok(1.0), 1.0), // double
             (Ok('1'), '1'), // String
@@ -309,8 +309,8 @@ void main() {
             (Ok([1, 2, 3]), [1, 2, 3]), // List
             (Ok({'a': 1, 'b': 2}), {'a': 1, 'b': 2}), // Map
           ];
-          for (final result in resultList) {
-            final (ok, value) = result;
+          for (final testCase in testCaseList) {
+            final (ok, value) = testCase;
             final orResult = ok.or(const Err(null));
             expect(orResult, isA<Ok>());
             expect((orResult as Ok).value, equals(ok.value));
@@ -349,7 +349,7 @@ void main() {
       test(
         'returns Ok with new value by applying orElse to original Err error',
         () {
-          final resultList = <Map<String, dynamic>>[
+          final testCaseList = <Map<String, dynamic>>[
             {
               'before': const Err(1),
               'after': const Ok(2),
@@ -376,11 +376,11 @@ void main() {
               'orElse': (error) => Ok(error),
             }, // null -> null
           ];
-          for (final result in resultList) {
+          for (final testCase in testCaseList) {
             final (before, after, orElse) = (
-              result['before'] as Err,
-              result['after'] as Ok,
-              result['orElse'] as Result Function(dynamic),
+              testCase['before'] as Err,
+              testCase['after'] as Ok,
+              testCase['orElse'] as Result Function(dynamic),
             );
             final orElseResult = before.orElse(orElse);
             expect(orElseResult, isA<Ok>());
@@ -392,7 +392,7 @@ void main() {
       test(
         'returns Err with new value by applying orElse to original Err error',
         () {
-          final resultList = <Map<String, dynamic>>[
+          final testCaseList = <Map<String, dynamic>>[
             {
               'before': const Err(1),
               'after': const Err(2),
@@ -419,11 +419,11 @@ void main() {
               'orElse': (error) => Err(error),
             }, // null -> null
           ];
-          for (final result in resultList) {
+          for (final testCase in testCaseList) {
             final (before, after, orElse) = (
-              result['before'] as Err,
-              result['after'] as Err,
-              result['orElse'] as Result Function(dynamic),
+              testCase['before'] as Err,
+              testCase['after'] as Err,
+              testCase['orElse'] as Result Function(dynamic),
             );
             final orElseResult = before.orElse(orElse);
             expect(orElseResult, isA<Err>());
@@ -435,7 +435,7 @@ void main() {
       test(
         'returns Ok with untouched value for Ok',
         () {
-          const resultList = <(Ok, dynamic)>[
+          const testCaseList = <(Ok, dynamic)>[
             (Ok(1), 1), // int
             (Ok(1.0), 1.0), // double
             (Ok('1'), '1'), // String
@@ -444,8 +444,8 @@ void main() {
             (Ok([1, 2, 3]), [1, 2, 3]), // List
             (Ok({'a': 1, 'b': 2}), {'a': 1, 'b': 2}), // Map
           ];
-          for (final result in resultList) {
-            final (ok, value) = result;
+          for (final testCase in testCaseList) {
+            final (ok, value) = testCase;
             final orElseResult = ok.orElse((error) => Err(error));
             expect(orElseResult, isA<Ok>());
             expect((orElseResult as Ok).value, equals(ok.value));
