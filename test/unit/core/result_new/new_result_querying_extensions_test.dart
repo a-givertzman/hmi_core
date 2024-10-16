@@ -9,7 +9,7 @@ void main() {
     () {
       //
       test(
-        'isOk returns true for Ok and false for Err',
+        'isOk method returns true for Ok and false for Err',
         () {
           const ok = Ok(1);
           const err = Err(1);
@@ -19,7 +19,7 @@ void main() {
       );
       //
       test(
-        'isOkAnd returns true if the predicate matches and false otherwise for Ok',
+        'isOkAnd method returns true if the predicate matches and false otherwise for Ok',
         () {
           const ok = Ok(1);
           expect(ok.isOkAnd((value) => value == 1), isTrue);
@@ -28,7 +28,7 @@ void main() {
       );
       //
       test(
-        'isOkAnd always returns false for Err',
+        'isOkAnd method always returns false for Err',
         () {
           const err = Err(1);
           expect(err.isOkAnd((value) => value == 1), isFalse);
@@ -37,7 +37,7 @@ void main() {
       );
       //
       test(
-        'isErr returns true for Err and false for Ok',
+        'isErr method returns true for Err and false for Ok',
         () {
           const ok = Ok(1);
           const err = Err(1);
@@ -47,7 +47,7 @@ void main() {
       );
       //
       test(
-        'isErrAnd returns true if the predicate matches and false otherwise for Err',
+        'isErrAnd method returns true if the predicate matches and false otherwise for Err',
         () {
           const err = Err(1);
           expect(err.isErrAnd((error) => error == 1), isTrue);
@@ -56,7 +56,7 @@ void main() {
       );
       //
       test(
-        'isErrAnd always returns false for Ok',
+        'isErrAnd method always returns false for Ok',
         () {
           const ok = Ok(1);
           expect(ok.isErrAnd((value) => value == 1), isFalse);

@@ -5,7 +5,7 @@ import 'package:hmi_core/src/core/result_new/extension_adapter.dart';
 //
 void main() {
   //
-  group('Result Adapter extension ok', () {
+  group('Result Adapter extension method', () {
     //
     test('ok returns Some for Ok and None for Err', () {
       const ok = Ok(1);

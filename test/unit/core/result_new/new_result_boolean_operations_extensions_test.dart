@@ -5,7 +5,7 @@ import 'package:hmi_core/src/core/result_new/extension_boolean_operations.dart';
 void main() {
   //
   group(
-    'Result BooleanOperations extension and',
+    'Result BooleanOperations extension and method',
     () {
       //
       test(
@@ -96,7 +96,7 @@ void main() {
   );
   //
   group(
-    'Result BooleanOperations extension andThen',
+    'Result BooleanOperations extension andThen method',
     () {
       //
       test(
@@ -230,7 +230,7 @@ void main() {
     },
   );
   group(
-    'Result BooleanOperations extension or',
+    'Result BooleanOperations extension or method',
     () {
       //
       test(
@@ -321,7 +321,7 @@ void main() {
   );
   //
   group(
-    'Result BooleanOperations extension orElse',
+    'Result BooleanOperations extension orElse method',
     () {
       //
       test(

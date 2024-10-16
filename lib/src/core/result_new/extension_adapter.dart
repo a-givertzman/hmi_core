@@ -8,6 +8,15 @@ extension Adapter<V, E> on Result<V, E> {
   ///
   /// Converts `this` into an [Option], consuming `this`,
   /// and discarding the error, if any.
+  ///
+  /// ### Examples
+  /// ```dart
+  /// final Result<int, String> x = Ok(2);
+  /// x.ok(); // Some(2)
+  ///
+  /// final Result<int, String> y = Err("Nothing here");
+  /// y.ok(); // None
+  /// ```
   Option<V> ok() {
     return switch (this) {
       Ok(:final V value) => Some(value),
@@ -19,6 +28,15 @@ extension Adapter<V, E> on Result<V, E> {
   ///
   /// Converts `this` into an [Option], consuming `this`,
   /// and discarding the success value, if any.
+  ///
+  /// ### Examples
+  /// ```dart
+  /// final Result<int, String> x = Ok(2);
+  /// x.err(); // None
+  ///
+  /// final Result<int, String> y = Err("Nothing here");
+  /// y.err(); // Some("Nothing here")
+  /// ```
   Option<E> err() {
     return switch (this) {
       Ok() => const None() as Option<E>,

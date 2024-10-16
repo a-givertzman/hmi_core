@@ -5,7 +5,7 @@ import 'package:hmi_core/src/core/result_new/extension_transform.dart';
 void main() {
   //
   group(
-    'Result Transform extension map',
+    'Result Transform extension map method',
     () {
       //
       test(
@@ -85,7 +85,7 @@ void main() {
   );
   //
   group(
-    'Result Transform extension mapOr',
+    'Result Transform extension mapOr method',
     () {
       //
       test(
@@ -170,7 +170,7 @@ void main() {
   );
   //
   group(
-    'Result Transform extension mapOrElse',
+    'Result Transform extension mapOrElse method',
     () {
       //
       test(
@@ -260,7 +260,7 @@ void main() {
   );
   //
   group(
-    'Result Transform extension mapErr',
+    'Result Transform extension mapErr method',
     () {
       //
       test(
@@ -340,7 +340,7 @@ void main() {
   );
   //
   group(
-    'Result Transform extension inspect',
+    'Result Transform extension inspect method',
     () {
       //
       test(
@@ -401,7 +401,7 @@ void main() {
   );
   //
   group(
-    'Result Transform extension inspectErr',
+    'Result Transform extension inspectErr method',
     () {
       //
       test(
