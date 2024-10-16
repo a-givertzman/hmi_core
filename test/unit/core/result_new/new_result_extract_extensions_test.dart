@@ -1,15 +1,359 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hmi_core/hmi_core.dart';
 import 'package:hmi_core/hmi_core_result_new.dart';
 import 'package:hmi_core/src/core/result_new/extension_extract.dart';
 //
 void main() {
   //
   group(
+    'Result Extract extension unwrap method',
+    () {
+      //
+      test(
+        'returns the contained Ok value',
+        () {
+          const testCaseList = <(Ok<dynamic, dynamic>, dynamic)>[
+            (Ok(1), 1), // int
+            (Ok(1.0), 1.0), // double
+            (Ok('1'), '1'), // String
+            (Ok(true), true), // bool
+            (Ok(null), null), // null
+            (Ok([1, 2, 3]), [1, 2, 3]), // List
+            (Ok({'a': 1, 'b': 2}), {'a': 1, 'b': 2}), // Map
+          ];
+          for (final testCase in testCaseList) {
+            final (ok, value) = testCase;
+            final unwrapValue = ok.unwrap();
+            expect(unwrapValue, equals(value));
+          }
+        },
+      );
+      //
+      test(
+        'throws a Failure for Err',
+        () {
+          const testCaseList = <(Err<dynamic, dynamic>, dynamic)>[
+            (Err(1), 1), // int
+            (Err(1.0), 1.0), // double
+            (Err('1'), '1'), // String
+            (Err(true), true), // bool
+            (Err(null), null), // null
+            (Err([1, 2, 3]), [1, 2, 3]), // List
+            (Err({'a': 1, 'b': 2}), {'a': 1, 'b': 2}), // Map
+          ];
+          for (final testCase in testCaseList) {
+            final (err, value) = testCase;
+            expect(() => err.unwrap(), throwsA(isA<Failure>()));
+          }
+        },
+      );
+      //
+      test(
+        'throws a Failure with Failure message for Err',
+        () {
+          const testCaseList = <(Err<dynamic, dynamic>, dynamic)>[
+            (Err(1), 1), // int
+            (Err(1.0), 1.0), // double
+            (Err('1'), '1'), // String
+            (Err(true), true), // bool
+            (Err(null), null), // null
+            (Err([1, 2, 3]), [1, 2, 3]), // List
+            (Err({'a': 1, 'b': 2}), {'a': 1, 'b': 2}), // Map
+          ];
+          for (final testCase in testCaseList) {
+            final (err, value) = testCase;
+            expect(
+              () => err.unwrap(),
+              throwsA(isA<Failure>().having(
+                (f) => '${f.message}',
+                'Failure message',
+                'Called unwrap() on Result with error: $value',
+              )),
+            );
+          }
+        },
+      );
+    },
+  );
+  //
+  group(
+    'Result Extract extension expect method',
+    () {
+      //
+      test(
+        'returns the contained Ok value',
+        () {
+          const testCaseList = <(Ok<dynamic, dynamic>, dynamic)>[
+            (Ok(1), 1), // int
+            (Ok(1.0), 1.0), // double
+            (Ok('1'), '1'), // String
+            (Ok(true), true), // bool
+            (Ok(null), null), // null
+            (Ok([1, 2, 3]), [1, 2, 3]), // List
+            (Ok({'a': 1, 'b': 2}), {'a': 1, 'b': 2}), // Map
+          ];
+          for (final testCase in testCaseList) {
+            final (ok, value) = testCase;
+            final expectValue = ok.expect("error message");
+            expect(expectValue, equals(value));
+          }
+        },
+      );
+      //
+      test(
+        'throws a Failure for Err',
+        () {
+          const testCaseList = <(Err<dynamic, dynamic>, dynamic)>[
+            (Err(1), 1), // int
+            (Err(1.0), 1.0), // double
+            (Err('1'), '1'), // String
+            (Err(true), true), // bool
+            (Err(null), null), // null
+            (Err([1, 2, 3]), [1, 2, 3]), // List
+            (Err({'a': 1, 'b': 2}), {'a': 1, 'b': 2}), // Map
+          ];
+          for (final testCase in testCaseList) {
+            final (err, value) = testCase;
+            expect(() => err.expect("error message"), throwsA(isA<Failure>()));
+          }
+        },
+      );
+      //
+      test(
+        'throws a Failure with Failure message for Err',
+        () {
+          const testCaseList = <(Err<dynamic, dynamic>, dynamic, String)>[
+            (
+              Err(1),
+              1,
+              'error message for int',
+            ), // int
+            (
+              Err(1.0),
+              1.0,
+              'error message for double',
+            ), // double
+            (
+              Err('1'),
+              '1',
+              'error message for String',
+            ), // String
+            (
+              Err(true),
+              true,
+              'error message for bool',
+            ), // bool
+            (
+              Err(null),
+              null,
+              'error message for null',
+            ), // null
+            (
+              Err([1, 2, 3]),
+              [1, 2, 3],
+              'error message for List',
+            ), // List
+            (
+              Err({'a': 1, 'b': 2}),
+              {'a': 1, 'b': 2},
+              'error message for Map'
+            ), // Map
+          ];
+          for (final testCase in testCaseList) {
+            final (err, value, message) = testCase;
+            expect(
+              () => err.expect(message),
+              throwsA(isA<Failure>().having(
+                (f) => '${f.message}',
+                'Failure message',
+                '$message: $value',
+              )),
+            );
+          }
+        },
+      );
+    },
+  );
+  //
+  group(
+    'Result Extract extension unwrapErr method',
+    () {
+      //
+      test(
+        'returns the contained Err value',
+        () {
+          const testCaseList = <(Err<dynamic, dynamic>, dynamic)>[
+            (Err(1), 1), // int
+            (Err(1.0), 1.0), // double
+            (Err('1'), '1'), // String
+            (Err(true), true), // bool
+            (Err(null), null), // null
+            (Err([1, 2, 3]), [1, 2, 3]), // List
+            (Err({'a': 1, 'b': 2}), {'a': 1, 'b': 2}), // Map
+          ];
+          for (final testCase in testCaseList) {
+            final (err, value) = testCase;
+            final unwrapError = err.unwrapErr();
+            expect(unwrapError, equals(value));
+          }
+        },
+      );
+      //
+      test(
+        'throws a Failure for Ok',
+        () {
+          const testCaseList = <(Ok<dynamic, dynamic>, dynamic)>[
+            (Ok(1), 1), // int
+            (Ok(1.0), 1.0), // double
+            (Ok('1'), '1'), // String
+            (Ok(true), true), // bool
+            (Ok(null), null), // null
+            (Ok([1, 2, 3]), [1, 2, 3]), // List
+            (Ok({'a': 1, 'b': 2}), {'a': 1, 'b': 2}), // Map
+          ];
+          for (final testCase in testCaseList) {
+            final (ok, value) = testCase;
+            expect(() => ok.unwrapErr(), throwsA(isA<Failure>()));
+          }
+        },
+      );
+      //
+      test(
+        'throws a Failure with Failure message for Ok',
+        () {
+          const testCaseList = <(Ok<dynamic, dynamic>, dynamic)>[
+            (Ok(1), 1), // int
+            (Ok(1.0), 1.0), // double
+            (Ok('1'), '1'), // String
+            (Ok(true), true), // bool
+            (Ok(null), null), // null
+            (Ok([1, 2, 3]), [1, 2, 3]), // List
+            (Ok({'a': 1, 'b': 2}), {'a': 1, 'b': 2}), // Map
+          ];
+          for (final testCase in testCaseList) {
+            final (ok, value) = testCase;
+            expect(
+              () => ok.unwrapErr(),
+              throwsA(isA<Failure>().having(
+                (f) => '${f.message}',
+                'Failure message',
+                'Called unwrapErr() on Result with value: $value',
+              )),
+            );
+          }
+        },
+      );
+    },
+  );
+  //
+  group(
+    'Result Extract extension expectErr method',
+    () {
+      //
+      test(
+        'returns the contained Err value',
+        () {
+          const testCaseList = <(Err<dynamic, dynamic>, dynamic)>[
+            (Err(1), 1), // int
+            (Err(1.0), 1.0), // double
+            (Err('1'), '1'), // String
+            (Err(true), true), // bool
+            (Err(null), null), // null
+            (Err([1, 2, 3]), [1, 2, 3]), // List
+            (Err({'a': 1, 'b': 2}), {'a': 1, 'b': 2}), // Map
+          ];
+          for (final testCase in testCaseList) {
+            final (err, value) = testCase;
+            final expectValue = err.expectErr("error message");
+            expect(expectValue, equals(value));
+          }
+        },
+      );
+      //
+      test(
+        'throws a Failure for Ok',
+        () {
+          const testCaseList = <(Ok<dynamic, dynamic>, dynamic)>[
+            (Ok(1), 1), // int
+            (Ok(1.0), 1.0), // double
+            (Ok('1'), '1'), // String
+            (Ok(true), true), // bool
+            (Ok(null), null), // null
+            (Ok([1, 2, 3]), [1, 2, 3]), // List
+            (Ok({'a': 1, 'b': 2}), {'a': 1, 'b': 2}), // Map
+          ];
+          for (final testCase in testCaseList) {
+            final (ok, value) = testCase;
+            expect(
+              () => ok.expectErr("error message"),
+              throwsA(isA<Failure>()),
+            );
+          }
+        },
+      );
+      //
+      test(
+        'throws a Failure with Failure message for Ok',
+        () {
+          const testCaseList = <(Ok<dynamic, dynamic>, dynamic, String)>[
+            (
+              Ok(1),
+              1,
+              'error message for int',
+            ), // int
+            (
+              Ok(1.0),
+              1.0,
+              'error message for double',
+            ), // double
+            (
+              Ok('1'),
+              '1',
+              'error message for String',
+            ), // String
+            (
+              Ok(true),
+              true,
+              'error message for bool',
+            ), // bool
+            (
+              Ok(null),
+              null,
+              'error message for null',
+            ), // null
+            (
+              Ok([1, 2, 3]),
+              [1, 2, 3],
+              'error message for List',
+            ), // List
+            (
+              Ok({'a': 1, 'b': 2}),
+              {'a': 1, 'b': 2},
+              'error message for Map'
+            ), // Map
+          ];
+          for (final testCase in testCaseList) {
+            final (ok, value, message) = testCase;
+            expect(
+              () => ok.expectErr(message),
+              throwsA(isA<Failure>().having(
+                (f) => '${f.message}',
+                'Failure message',
+                '$message: $value',
+              )),
+            );
+          }
+        },
+      );
+    },
+  );
+  //
+  group(
     'Result Extract extension',
     () {
       //
       test(
-        'unwrapOr returns the contained value for Ok',
+        'unwrapOr method returns the contained value for Ok',
         () {
           const testCaseList = <(Ok<dynamic, dynamic>, dynamic, dynamic)>[
             (Ok(1), 1, 2), // int
@@ -28,7 +372,7 @@ void main() {
       );
       //
       test(
-        'unwrapOr returns the `or` value for Err',
+        'unwrapOr method returns the `or` value for Err',
         () {
           const testCaseList = <(Err<dynamic, dynamic>, dynamic, dynamic)>[
             (Err(1), 1, 2), // int
@@ -51,7 +395,7 @@ void main() {
       );
       //
       test(
-        'unwrapOrElse returns the contained value for Ok',
+        'unwrapOrElse method returns the contained value for Ok',
         () {
           final testCaseList = <Map<String, dynamic>>[
             {
@@ -100,7 +444,7 @@ void main() {
       );
       //
       test(
-        'unwrapOrElse returns the computed value for Err',
+        'unwrapOrElse method returns the computed value for Err',
         () {
           final testCaseList = <Map<String, dynamic>>[
             {
@@ -179,6 +523,7 @@ void main() {
   group(
     'Result ExtractErr extension',
     () {
+      //
       test(
         'intoOk returns the contained Ok value',
         () {
