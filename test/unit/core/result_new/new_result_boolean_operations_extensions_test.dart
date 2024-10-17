@@ -88,7 +88,7 @@ void main() {
             final (err, value) = testCase;
             final andResult = err.and(const Ok(null));
             expect(andResult, isA<Err>());
-            expect((andResult as Err).error, equals(err.error));
+            expect((andResult as Err).error, equals(value));
           }
         },
       );
@@ -223,7 +223,7 @@ void main() {
             final (err, value) = testCase;
             final andThenResult = err.andThen((value) => Ok(value));
             expect(andThenResult, isA<Err>());
-            expect((andThenResult as Err).error, equals(err.error));
+            expect((andThenResult as Err).error, equals(value));
           }
         },
       );
@@ -313,7 +313,7 @@ void main() {
             final (ok, value) = testCase;
             final orResult = ok.or(const Err(null));
             expect(orResult, isA<Ok>());
-            expect((orResult as Ok).value, equals(ok.value));
+            expect((orResult as Ok).value, equals(value));
           }
         },
       );
@@ -448,7 +448,7 @@ void main() {
             final (ok, value) = testCase;
             final orElseResult = ok.orElse((error) => Err(error));
             expect(orElseResult, isA<Ok>());
-            expect((orElseResult as Ok).value, equals(ok.value));
+            expect((orElseResult as Ok).value, equals(value));
           }
         },
       );

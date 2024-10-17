@@ -77,7 +77,7 @@ void main() {
             final (err, value) = testCase;
             final mappedErr = err.map((value) => value + 1);
             expect(mappedErr, isA<Err>());
-            expect((mappedErr as Err).error, equals(err.error));
+            expect((mappedErr as Err).error, equals(value));
           }
         },
       );
@@ -332,7 +332,7 @@ void main() {
             final (ok, value) = testCase;
             final mappedOk = ok.mapErr((value) => value + 1);
             expect(mappedOk, isA<Ok>());
-            expect((mappedOk as Ok).value, equals(ok.value));
+            expect((mappedOk as Ok).value, equals(value));
           }
         },
       );

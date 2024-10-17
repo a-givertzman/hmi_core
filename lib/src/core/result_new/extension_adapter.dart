@@ -18,9 +18,10 @@ extension Adapter<V, E> on Result<V, E> {
   /// y.ok(); // None
   /// ```
   Option<V> ok() {
+    const Option<V> noneResult = None();
     return switch (this) {
       Ok(:final V value) => Some(value),
-      Err() => const None() as Option<V>,
+      Err() => noneResult,
     };
   }
   ///
@@ -38,8 +39,9 @@ extension Adapter<V, E> on Result<V, E> {
   /// y.err(); // Some("Nothing here")
   /// ```
   Option<E> err() {
+    const Option<E> noneResult = None();
     return switch (this) {
-      Ok() => const None() as Option<E>,
+      Ok() => noneResult,
       Err(:final error) => Some(error),
     };
   }

@@ -42,7 +42,7 @@ void main() {
             (Err({'a': 1, 'b': 2}), {'a': 1, 'b': 2}), // Map
           ];
           for (final testCase in testCaseList) {
-            final (err, value) = testCase;
+            final (err, _) = testCase;
             expect(() => err.unwrap(), throwsA(isA<Failure>()));
           }
         },
@@ -113,7 +113,7 @@ void main() {
             (Err({'a': 1, 'b': 2}), {'a': 1, 'b': 2}), // Map
           ];
           for (final testCase in testCaseList) {
-            final (err, value) = testCase;
+            final (err, _) = testCase;
             expect(() => err.expect("error message"), throwsA(isA<Failure>()));
           }
         },
@@ -212,7 +212,7 @@ void main() {
             (Ok({'a': 1, 'b': 2}), {'a': 1, 'b': 2}), // Map
           ];
           for (final testCase in testCaseList) {
-            final (ok, value) = testCase;
+            final (ok, _) = testCase;
             expect(() => ok.unwrapErr(), throwsA(isA<Failure>()));
           }
         },
@@ -283,7 +283,7 @@ void main() {
             (Ok({'a': 1, 'b': 2}), {'a': 1, 'b': 2}), // Map
           ];
           for (final testCase in testCaseList) {
-            final (ok, value) = testCase;
+            final (ok, _) = testCase;
             expect(
               () => ok.expectErr("error message"),
               throwsA(isA<Failure>()),
@@ -387,7 +387,7 @@ void main() {
             ), // Map
           ];
           for (final testCase in testCaseList) {
-            final (ok, value, or) = testCase;
+            final (ok, _, or) = testCase;
             final unwrapOrValue = ok.unwrapOr(or);
             expect(unwrapOrValue, equals(or));
           }
