@@ -8,11 +8,13 @@ void main() {
       for(final value in testData) {
         final Option option = Some(value);
         expect(option is None, equals(false));
+        expect(option, equals(Some(value)));
       }
     });
     test('returns true if it is instance of None', () {
       const Option option = None();
       expect(option is None, equals(true));
+      expect(option, equals(const None()));
     });
   });
 }
