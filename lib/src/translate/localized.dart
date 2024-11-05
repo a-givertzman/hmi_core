@@ -21,7 +21,7 @@ class Localized {
 extension StringLocalize on String {
   ///
   /// Returns translated version of given `string` 
-  String loc() {
+  String get loc {
     return Localizations.getTranslation(this);
   }
 }
