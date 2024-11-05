@@ -1,4 +1,4 @@
-import 'package:hmi_core/src/core/result_new/result.dart';
+import 'package:hmi_core/src/core/result/result.dart';
 import 'package:hmi_core/src/core/text_file.dart';
 ///
 class FakeTextFile implements TextFile {

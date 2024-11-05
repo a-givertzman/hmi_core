@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:hmi_core/src/core/error/failure.dart';
 import 'package:hmi_core/src/core/log/log.dart';
-import 'package:hmi_core/src/core/result_new/result.dart';
+import 'package:hmi_core/src/core/result/result.dart';
 /// The interface for reading and writing a text file.
 abstract interface class TextFile {
   /// Text file from the file system.

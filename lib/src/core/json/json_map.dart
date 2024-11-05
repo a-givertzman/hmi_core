@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:hmi_core/src/core/error/failure.dart';
 import 'package:hmi_core/src/core/log/log.dart';
-import 'package:hmi_core/src/core/result_new/result.dart';
+import 'package:hmi_core/src/core/result/result.dart';
 import 'package:hmi_core/src/core/text_file.dart';
 ///
 class JsonMap<T> {

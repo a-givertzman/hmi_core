@@ -1,6 +1,6 @@
 import 'package:hmi_core/src/core/json/json_map.dart';
 import 'package:hmi_core/src/core/log/log.dart';
-import 'package:hmi_core/src/core/result_new/result.dart';
+import 'package:hmi_core/src/core/result/result.dart';
 import 'package:hmi_core/src/translate/app_lang.dart';
 ///
 class Localizations {
