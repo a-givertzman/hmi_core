@@ -4,7 +4,7 @@ import 'package:hmi_core/src/core/entities/ds_data_type.dart';
 import 'package:hmi_core/src/core/entities/ds_point_name.dart';
 import 'package:hmi_core/src/core/entities/ds_status.dart';
 import 'package:hmi_core/src/core/error/failure.dart';
-import 'package:hmi_core/src/core/result_new/result.dart';
+import 'package:hmi_core/src/core/result/result.dart';
 
 ///
 abstract class IDataPoint<T> {}

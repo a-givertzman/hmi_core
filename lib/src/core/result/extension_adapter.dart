@@ -1,5 +1,5 @@
-import 'package:hmi_core/hmi_core.dart' hide Result;
-import 'package:hmi_core/hmi_core_result_new.dart';
+import 'package:hmi_core/hmi_core_option.dart';
+import 'package:hmi_core/hmi_core_result.dart';
 ///
 /// Adapter for each variant
 extension Adapter<V, E> on Result<V, E> {

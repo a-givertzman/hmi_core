@@ -1,5 +1,5 @@
 import 'package:hmi_core/hmi_core.dart' hide Result;
-import 'package:hmi_core/hmi_core_result_new.dart';
+import 'package:hmi_core/hmi_core_result.dart';
 ///
 /// Extracting contained values
 extension Extract<V, E> on Result<V, E> {

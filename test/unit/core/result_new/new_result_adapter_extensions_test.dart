@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hmi_core/hmi_core.dart' hide Result;
-import 'package:hmi_core/hmi_core_result_new.dart';
-import 'package:hmi_core/src/core/result_new/extension_adapter.dart';
+import 'package:hmi_core/hmi_core_result.dart';
+import 'package:hmi_core/src/core/result/extension_adapter.dart';
 //
 void main() {
   //

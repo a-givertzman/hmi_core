@@ -1,4 +1,4 @@
-import 'package:hmi_core/hmi_core_result_new.dart';
+import 'package:hmi_core/hmi_core_result.dart';
 ///
 /// Boolean operations on the values, eager and lazy
 ///
