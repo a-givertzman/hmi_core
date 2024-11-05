@@ -1,23 +1,25 @@
-// ignore_for_file: deprecated_member_use_from_same_package
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hmi_core/hmi_core_failure.dart';
-import 'package:hmi_core/hmi_core_result_old.dart';
+import 'package:hmi_core/hmi_core_result.dart';
+
+import 'test_data.dart';
 
 void main() {
-  group('Result constructor', () {
-    test('asserts if no args', () {
-      expect(() => Result(), throwsA(isA<AssertionError>()));
+  group('Result constructor of', () {
+    test('Ok completes if data is provided', () {
+      for(final value in testData) {
+        expect(() => Ok(value), returnsNormally);
+      }
     });
-    test('completes if data is provided', () {
-      expect(() => const Result(data: 'test'), returnsNormally);
-    });
-    test('completes if error is provided', () {
-      expect(
-        () => Result(
-          error: Failure(message: '', stackTrace: StackTrace.current),
-        ), 
-        returnsNormally,
-      );
+    test('Err completes if error is provided', () {
+      for(final value in testData) {
+        expect(
+          () => Err(
+            Failure(message: value, stackTrace: StackTrace.current),
+          ), 
+          returnsNormally,
+        );
+      }
     });
   });
 }
