@@ -1,31 +1,59 @@
-// ignore_for_file: deprecated_member_use_from_same_package
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hmi_core/hmi_core_failure.dart';
-import 'package:hmi_core/hmi_core_result_old.dart';
+import 'package:hmi_core/hmi_core_result.dart';
+import 'test_data.dart';
 
 void main() {
   group('Result fold', () {
-    const resultWithData = Result(data: 'test');
-    final resultWithError = Result(
-      error: Failure(message: '', stackTrace: StackTrace.current),
-    );
-    final resultWithDataAndError = Result(
-      data: 'test',
-      error: Failure(message: '', stackTrace: StackTrace.current),
-    );
-    const valueIfData = 1;
-    const valueIfError = 0;
-    int onData<T>(T data) => valueIfData;
-    int onError(Failure error) => valueIfError;
-    test('calls onData if data is provided', () {
-      expect(resultWithData.fold(onData: onData, onError: onError), valueIfData);
+    test('matches Ok if data is provided', () {
+      for (final value in testData) {
+        final Result<dynamic, Failure> result = Ok(value);
+        final foldResult = switch(result) {
+          Ok(:final value) => value,
+          Err(:final error) => error,
+        };
+        expect(foldResult, value);
+      }
     });
-    test('calls onError if no data', () {
-      expect(resultWithError.fold(onData: onData, onError: onError), valueIfError);
+    test('matches Err if no data', () {
+      for (final error in testData) {
+        final Result result = Err(error);
+        final foldResult = switch(result) {
+          Ok(:final value) => value,
+          Err(:final error) => error,
+        };
+        expect(foldResult, error);
+      }
     });
-    test('calls onData if both data and error are provided', () {
-      expect(resultWithDataAndError.fold(onData: onData, onError: onError), valueIfData);
+    test('works perfectly even if data is void', () {
+      for (final value in testData) {
+        // ignore: void_checks
+        final Result<void, Failure> result = Ok(value);
+        expect(
+          () {
+            return switch(result) {
+              Ok(:final value) => value,
+              Err(:final error) => error,
+            };
+          },
+          returnsNormally,
+        );
+      }
+    });
+    test('works perfectly even if error is void', () {
+      for (final error in testData) {
+        // ignore: void_checks
+        final Result<dynamic, void> result = Err(error);
+        expect(
+          () {
+            return switch(result) {
+              Ok(:final value) => value,
+              Err(:final error) => error,
+            };
+          },
+          returnsNormally,
+        );
+      }
     });
   });
 }
