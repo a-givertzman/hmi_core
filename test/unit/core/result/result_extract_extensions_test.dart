@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hmi_core/hmi_core.dart';
+import 'package:hmi_core/hmi_core_failure.dart';
 import 'package:hmi_core/hmi_core_result.dart';
 import 'package:hmi_core/src/core/result/extension_extract.dart';
 //
