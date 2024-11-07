@@ -2,7 +2,7 @@ import 'package:hmi_core/hmi_core_option.dart';
 import 'package:hmi_core/hmi_core_result.dart';
 ///
 /// Adapter for each variant
-extension Adapter<V, E> on Result<V, E> {
+extension ResultAdapter<V, E> on Result<V, E> {
   ///
   /// Converts from `Result<V, E>` to `Option<V>`.
   ///

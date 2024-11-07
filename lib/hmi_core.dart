@@ -1,5 +1,4 @@
 library hmi_core;
-
 // Entities
 export 'src/core/entities/ds_data_class.dart';
 export 'src/core/entities/ds_data_point.dart';
@@ -23,11 +22,11 @@ export 'src/core/log/log_level.dart';
 export 'src/core/option/option.dart';
 // Result
 export 'src/core/result/result.dart';
-export 'src/core/result/extension_adapter.dart';
-export 'src/core/result/extension_boolean_operations.dart';
-export 'src/core/result/extension_extract.dart';
-export 'src/core/result/extension_querying.dart';
-export 'src/core/result/extension_transform.dart';
+export 'src/core/result/result_adapter_extension.dart';
+export 'src/core/result/result_boolean_operations_extension.dart';
+export 'src/core/result/result_extract_extension.dart';
+export 'src/core/result/result_querying_extension.dart';
+export 'src/core/result/result_transform_extension.dart';
 // ValueObject
 export 'src/core/value_object/value_object.dart';
 export 'src/core/value_object/value_string.dart';
