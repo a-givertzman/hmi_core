@@ -1,7 +1,7 @@
 import 'package:hmi_core/hmi_core_result.dart';
 ///
 /// Transforming contained values
-extension Transform<V, E> on Result<V, E> {
+extension ResultTransform<V, E> on Result<V, E> {
   ///
   /// Maps a `Result<V, E>` to `Result<U, E>` by applying a function to a
   /// contained [Ok] value, leaving an [Err] value untouched.

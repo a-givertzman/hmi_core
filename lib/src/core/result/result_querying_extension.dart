@@ -1,7 +1,7 @@
 import 'package:hmi_core/hmi_core_result.dart';
 ///
 /// Querying the contained values
-extension Querying<V, E> on Result<V, E> {
+extension ResultQuerying<V, E> on Result<V, E> {
   ///
   /// Returns `true` if the result is [Ok], and `false` otherwise.
   ///
