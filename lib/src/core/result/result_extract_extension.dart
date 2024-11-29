@@ -2,7 +2,7 @@ import 'package:hmi_core/hmi_core_failure.dart';
 import 'package:hmi_core/hmi_core_result.dart';
 ///
 /// Extracting contained values
-extension Extract<V, E> on Result<V, E> {
+extension ResultExtract<V, E> on Result<V, E> {
   ///
   /// Returns the contained [Ok] value, consuming the `this` value.
   ///
