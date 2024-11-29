@@ -1,7 +1,7 @@
 import 'package:hmi_core/hmi_core_option.dart';
 ///
 /// Querying the contained values
-extension Querying<V> on Option<V> {
+extension OptionQuerying<V> on Option<V> {
   ///
   /// Returns `true` if the option is [Some], and `false` otherwise.
   ///
