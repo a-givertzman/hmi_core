@@ -3,7 +3,7 @@ import 'package:hmi_core/src/core/log/log_level.dart';
 import 'package:logging/logging.dart';
 
 export 'package:logging/logging.dart' hide Logger, Level;
-
+///
 /// Use a [Log] to log debug messages.
 /// - First call initialize with optional root loging Level, default LogLevel.all
 /// - [Log]s are named using a hierarchical dot-separated name convention.
@@ -19,19 +19,19 @@ class Log {
     Logger.root.level = level ?? LogLevel.all; // defaults to Level.INFO
     Logger.root.onRecord.listen((record) {
       if (record.level == LogLevel.all) {
-        _logColored(ConsoleColors.fgGray, '${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
+        _logColored(ConsoleColors.fgGray, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
       } else if (record.level == LogLevel.debug) {
-        _logColored(ConsoleColors.fgBlue, '${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
+        _logColored(ConsoleColors.fgBlue, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
       } else if (record.level == LogLevel.config) {
-        _logColored(ConsoleColors.fgPurple, '${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
+        _logColored(ConsoleColors.fgPurple, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
       } else if (record.level == LogLevel.info) {
-        _logColored(ConsoleColors.fgGray, '${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
+        _logColored(ConsoleColors.fgGray, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
       } else if (record.level == LogLevel.warning) {
-        _logColored(ConsoleColors.fgYellow, '${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
+        _logColored(ConsoleColors.fgYellow, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
       } else if (record.level == LogLevel.error) {
-        _logColored(ConsoleColors.fgRed, '${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
+        _logColored(ConsoleColors.fgRed, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
       } else {
-        _logColored(ConsoleColors.fgGray, '${record.time} | ${record.level.name} | ${record.loggerName}: ${record.message}');
+        _logColored(ConsoleColors.fgGray, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
       }
     });
   }
