@@ -2,7 +2,7 @@ import 'package:hmi_core/hmi_core_failure.dart';
 import 'package:hmi_core/hmi_core_option.dart';
 ///
 /// Extracting contained values
-extension Extract<V> on Option<V> {
+extension OptionExtract<V> on Option<V> {
   ///
   /// Returns the contained [Some] value, consuming the `self` value.
   ///

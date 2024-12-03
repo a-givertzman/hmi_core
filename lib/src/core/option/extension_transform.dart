@@ -3,7 +3,7 @@ import 'package:hmi_core/hmi_core_result.dart';
 
 ///
 /// Transforming contained values
-extension Transform<V, E> on Option<V> {
+extension OptionTransform<V, E> on Option<V> {
   ///
   /// Transforms the `Option<T>` into a [Result<T, E>],
   /// mapping [Some(v)] to [Ok(v)] and [None] to [Err(err)].
