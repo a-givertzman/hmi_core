@@ -37,7 +37,7 @@ import 'package:hmi_core/hmi_core_result.dart';
 /// | `orElse`  | `Err(e)` | `e`            | `Err(d)`        | `Err(d)` |
 /// | `orElse`  | `Err(e)` | `e`            | `Ok(y)`         | `Ok(y)`  |
 /// | `orElse`  | `Ok(x)`  | (not provided) | (not evaluated) | `Ok(x)`  |
-extension BooleanOperations<V, E> on Result<V, E> {
+extension ResultBooleanOperations<V, E> on Result<V, E> {
   ///
   /// Returns [result] if the result is [Ok], otherwise returns the [Err] value of `this`.
   ///

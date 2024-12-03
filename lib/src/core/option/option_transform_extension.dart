@@ -1,6 +1,5 @@
 import 'package:hmi_core/hmi_core_option.dart';
 import 'package:hmi_core/hmi_core_result.dart';
-
 ///
 /// Transforming contained values
 extension OptionTransform<V, E> on Option<V> {
