@@ -20,6 +20,8 @@ class Log {
     Logger.root.onRecord.listen((record) {
       if (record.level == LogLevel.all) {
         _logColored(ConsoleColors.fgGray, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
+      } else if (record.level == LogLevel.trace) {
+        _logColored(ConsoleColors.fgCyan, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
       } else if (record.level == LogLevel.debug) {
         _logColored(ConsoleColors.fgBlue, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
       } else if (record.level == LogLevel.config) {
@@ -39,6 +41,13 @@ class Log {
   static void _logColored(String color, String message) {
       log(true, '$color$message${ConsoleColors.reset}');
   }
+  ///
+  /// Log message at level [LogLevel.trace].
+  ///
+  /// See [log] for information on how non-String [message] arguments are
+  /// handled.
+  void trace(Object? message, [Object? error, StackTrace? stackTrace]) =>
+    Logger(_name).log(LogLevel.trace, message, error, stackTrace);
   ///
   /// Log message at level [LogLevel.debug].
   ///
