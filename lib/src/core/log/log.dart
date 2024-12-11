@@ -81,6 +81,13 @@ class Log {
   void warning(Object? message, [Object? error, StackTrace? stackTrace]) =>
     Logger(_name).log(LogLevel.warning, message, error, stackTrace);
   ///
+  /// Log message at level [LogLevel.warning].
+  ///
+  /// See [log] for information on how non-String [message] arguments are
+  /// handled.
+  void warn(Object? message, [Object? error, StackTrace? stackTrace]) =>
+    Logger(_name).log(LogLevel.warning, message, error, stackTrace);
+  ///
   /// Log message at level [LogLevel.error].
   ///
   /// See [log] for information on how non-String [message] arguments are handled.
