@@ -22,14 +22,14 @@ class ConsoleColors {
     static const fgGray =   '\x1b[90m';
     //
     // Bold
-    static const fgBoldBlack =  '\x1b[1;30m';   // Black
-    static const fgBoldRed =    '\x1b[1;31m';   // Red
-    static const fgBoldGreen =  '\x1b[1;32m';   // Green
-    static const fgBoldYellow = '\x1b[1;33m';   // Yellow
-    static const fgBoldBlue =   '\x1b[1;34m';   // Blue
-    static const fgBoldPurple = '\x1b[1;35m';   // Purple
-    static const fgBoldCyan =   '\x1b[1;36m';   // Cyan
-    static const fgBoldWhite =  '\x1b[1;37m';   // White
+    static const fgBoldBlack =  '\x1b[1;30m';   // Bold Black
+    static const fgBoldRed =    '\x1b[1;31m';   // Bold Red
+    static const fgBoldGreen =  '\x1b[1;32m';   // Bold Green
+    static const fgBoldYellow = '\x1b[1;33m';   // Bold Yellow
+    static const fgBoldBlue =   '\x1b[1;34m';   // Bold Blue
+    static const fgBoldPurple = '\x1b[1;35m';   // Bold Purple
+    static const fgBoldCyan =   '\x1b[1;36m';   // Bold Cyan
+    static const fgBoldWhite =  '\x1b[1;37m';   // Bold White
     //
     // Regular background
     static const bgBlack =    '\x1b[40m';

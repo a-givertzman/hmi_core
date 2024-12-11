@@ -18,23 +18,34 @@ class Log {
     hierarchicalLoggingEnabled = true;
     Logger.root.level = level ?? LogLevel.all; // defaults to Level.INFO
     Logger.root.onRecord.listen((record) {
-      if (record.level == LogLevel.all) {
-        _logColored(ConsoleColors.fgGray, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
-      } else if (record.level == LogLevel.trace) {
-        _logColored(ConsoleColors.fgBoldCyan, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
-      } else if (record.level == LogLevel.debug) {
-        _logColored(ConsoleColors.fgBlue, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
-      } else if (record.level == LogLevel.config) {
-        _logColored(ConsoleColors.fgPurple, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
-      } else if (record.level == LogLevel.info) {
-        _logColored(ConsoleColors.fgGray, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
-      } else if (record.level == LogLevel.warning) {
-        _logColored(ConsoleColors.fgYellow, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
-      } else if (record.level == LogLevel.error) {
-        _logColored(ConsoleColors.fgRed, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
-      } else {
-        _logColored(ConsoleColors.fgGray, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
-      }
+      final color = switch (record.level) {
+        LogLevel.all     => ConsoleColors.fgGray,
+        LogLevel.trace   => ConsoleColors.fgBoldCyan,
+        LogLevel.debug   => ConsoleColors.fgBlue,
+        LogLevel.config  => ConsoleColors.fgPurple,
+        LogLevel.info    => ConsoleColors.fgGray,
+        LogLevel.warning => ConsoleColors.fgYellow,
+        LogLevel.error   => ConsoleColors.fgRed,
+        _                => ConsoleColors.fgGray,
+      };
+      _logColored(color, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
+      // if (record.level == LogLevel.all) {
+      //   _logColored(ConsoleColors.fgGray, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
+      // } else if (record.level == LogLevel.trace) {
+      //   _logColored(ConsoleColors.fgBoldCyan, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
+      // } else if (record.level == LogLevel.debug) {
+      //   _logColored(ConsoleColors.fgBlue, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
+      // } else if (record.level == LogLevel.config) {
+      //   _logColored(ConsoleColors.fgPurple, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
+      // } else if (record.level == LogLevel.info) {
+      //   _logColored(ConsoleColors.fgGray, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
+      // } else if (record.level == LogLevel.warning) {
+      //   _logColored(ConsoleColors.fgYellow, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
+      // } else if (record.level == LogLevel.error) {
+      //   _logColored(ConsoleColors.fgRed, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
+      // } else {
+      //   _logColored(ConsoleColors.fgGray, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
+      // }
     });
   }
   ///
