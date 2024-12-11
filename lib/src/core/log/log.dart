@@ -21,7 +21,7 @@ class Log {
       if (record.level == LogLevel.all) {
         _logColored(ConsoleColors.fgGray, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
       } else if (record.level == LogLevel.trace) {
-        _logColored(ConsoleColors.fgCyan, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
+        _logColored(ConsoleColors.fgBoldCyan, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
       } else if (record.level == LogLevel.debug) {
         _logColored(ConsoleColors.fgBlue, '${record.time} | ${record.level.name} | ${record.loggerName}${record.message}');
       } else if (record.level == LogLevel.config) {
