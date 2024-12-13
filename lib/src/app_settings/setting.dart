@@ -25,7 +25,7 @@ class Setting {
   /// 
   /// Returns setting value in int represantation
   int get toInt {
-    final value = AppSettings.getSetting(_name, _onError);
+    final value = AppSettings.getSetting(_name, onError: _onError);
     if (value is int) {
       return _factor == 1 ? value : (value * _factor).toInt();
     }
@@ -34,7 +34,7 @@ class Setting {
   /// 
   /// Returns setting value in double represantation
   double get toDouble {
-    final value = AppSettings.getSetting(_name, _onError);
+    final value = AppSettings.getSetting(_name, onError: _onError);
     if (value is double) {
       return value * _factor;
     }
@@ -43,7 +43,7 @@ class Setting {
   /// 
   /// Returns setting value in string represantation
   @override
-  String toString() => '${AppSettings.getSetting(_name, _onError)}';
+  String toString() => '${AppSettings.getSetting(_name, onError: _onError)}';
 }
 ///
 ///

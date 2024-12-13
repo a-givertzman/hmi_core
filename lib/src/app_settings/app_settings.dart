@@ -30,7 +30,7 @@ class AppSettings {
   }
   ///
   /// Returns stored value by it's key
-  static dynamic getSetting(String key, dynamic Function(Failure err)? onError) {
+  static dynamic getSetting(String key, {dynamic Function(Failure err)? onError}) {
     final setting = _map[key];
     if (setting == null) {
       final err = Failure(

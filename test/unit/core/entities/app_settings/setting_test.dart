@@ -41,6 +41,35 @@ void main() {
         expect(const Setting('test_setting_3').toString(), setSettings['test_setting_3']!.toString());
       }
     });
+    test('key not found', () async {
+      for (final settings in validSettings) {
+        final textFile = settings['text_file'] as String;
+        final setSettings = settings['set_settings'] as Map<String, num>;
+        await AppSettings.initialize(
+          jsonMap: JsonMap.fromTextFile(
+            FakeTextFile(textFile),
+          ),
+        );
+        for (final setting in setSettings.entries) {
+          final int testSetting = Setting(setting.key).toInt;
+          log.debug('as Int | ${setting.key}: $testSetting');
+        }
+        for (final setting in setSettings.entries) {
+          final double testSetting = Setting(setting.key).toDouble;
+          log.debug('as Double | ${setting.key}: $testSetting');
+        }
+        for (final setting in setSettings.entries) {
+          final String testSetting = Setting(setting.key).toString();
+          log.debug('as String | ${setting.key}: $testSetting');
+        }
+        expect(Setting('test_setting_1111', onError: (err) => 111,).toInt, 111);
+        expect(Setting('test_setting_1222', onError: (err) => -222,).toInt, -222);
+        expect(Setting('test_setting_1.10', onError: (err) => 1.10,).toDouble, 1.10);
+        expect(Setting('test_setting_2.22', onError: (err) => 2.22,).toDouble, 2.22);
+        expect(Setting('test_setting_1234', onError: (err) => '1234').toString(), '1234');
+        expect(Setting('test_setting_2345', onError: (err) => '2345').toString(), '2345');
+      }
+    });
     test('valid data with factor', () async {
       const factors = [0.123, -0.123, 3.54, -5.12];
       for (final factor in factors) {
