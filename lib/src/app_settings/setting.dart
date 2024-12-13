@@ -41,8 +41,8 @@ class Setting {
   @override
   String toString() => '${AppSettings.getSetting(_name)}';
 }
-
-
+///
+///
 class _SettingValue implements Setting {
   final dynamic _value;
   //
