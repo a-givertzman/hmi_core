@@ -5,6 +5,7 @@ void main() {
   group('LogLevel test', () {
     const target = {
       'all': ['ALL', 0],
+      'trace': ['TRACE', 400],
       'debug': ['DEBUG', 500],
       'config': ['CONFIG', 700],
       'info': ['INFO', 800],
