@@ -24,18 +24,23 @@ class AppSettings {
       await jsonMap.decoded
         .then((result) => switch(result) {
           Ok(value: final map) => _map.addAll(map),
-          Err() => _log.warning('Failed to initialize app settings from file.'),
+          Err(: final error) => _log.warning('$AppSettings.initialize | Failed to initialize app settings from file. Error: $error'),
         });
     }
   }
   ///
-  static dynamic getSetting(String settingName) {
-    final setting = _map[settingName];
+  /// Returns stored value by it's key
+  static dynamic getSetting(String key, dynamic Function(Failure err)? onError) {
+    final setting = _map[key];
     if (setting == null) {
-      throw Failure(
-        message: 'Ошибка в методе $AppSettings.getSetting(): Не найдена настройка "$settingName"',
+      final err = Failure(
+        message: '$AppSettings.getSetting | Not found key "$key"',
         stackTrace: StackTrace.current,
       );
+      if (onError != null) {
+        return onError(err);
+      }
+      throw err;
     }
     return setting;
   }
