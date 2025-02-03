@@ -8,6 +8,4 @@ export 'src/core/entities/ds_data_type.dart';
 export 'src/core/entities/ds_status.dart';
 export 'src/core/entities/ds_timestamp.dart';
 export 'src/core/entities/state_constatnts.dart';
-export 'src/core/entities/alarm_colors.dart';
-export 'src/core/entities/state_colors.dart';
 export 'src/core/entities/stacked.dart';
