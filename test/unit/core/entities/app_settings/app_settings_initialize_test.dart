@@ -15,9 +15,10 @@ void main() {
             FakeTextFile(textFile),
           ),
         );
-        expect(AppSettings.getSetting('test_setting_1'), setSettings['test_setting_1']);
-        expect(AppSettings.getSetting('test_setting_2'), setSettings['test_setting_2']);
-        expect(AppSettings.getSetting('test_setting_3'), setSettings['test_setting_3']);
+        expect(AppSettings.getSetting('test_setting_1', onError: ((err) => null)), setSettings['test_setting_1']);
+        expect(AppSettings.getSetting('test_setting_2', onError: ((err) => null)), setSettings['test_setting_2']);
+        expect(AppSettings.getSetting('test_setting_3', onError: ((err) => null)), setSettings['test_setting_3']);
+        expect(AppSettings.getSetting('1234', onError: ((err) => 1234)), 1234);
       }
     });
     // test('throws with valid json format and invalid data', () async {
