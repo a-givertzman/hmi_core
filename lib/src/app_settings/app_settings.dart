@@ -13,7 +13,7 @@ import 'package:hmi_core/src/core/result/result_transform_extension.dart';
 /// for different groups of settings. E.g. `ui-padding`, `ui-font-size`,
 /// `api-host`, `api-port`, etc.
 class AppSettings {
-  static const _log = Log('AppSettings');
+  static const _log = Log('AppSettings ');
   static final _settings = <String, dynamic>{
     'displaySizeWidth': 1024,
     'displaySizeHeight': 768,
@@ -28,7 +28,7 @@ class AppSettings {
     'floatingActionIconSize': 45.0,
   };
   static final _writable = <String, bool>{};
-  static TextFile _writeFile = const TextFile.path('stored_settings.json');
+  static TextFile _store = const TextFile.path('stored_settings.json');
   ///
   /// Initializes app settings with [readOnly] and [writable] settings.
   ///
@@ -36,17 +36,18 @@ class AppSettings {
   ///
   /// [writable] settings are accessible for reading and updating (writing).
   ///
-  /// [writeFile] is used to write and restore [writable] settings.
+  /// [store] file is used to write and restore [writable] settings.
   /// If not passed, file with path `stored_settings.json` will be used
   /// by default.
   static Future<void> initialize({
     JsonMap<dynamic> readOnly = const JsonMap.empty(),
     JsonMap<dynamic> writable = const JsonMap.empty(),
-    TextFile? writeFile,
+    TextFile? store,
   }) async {
-    if (writeFile != null) {
-      _writeFile = writeFile;
+    if (store != null) {
+      _store = store;
     }
+    _log.info('Initializing read-only app settings...');
     await _addSettings(
       readOnly,
       onSettingAdded: (entry) {
@@ -61,6 +62,7 @@ class AppSettings {
         _writable[entry.key] = false;
       },
     );
+    _log.info('Initializing writable app settings...');
     await _addSettings(
       writable,
       onSettingAdded: (entry) {
@@ -75,8 +77,9 @@ class AppSettings {
         _writable[entry.key] = true;
       },
     );
+    _log.info('Restoring writable app settings...');
     await _addSettings(
-      JsonMap.fromTextFile(_writeFile),
+      JsonMap.fromTextFile(_store),
       onSettingAdded: (entry) {
         _log.info(
           'Restoring writeable setting "${entry.key}": ${entry.value}...',
@@ -151,7 +154,7 @@ class AppSettings {
       _settings[settingName] = value;
       final storedMap = await _getWritableSettings();
       storedMap[settingName] = value;
-      await _writeFile.write(json.encode(storedMap)).then(
+      await _store.write(json.encode(storedMap)).then(
         (_) {
           onSuccess?.call();
         },
@@ -171,10 +174,10 @@ class AppSettings {
   ///
   /// Returns map of writable settings.
   ///
-  /// Gets entries from [_writeFile] if it exists,
+  /// Gets entries from [_store] if it exists,
   /// otherwise gets writable entries from [_settings].
   static Future<Map<String, dynamic>> _getWritableSettings() async {
-    final mapResult = await JsonMap.fromTextFile(_writeFile).decoded;
+    final mapResult = await JsonMap.fromTextFile(_store).decoded;
     return mapResult.mapOrElse(
       (_) {
         return Map.fromEntries(

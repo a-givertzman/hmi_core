@@ -74,7 +74,7 @@ void main() {
         );
         await AppSettings.initialize(
           writable: FakeJsonMap(Ok(map)),
-          writeFile: writeFile,
+          store: writeFile,
         );
         await AppSettings.setSetting(key, setValue);
         expect(writeJson, writeContent);
@@ -91,7 +91,7 @@ void main() {
         );
         await AppSettings.initialize(
           writable: FakeJsonMap(Ok(map)),
-          writeFile: writeFile,
+          store: writeFile,
         );
         await AppSettings.setSetting(key, setValue);
         expect(AppSettings.getSetting(key), setValue);
@@ -110,7 +110,7 @@ void main() {
         );
         await AppSettings.initialize(
           writable: FakeJsonMap(Ok(map)),
-          writeFile: writeFile,
+          store: writeFile,
         );
         await AppSettings.setSetting(
           key,
@@ -139,7 +139,7 @@ void main() {
         );
         await AppSettings.initialize(
           writable: FakeJsonMap(Ok(map)),
-          writeFile: writeFile,
+          store: writeFile,
         );
         await AppSettings.setSetting(
           key,
@@ -163,7 +163,7 @@ void main() {
         writeFuture: (_) => Future.error('write error'),
       );
       await AppSettings.initialize(
-        writeFile: writeFile,
+        store: writeFile,
       );
       await AppSettings.setSetting(
         'test_not_found_setting',
@@ -187,7 +187,7 @@ void main() {
       );
       await AppSettings.initialize(
         readOnly: const FakeJsonMap(Ok({"test_not_write_setting": 0})),
-        writeFile: writeFile,
+        store: writeFile,
       );
       await AppSettings.setSetting(
         'test_not_write_setting',
@@ -213,7 +213,7 @@ void main() {
         );
         await AppSettings.initialize(
           writable: FakeJsonMap(Ok(map)),
-          writeFile: writeFile,
+          store: writeFile,
         );
         await AppSettings.setSetting(key, setValue);
         expect(AppSettings.getSetting(key), map[key]);

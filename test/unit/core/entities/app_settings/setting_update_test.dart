@@ -9,7 +9,6 @@ import 'fake_text_file.dart';
 /// Fake implementation of [JsonMap] for tests
 class FakeJsonMap implements JsonMap<dynamic> {
   final ResultF<Map<String, dynamic>> _map;
-
   ///
   /// Creates [FakeJsonMap] with a given [map].
   const FakeJsonMap(ResultF<Map<String, dynamic>> map) : _map = map;
@@ -76,7 +75,7 @@ void main() {
         );
         await AppSettings.initialize(
           writable: FakeJsonMap(Ok(map)),
-          writeFile: writeFile,
+          store: writeFile,
         );
         await Setting(key).update(setValue);
         expect(writeJson, writeContent);
@@ -93,7 +92,7 @@ void main() {
         );
         await AppSettings.initialize(
           writable: FakeJsonMap(Ok(map)),
-          writeFile: writeFile,
+          store: writeFile,
         );
         await Setting(key).update(setValue);
         expect(AppSettings.getSetting(key), setValue);
@@ -112,7 +111,7 @@ void main() {
         );
         await AppSettings.initialize(
           writable: FakeJsonMap(Ok(map)),
-          writeFile: writeFile,
+          store: writeFile,
         );
         await Setting(key).update(
           setValue,
@@ -140,7 +139,7 @@ void main() {
         );
         await AppSettings.initialize(
           writable: FakeJsonMap(Ok(map)),
-          writeFile: writeFile,
+          store: writeFile,
         );
         await Setting(key).update(
           setValue,
@@ -163,7 +162,7 @@ void main() {
         writeFuture: (_) => Future.error('write error'),
       );
       await AppSettings.initialize(
-        writeFile: writeFile,
+        store: writeFile,
       );
       await const Setting('test_not_found_setting').update(
         10,
@@ -186,7 +185,7 @@ void main() {
       );
       await AppSettings.initialize(
         readOnly: const FakeJsonMap(Ok({'test_not_write_setting': 0})),
-        writeFile: writeFile,
+        store: writeFile,
       );
       await const Setting('test_not_write_setting').update(
         10,
@@ -211,7 +210,7 @@ void main() {
         );
         await AppSettings.initialize(
           writable: FakeJsonMap(Ok(map)),
-          writeFile: writeFile,
+          store: writeFile,
         );
         await AppSettings.setSetting(key, setValue);
         expect(AppSettings.getSetting(key), map[key]);
