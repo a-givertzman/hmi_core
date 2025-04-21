@@ -56,7 +56,7 @@ class AppSettings {
         }
         _settings[entry.key] = entry.value;
         _isWritable[entry.key] = false;
-        _log.info('Added read-only setting "${entry.key}": ${entry.value}...');
+        _log.info('Added read-only setting "${entry.key}": ${entry.value}.');
       },
     );
     _log.info('Initializing writable app settings...');
@@ -64,13 +64,11 @@ class AppSettings {
       writable,
       onSettingParsed: (entry) {
         if (_settings.containsKey(entry.key)) {
-          _log.warning(
-            'Setting with key "${entry.key}" was overwritten.',
-          );
+          _log.warning('Setting with key "${entry.key}" will be overwritten.');
         }
         _settings[entry.key] = entry.value;
         _isWritable[entry.key] = true;
-        _log.info('Added writeable setting "${entry.key}": ${entry.value}...');
+        _log.info('Added writeable setting "${entry.key}": ${entry.value}.');
       },
     );
     _log.info('Restoring writable app settings...');
@@ -81,7 +79,7 @@ class AppSettings {
           _log.warning('Writeable setting with key "${entry.key}" does not exist and was ignored.');
         } else {
           _settings[entry.key] = entry.value;
-          _log.info('Restored writeable setting "${entry.key}": ${entry.value}...');
+          _log.info('Restored writeable setting "${entry.key}": ${entry.value}.');
         }
       },
     );
@@ -92,13 +90,14 @@ class AppSettings {
     void Function(MapEntry<String, dynamic>)? onSettingParsed,
   }) async {
     final decodedResult = await settings.decoded;
-    decodedResult.inspect((map) {
-      for (final entry in map.entries) {
-        onSettingParsed?.call(entry);
-      }
-    }).inspectErr((error) {
-      _log.warning('Failed to initialize app settings, ${error.message}.');
-    });
+    decodedResult
+      .inspect((map) {
+        for (final entry in map.entries) {
+          onSettingParsed?.call(entry);
+        }
+      }).inspectErr((error) {
+        _log.warning('Failed to initialize app settings, ${error.message}.');
+      });
   }
   //
   static bool _canWriteSetting(String key) {
@@ -119,31 +118,10 @@ class AppSettings {
       );
       if (onError != null) {
         return onError(err);
-      } else {
-        throw err;
       }
+      throw err;
     }
     return _settings[key];
-  }
-  ///
-  /// Returns map of writable settings.
-  ///
-  /// Gets entries from [_store] if it exists,
-  /// otherwise gets writable entries from [_settings].
-  static Future<Map<String, dynamic>> _getWritableSettings() async {
-    final mapResult = await JsonMap.fromTextFile(_store).decoded;
-    return mapResult.mapOrElse(
-      (_) {
-        return Map.fromEntries(
-          _settings.entries.where(
-            (entry) => _isWritable.containsKey(entry.key),
-          ),
-        );
-      },
-      (map) {
-        return map;
-      },
-    );
   }
   ///
   /// Immediately updates app setting with key [settingName] to new [value]
@@ -185,5 +163,25 @@ class AppSettings {
           },
         );
     }
+  }
+  ///
+  /// Returns map of writable settings.
+  ///
+  /// Gets entries from [_store] if it exists,
+  /// otherwise gets writable entries from [_settings].
+  static Future<Map<String, dynamic>> _getWritableSettings() async {
+    final decodedResult = await JsonMap.fromTextFile(_store).decoded;
+    return decodedResult.mapOrElse(
+      (_) {
+        return Map.fromEntries(
+          _settings.entries.where(
+            (entry) => _canWriteSetting(entry.key),
+          ),
+        );
+      },
+      (map) {
+        return map;
+      },
+    );
   }
 }
