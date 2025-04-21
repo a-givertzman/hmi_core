@@ -4,7 +4,6 @@ import 'package:hmi_core/hmi_core_app_settings.dart';
 import 'fake_text_file.dart';
 import 'settings_data.dart';
 void main() {
-  Log.initialize();
   group('Setting', () {
     Log.initialize(level: LogLevel.all);
     const log = Log('Setting');
