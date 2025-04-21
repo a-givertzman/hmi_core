@@ -9,7 +9,7 @@ import 'package:hmi_core/src/core/result/result_boolean_operations_extension.dar
 ///
 /// Decode json string into [Map<String, T>].
 class JsonMap<T> {
-  static const _log = Log('JsonMap');
+  static const _log = Log('JsonMap ');
   final FutureOr<List<ResultF<String>>> _contents;
   const JsonMap._(FutureOr<List<ResultF<String>>> contents)
       : _contents = contents;
@@ -29,7 +29,7 @@ class JsonMap<T> {
           textFile.content.then((content) => [content]),
         );
   ///
-  /// Creates [JsonMap] that parses itself from json map stored in [textFiles].
+  /// Creates [JsonMap] that parses itself from json stored in [textFiles].
   JsonMap.fromTextFiles(List<TextFile> textFiles)
       : this._(Future.wait(
           textFiles.map((textFile) => textFile.content),
@@ -66,7 +66,7 @@ class JsonMap<T> {
         )
         .inspectErr(
           (error) => _log.warning(
-            'Failed to parse map from json., ${error.message}',
+            'Failed to parse map from json, ${error.message}',
           ),
         );
   }
