@@ -4,6 +4,7 @@ import 'package:hmi_core/src/core/json/json_map.dart';
 import 'package:hmi_core/src/core/log/log.dart';
 import 'package:hmi_core/src/core/result/result.dart';
 import 'package:hmi_core/src/core/error/failure.dart';
+import 'fake_text_file.dart';
 ///
 /// Fake implementation of [JsonMap] for tests
 class FakeJsonMap implements JsonMap<dynamic> {
@@ -116,6 +117,52 @@ void main() {
       expect(AppSettings.getSetting('test_overwrite_setting_1'), -123);
       expect(AppSettings.getSetting('test_overwrite_setting_2'), 0);
       expect(AppSettings.getSetting('test_overwrite_setting_3'), 27);
+    });
+    test('restore writable setting from store file', () async {
+      for (final map in validWritableMaps) {
+        final storeFile = FakeTextFile(
+          '{"test_writable_setting_1":"rewritten","test_writable_setting_2":"rewritten","test_writable_setting_3":"rewritten"}',
+        );
+        await AppSettings.initialize(
+          writable: FakeJsonMap(Ok(map)),
+          store: storeFile,
+        );
+        expect(AppSettings.getSetting('test_writable_setting_1'), "rewritten");
+        expect(AppSettings.getSetting('test_writable_setting_2'), "rewritten");
+        expect(AppSettings.getSetting('test_writable_setting_3'), "rewritten");
+      }
+    });
+    test('ignore read only settings in store file', () async {
+      for (final map in validReadOnlyMaps) {
+        final storeFile = FakeTextFile(
+          '{"test_setting_1":"rewritten","test_setting_2":"rewritten","test_setting_3":"rewritten"}',
+        );
+        await AppSettings.initialize(
+          readOnly: FakeJsonMap(Ok(map)),
+          store: storeFile,
+        );
+        expect(AppSettings.getSetting('test_setting_1'), map['test_setting_1']);
+        expect(AppSettings.getSetting('test_setting_2'), map['test_setting_2']);
+        expect(AppSettings.getSetting('test_setting_3'), map['test_setting_3']);
+      }
+    });
+    test('ignore not found settings in store file', () async {
+      final storeFile = FakeTextFile(
+        '{"test_not_found_setting_1":"rewritten","test_not_found_setting_2":"rewritten","test_not_found_setting_3":"rewritten"}',
+      );
+      await AppSettings.initialize(store: storeFile);
+      expect(
+        AppSettings.getSetting('test_not_found_setting_1', onError: ((err) => null)),
+        null,
+      );
+      expect(
+        AppSettings.getSetting('test_not_found_setting_2', onError: ((err) => null)),
+        null,
+      );
+      expect(
+        AppSettings.getSetting('test_not_found_setting_3', onError: ((err) => null)),
+        null,
+      );
     });
     test('getSetting onError passes new value case error', () async {
       final notFoundMaps = [
