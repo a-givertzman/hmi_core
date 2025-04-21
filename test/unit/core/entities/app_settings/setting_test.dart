@@ -1,112 +1,217 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hmi_core/hmi_core.dart';
 import 'package:hmi_core/hmi_core_app_settings.dart';
-import 'fake_text_file.dart';
-import 'settings_data.dart';
+import 'package:hmi_core/src/core/error/failure.dart';
+import 'package:hmi_core/src/core/json/json_map.dart';
+import 'package:hmi_core/src/core/log/log.dart';
+import 'package:hmi_core/src/core/result/result.dart';
+///
+/// Fake implementation of [JsonMap] for tests
+class FakeJsonMap implements JsonMap<dynamic> {
+  final ResultF<Map<String, dynamic>> _map;
+  ///
+  /// Creates [FakeJsonMap] with a given [map].
+  const FakeJsonMap(ResultF<Map<String, dynamic>> map) : _map = map;
+  //
+  @override
+  Future<ResultF<Map<String, dynamic>>> get decoded async {
+    return _map;
+  }
+}
+//
 void main() {
+  final List<Map<String, dynamic>> validReadOnlyMaps = [
+    {
+      'test_setting_1': 0,
+      'test_setting_2': 27,
+      'test_setting_3': -123,
+    }, // int
+    {
+      'test_setting_1': 0.0,
+      'test_setting_2': 27.0,
+      'test_setting_3': -123.0,
+    }, // double
+  ];
+  final List<Map<String, dynamic>> validWritableMaps = [
+    {
+      'test_writable_setting_1': 0,
+      'test_writable_setting_2': 27,
+      'test_writable_setting_3': -123,
+    }, // int
+    {
+      'test_writable_setting_1': 0.0,
+      'test_writable_setting_2': 27.0,
+      'test_writable_setting_3': -123.0,
+    }, // double
+  ];
   group('Setting', () {
-    Log.initialize(level: LogLevel.all);
+    Log.initialize();
     const log = Log('Setting');
-    test('valid data', () async {
-      for (final settings in validSettings) {
-        final textFile = settings['text_file'] as String;
-        final setSettings = settings['set_settings'] as Map<String, num>;
-        await AppSettings.initialize(
-          readOnly: JsonMap.fromTextFile(
-            FakeTextFile(textFile),
-          ),
-        );
-        for (final setting in setSettings.entries) {
+    test('valid read only data', () async {
+      for (final settings in validReadOnlyMaps) {
+        await AppSettings.initialize(readOnly: FakeJsonMap(Ok(settings)));
+        for (final setting in settings.entries) {
           final int testSetting = Setting(setting.key).toInt;
           log.debug('as Int | ${setting.key}: $testSetting');
         }
-        for (final setting in setSettings.entries) {
+        for (final setting in settings.entries) {
           final double testSetting = Setting(setting.key).toDouble;
           log.debug('as Double | ${setting.key}: $testSetting');
         }
-        for (final setting in setSettings.entries) {
+        for (final setting in settings.entries) {
           final String testSetting = Setting(setting.key).toString();
           log.debug('as String | ${setting.key}: $testSetting');
         }
-        expect(const Setting('test_setting_1').toInt, setSettings['test_setting_1']!.toInt());
-        expect(const Setting('test_setting_2').toInt, setSettings['test_setting_2']!.toInt());
-        expect(const Setting('test_setting_3').toInt, setSettings['test_setting_3']!.toInt());
-        expect(const Setting('test_setting_1').toDouble, setSettings['test_setting_1']!.toDouble());
-        expect(const Setting('test_setting_2').toDouble, setSettings['test_setting_2']!.toDouble());
-        expect(const Setting('test_setting_3').toDouble, setSettings['test_setting_3']!.toDouble());
-        expect(const Setting('test_setting_1').toString(), setSettings['test_setting_1']!.toString());
-        expect(const Setting('test_setting_2').toString(), setSettings['test_setting_2']!.toString());
-        expect(const Setting('test_setting_3').toString(), setSettings['test_setting_3']!.toString());
+        expect(const Setting('test_setting_1').toInt, settings['test_setting_1']!.toInt());
+        expect(const Setting('test_setting_2').toInt, settings['test_setting_2']!.toInt());
+        expect(const Setting('test_setting_3').toInt, settings['test_setting_3']!.toInt());
+        expect(const Setting('test_setting_1').toDouble, settings['test_setting_1']!.toDouble());
+        expect(const Setting('test_setting_2').toDouble, settings['test_setting_2']!.toDouble());
+        expect(const Setting('test_setting_3').toDouble, settings['test_setting_3']!.toDouble());
+        expect(const Setting('test_setting_1').toString(), settings['test_setting_1']!.toString());
+        expect(const Setting('test_setting_2').toString(), settings['test_setting_2']!.toString());
+        expect(const Setting('test_setting_3').toString(), settings['test_setting_3']!.toString());
       }
     });
-    test('key not found', () async {
-      for (final settings in validSettings) {
-        final textFile = settings['text_file'] as String;
-        final setSettings = settings['set_settings'] as Map<String, num>;
-        await AppSettings.initialize(
-          readOnly: JsonMap.fromTextFile(
-            FakeTextFile(textFile),
-          ),
-        );
-        for (final setting in setSettings.entries) {
+    test('valid writable data', () async {
+      for (final settings in validWritableMaps) {
+        await AppSettings.initialize(writable: FakeJsonMap(Ok(settings)));
+        for (final setting in settings.entries) {
           final int testSetting = Setting(setting.key).toInt;
           log.debug('as Int | ${setting.key}: $testSetting');
         }
-        for (final setting in setSettings.entries) {
+        for (final setting in settings.entries) {
           final double testSetting = Setting(setting.key).toDouble;
           log.debug('as Double | ${setting.key}: $testSetting');
         }
-        for (final setting in setSettings.entries) {
+        for (final setting in settings.entries) {
           final String testSetting = Setting(setting.key).toString();
           log.debug('as String | ${setting.key}: $testSetting');
         }
-        expect(Setting('test_setting_1111', onError: (err) => 111,).toInt, 111);
-        expect(Setting('test_setting_1222', onError: (err) => -222,).toInt, -222);
-        expect(Setting('test_setting_1.10', onError: (err) => 1.10,).toDouble, 1.10);
-        expect(Setting('test_setting_2.22', onError: (err) => 2.22,).toDouble, 2.22);
+        expect(const Setting('test_writable_setting_1').toInt, settings['test_writable_setting_1']!.toInt());
+        expect(const Setting('test_writable_setting_2').toInt, settings['test_writable_setting_2']!.toInt());
+        expect(const Setting('test_writable_setting_3').toInt, settings['test_writable_setting_3']!.toInt());
+        expect(const Setting('test_writable_setting_1').toDouble, settings['test_writable_setting_1']!.toDouble());
+        expect(const Setting('test_writable_setting_2').toDouble, settings['test_writable_setting_2']!.toDouble());
+        expect(const Setting('test_writable_setting_3').toDouble, settings['test_writable_setting_3']!.toDouble());
+        expect(const Setting('test_writable_setting_1').toString(), settings['test_writable_setting_1']!.toString());
+        expect(const Setting('test_writable_setting_2').toString(), settings['test_writable_setting_2']!.toString());
+        expect(const Setting('test_writable_setting_3').toString(), settings['test_writable_setting_3']!.toString());
+      }
+    });
+    test('read-only key not found', () async {
+      for (final settings in validReadOnlyMaps) {
+        await AppSettings.initialize(readOnly: FakeJsonMap(Ok(settings)));
+        for (final setting in settings.entries) {
+          final int testSetting = Setting(setting.key).toInt;
+          log.debug('as Int | ${setting.key}: $testSetting');
+        }
+        for (final setting in settings.entries) {
+          final double testSetting = Setting(setting.key).toDouble;
+          log.debug('as Double | ${setting.key}: $testSetting');
+        }
+        for (final setting in settings.entries) {
+          final String testSetting = Setting(setting.key).toString();
+          log.debug('as String | ${setting.key}: $testSetting');
+        }
+        expect(Setting('test_setting_1111', onError: (err) => 111).toInt, 111);
+        expect(Setting('test_setting_1222', onError: (err) => -222).toInt, -222);
+        expect(Setting('test_setting_1.10', onError: (err) => 1.10).toDouble, 1.10);
+        expect(Setting('test_setting_2.22', onError: (err) => 2.22).toDouble, 2.22);
         expect(Setting('test_setting_1234', onError: (err) => '1234').toString(), '1234');
         expect(Setting('test_setting_2345', onError: (err) => '2345').toString(), '2345');
       }
     });
-    test('valid data with factor', () async {
+    test('writable key not found', () async {
+      for (final settings in validWritableMaps) {
+        await AppSettings.initialize(writable: FakeJsonMap(Ok(settings)));
+        for (final setting in settings.entries) {
+          final int testSetting = Setting(setting.key).toInt;
+          log.debug('as Int | ${setting.key}: $testSetting');
+        }
+        for (final setting in settings.entries) {
+          final double testSetting = Setting(setting.key).toDouble;
+          log.debug('as Double | ${setting.key}: $testSetting');
+        }
+        for (final setting in settings.entries) {
+          final String testSetting = Setting(setting.key).toString();
+          log.debug('as String | ${setting.key}: $testSetting');
+        }
+        expect(Setting('test_writable_setting_1111', onError: (err) => 111).toInt, 111);
+        expect(Setting('test_writable_setting_1222', onError: (err) => -222).toInt, -222);
+        expect(Setting('test_writable_setting_1.10', onError: (err) => 1.10).toDouble, 1.10);
+        expect(Setting('test_writable_setting_2.22', onError: (err) => 2.22).toDouble, 2.22);
+        expect(Setting('test_writable_setting_1234', onError: (err) => '1234').toString(), '1234');
+        expect(Setting('test_writable_setting_2345', onError: (err) => '2345').toString(), '2345');
+      }
+    });
+    test('valid read-only data with factor', () async {
       const factors = [0.123, -0.123, 3.54, -5.12];
       for (final factor in factors) {
-        for (final settings in validSettings) {
-          final textFile = settings['text_file'] as String;
-          final setSettings = settings['set_settings'] as Map<String, num>;
-          await AppSettings.initialize(
-            readOnly: JsonMap.fromTextFile(
-              FakeTextFile(textFile),
-            ),
-          );
-          for (final setting in setSettings.entries) {
+        for (final settings in validReadOnlyMaps) {
+          await AppSettings.initialize(readOnly: FakeJsonMap(Ok(settings)));
+          for (final setting in settings.entries) {
             final int testSetting = Setting(setting.key, factor: factor).toInt;
             log.debug('as Int | ${setting.key} * $factor: $testSetting');
           }
-          for (final setting in setSettings.entries) {
+          for (final setting in settings.entries) {
             final double testSetting = Setting(setting.key, factor: factor).toDouble;
             log.debug('as Double | ${setting.key} * $factor: $testSetting');
           }
           const factorConst = 0.123;
           const setting = Setting('test_setting_1', factor: factorConst);
-          expect(setting.toInt, (setSettings['test_setting_1']! * factor).toInt());
-          expect(Setting('test_setting_1', factor: factor).toInt, (setSettings['test_setting_1']! * factor).toInt());
-          expect(Setting('test_setting_2', factor: factor).toInt, (setSettings['test_setting_2']! * factor).toInt());
-          expect(Setting('test_setting_3', factor: factor).toInt, (setSettings['test_setting_3']! * factor).toInt());
-          expect(Setting('test_setting_1', factor: factor).toDouble, (setSettings['test_setting_1']! * factor).toDouble());
-          expect(Setting('test_setting_2', factor: factor).toDouble, (setSettings['test_setting_2']! * factor).toDouble());
-          expect(Setting('test_setting_3', factor: factor).toDouble, (setSettings['test_setting_3']! * factor).toDouble());
+          expect(setting.toInt, (settings['test_setting_1']! * factor).toInt());
+          expect(Setting('test_setting_1', factor: factor).toInt, (settings['test_setting_1']! * factor).toInt());
+          expect(Setting('test_setting_2', factor: factor).toInt, (settings['test_setting_2']! * factor).toInt());
+          expect(Setting('test_setting_3', factor: factor).toInt, (settings['test_setting_3']! * factor).toInt());
+          expect(Setting('test_setting_1', factor: factor).toDouble, (settings['test_setting_1']! * factor).toDouble());
+          expect(Setting('test_setting_2', factor: factor).toDouble, (settings['test_setting_2']! * factor).toDouble());
+          expect(Setting('test_setting_3', factor: factor).toDouble, (settings['test_setting_3']! * factor).toDouble());
         }
       }
     });
-    test('does not throw with invalid json', () {
-      for (final invalidJson in invalidJsons) {
-        final textFile = invalidJson['text_file'] as String;
-        expectLater(AppSettings.initialize(
-            readOnly: JsonMap.fromTextFile(
-              FakeTextFile(textFile),
-            ),
-          ),
+    test('valid writable data with factor', () async {
+      const factors = [0.123, -0.123, 3.54, -5.12];
+      for (final factor in factors) {
+        for (final settings in validWritableMaps) {
+          await AppSettings.initialize(writable: FakeJsonMap(Ok(settings)));
+          for (final setting in settings.entries) {
+            final int testSetting = Setting(setting.key, factor: factor).toInt;
+            log.debug('as Int | ${setting.key} * $factor: $testSetting');
+          }
+          for (final setting in settings.entries) {
+            final double testSetting = Setting(setting.key, factor: factor).toDouble;
+            log.debug('as Double | ${setting.key} * $factor: $testSetting');
+          }
+          const factorConst = 0.123;
+          const setting = Setting('test_writable_setting_1', factor: factorConst);
+          expect(setting.toInt, (settings['test_writable_setting_1']! * factor).toInt());
+          expect(Setting('test_writable_setting_1', factor: factor).toInt, (settings['test_writable_setting_1']! * factor).toInt());
+          expect(Setting('test_writable_setting_2', factor: factor).toInt, (settings['test_writable_setting_2']! * factor).toInt());
+          expect(Setting('test_writable_setting_3', factor: factor).toInt, (settings['test_writable_setting_3']! * factor).toInt());
+          expect(Setting('test_writable_setting_1', factor: factor).toDouble, (settings['test_writable_setting_1']! * factor).toDouble());
+          expect(Setting('test_writable_setting_2', factor: factor).toDouble, (settings['test_writable_setting_2']! * factor).toDouble());
+          expect(Setting('test_writable_setting_3', factor: factor).toDouble, (settings['test_writable_setting_3']! * factor).toDouble());
+        }
+      }
+    });
+    test('does not throw with invalid map', () {
+      final invalidJsonMaps = [
+        FakeJsonMap(Err(Failure(
+          message: 'error',
+          stackTrace: StackTrace.current,
+        ))),
+        FakeJsonMap(Err(Failure(
+          message: null,
+          stackTrace: StackTrace.current,
+        ))),
+        FakeJsonMap(Err(Failure(
+          message: '{"validJson":true}',
+          stackTrace: StackTrace.current,
+        ))),
+      ];
+      for (final invalidJsonMap in invalidJsonMaps) {
+        expectLater(
+          AppSettings.initialize(readOnly: invalidJsonMap),
           completes,
         );
       }
