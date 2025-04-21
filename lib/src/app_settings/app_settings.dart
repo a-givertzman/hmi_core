@@ -27,7 +27,7 @@ class AppSettings {
     'floatingActionButtonSize': 60.0,
     'floatingActionIconSize': 45.0,
   };
-  static final _writable = <String, bool>{};
+  static final _isWritable = <String, bool>{};
   static TextFile _store = const TextFile.path('stored_settings.json');
   ///
   /// Initializes app settings with [readOnly] and [writable] settings.
@@ -48,65 +48,61 @@ class AppSettings {
       _store = store;
     }
     _log.info('Initializing read-only app settings...');
-    await _addSettings(
+    await _parseSettings(
       readOnly,
-      onSettingAdded: (entry) {
-        _log.info(
-          'Added read-only setting "${entry.key}": ${entry.value}...',
-        );
+      onSettingParsed: (entry) {
         if (_settings.containsKey(entry.key)) {
-          _log.warning(
-            'Setting with key "${entry.key}" was overwritten.',
-          );
+          _log.warning('Setting with key "${entry.key}" will be overwritten.');
         }
-        _writable[entry.key] = false;
+        _settings[entry.key] = entry.value;
+        _isWritable[entry.key] = false;
+        _log.info('Added read-only setting "${entry.key}": ${entry.value}...');
       },
     );
     _log.info('Initializing writable app settings...');
-    await _addSettings(
+    await _parseSettings(
       writable,
-      onSettingAdded: (entry) {
-        _log.info(
-          'Added writeable setting "${entry.key}": ${entry.value}...',
-        );
+      onSettingParsed: (entry) {
         if (_settings.containsKey(entry.key)) {
           _log.warning(
             'Setting with key "${entry.key}" was overwritten.',
           );
         }
-        _writable[entry.key] = true;
+        _settings[entry.key] = entry.value;
+        _isWritable[entry.key] = true;
+        _log.info('Added writeable setting "${entry.key}": ${entry.value}...');
       },
     );
     _log.info('Restoring writable app settings...');
-    await _addSettings(
+    await _parseSettings(
       JsonMap.fromTextFile(_store),
-      onSettingAdded: (entry) {
-        _log.info(
-          'Restoring writeable setting "${entry.key}": ${entry.value}...',
-        );
-        if (!_settings.containsKey(entry.key)) {
-          _settings.remove(entry.key);
-          _log.warning(
-            'Setting with key "${entry.key}" does not exist and was ignored.',
-          );
+      onSettingParsed: (entry) {
+        if (!_canWriteSetting(entry.key)) {
+          _log.warning('Writeable setting with key "${entry.key}" does not exist and was ignored.');
+        } else {
+          _settings[entry.key] = entry.value;
+          _log.info('Restored writeable setting "${entry.key}": ${entry.value}...');
         }
       },
     );
   }
   //
-  static Future<void> _addSettings(
+  static Future<void> _parseSettings(
     JsonMap<dynamic> settings, {
-    void Function(MapEntry<String, dynamic>)? onSettingAdded,
+    void Function(MapEntry<String, dynamic>)? onSettingParsed,
   }) async {
     final decodedResult = await settings.decoded;
     decodedResult.inspect((map) {
       for (final entry in map.entries) {
-        _settings[entry.key] = entry.value;
-        onSettingAdded?.call(entry);
+        onSettingParsed?.call(entry);
       }
     }).inspectErr((error) {
       _log.warning('Failed to initialize app settings, ${error.message}.');
     });
+  }
+  //
+  static bool _canWriteSetting(String key) {
+    return _settings.containsKey(key) && _isWritable.containsKey(key) && (_isWritable[key] ?? false);
   }
   ///
   /// Returns value of app setting by [key].
@@ -130,6 +126,26 @@ class AppSettings {
     return _settings[key];
   }
   ///
+  /// Returns map of writable settings.
+  ///
+  /// Gets entries from [_store] if it exists,
+  /// otherwise gets writable entries from [_settings].
+  static Future<Map<String, dynamic>> _getWritableSettings() async {
+    final mapResult = await JsonMap.fromTextFile(_store).decoded;
+    return mapResult.mapOrElse(
+      (_) {
+        return Map.fromEntries(
+          _settings.entries.where(
+            (entry) => _isWritable.containsKey(entry.key),
+          ),
+        );
+      },
+      (map) {
+        return map;
+      },
+    );
+  }
+  ///
   /// Immediately updates app setting with key [settingName] to new [value]
   /// and save it asynchronously to file.
   ///
@@ -141,9 +157,7 @@ class AppSettings {
     void Function(Failure error)? onError,
     void Function()? onSuccess,
   }) async {
-    if (!_settings.containsKey(settingName) ||
-        !_writable.containsKey(settingName) ||
-        !_writable[settingName]!) {
+    if (!_canWriteSetting(settingName)) {
       final failure = Failure(
         message: 'Cannot update setting with key "$settingName".',
         stackTrace: StackTrace.current,
@@ -154,41 +168,22 @@ class AppSettings {
       _settings[settingName] = value;
       final storedMap = await _getWritableSettings();
       storedMap[settingName] = value;
-      await _store.write(json.encode(storedMap)).then(
-        (_) {
-          onSuccess?.call();
-        },
-      ).catchError(
-        (error, stackTrace) {
-          final failure = Failure(
-            message: 'Failed to save setting "$settingName", $error.',
-            stackTrace: stackTrace,
-          );
-          _log.warning(failure.message);
-          _settings[settingName] = valueBackup;
-          onError?.call(failure);
-        },
-      );
-    }
-  }
-  ///
-  /// Returns map of writable settings.
-  ///
-  /// Gets entries from [_store] if it exists,
-  /// otherwise gets writable entries from [_settings].
-  static Future<Map<String, dynamic>> _getWritableSettings() async {
-    final mapResult = await JsonMap.fromTextFile(_store).decoded;
-    return mapResult.mapOrElse(
-      (_) {
-        return Map.fromEntries(
-          _settings.entries.where(
-            (entry) => _writable.containsKey(entry.key),
-          ),
+      await _store
+        .write(json.encode(storedMap)).then(
+          (_) {
+            onSuccess?.call();
+          },
+        ).catchError(
+          (error, stackTrace) {
+            final failure = Failure(
+              message: 'Failed to save setting "$settingName", $error.',
+              stackTrace: stackTrace,
+            );
+            _log.warning(failure.message);
+            _settings[settingName] = valueBackup;
+            onError?.call(failure);
+          },
         );
-      },
-      (map) {
-        return map;
-      },
-    );
+    }
   }
 }
