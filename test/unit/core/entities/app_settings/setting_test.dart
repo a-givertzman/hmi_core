@@ -3,9 +3,7 @@ import 'package:hmi_core/hmi_core.dart';
 import 'package:hmi_core/hmi_core_app_settings.dart';
 import 'fake_text_file.dart';
 import 'settings_data.dart';
-
 void main() {
-  Log.initialize();
   group('Setting', () {
     Log.initialize(level: LogLevel.all);
     const log = Log('Setting');
@@ -14,7 +12,7 @@ void main() {
         final textFile = settings['text_file'] as String;
         final setSettings = settings['set_settings'] as Map<String, num>;
         await AppSettings.initialize(
-          jsonMap: JsonMap.fromTextFile(
+          readOnly: JsonMap.fromTextFile(
             FakeTextFile(textFile),
           ),
         );
@@ -46,7 +44,7 @@ void main() {
         final textFile = settings['text_file'] as String;
         final setSettings = settings['set_settings'] as Map<String, num>;
         await AppSettings.initialize(
-          jsonMap: JsonMap.fromTextFile(
+          readOnly: JsonMap.fromTextFile(
             FakeTextFile(textFile),
           ),
         );
@@ -77,7 +75,7 @@ void main() {
           final textFile = settings['text_file'] as String;
           final setSettings = settings['set_settings'] as Map<String, num>;
           await AppSettings.initialize(
-            jsonMap: JsonMap.fromTextFile(
+            readOnly: JsonMap.fromTextFile(
               FakeTextFile(textFile),
             ),
           );
@@ -105,7 +103,7 @@ void main() {
       for (final invalidJson in invalidJsons) {
         final textFile = invalidJson['text_file'] as String;
         expectLater(AppSettings.initialize(
-            jsonMap: JsonMap.fromTextFile(
+            readOnly: JsonMap.fromTextFile(
               FakeTextFile(textFile),
             ),
           ),

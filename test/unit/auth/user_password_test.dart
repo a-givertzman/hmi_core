@@ -1,13 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hmi_core/hmi_core.dart';
-
-
 void main() {
   group('UserPassword', () {
     Log.initialize(level: LogLevel.all);
     const log = Log('UserPassword');
     AppSettings.initialize(
-      jsonMap: JsonMap.fromString('{"passwordKey": "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNMЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЁЯЧСМИТЬБЮйцукенгшщзхъфывапролджэёячсмитьбю"}'),
+      readOnly: JsonMap.fromString('{"passwordKey": "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNMЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЁЯЧСМИТЬБЮйцукенгшщзхъфывапролджэёячсмитьбю"}'),
     );
     test('value', () async {
       const rawPassValue = '123qwe';
