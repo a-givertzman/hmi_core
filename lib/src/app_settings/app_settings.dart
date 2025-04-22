@@ -142,10 +142,10 @@ class AppSettings {
       );
       onError?.call(failure);
     } else {
-      final storedMap = await _getWritableSettings();
-      storedMap[key] = value;
+      final writableSettings = _getWritableSettings();
+      writableSettings[key] = value;
       await _store
-        .write(json.encode(storedMap)).then(
+        .write(json.encode(writableSettings)).then(
           (_) {
             _settings[key] = value;
             onSuccess?.call();
@@ -162,24 +162,12 @@ class AppSettings {
         );
     }
   }
-  ///
-  /// Returns map of writable settings.
-  ///
-  /// Gets entries from [_store] if it exists,
-  /// otherwise gets writable entries from [_settings].
-  static Future<Map<String, dynamic>> _getWritableSettings() async {
-    final decodedResult = await JsonMap.fromTextFile(_store).decoded;
-    return decodedResult.mapOrElse(
-      (_) {
-        return Map.fromEntries(
-          _settings.entries.where(
-            (entry) => _canWriteSetting(entry.key),
-          ),
-        );
-      },
-      (map) {
-        return map;
-      },
+  //
+  static Map<String, dynamic> _getWritableSettings() {
+    return Map.fromEntries(
+      _settings.entries.where(
+        (entry) => _canWriteSetting(entry.key),
+      ),
     );
   }
 }
