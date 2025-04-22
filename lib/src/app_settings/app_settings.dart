@@ -124,41 +124,39 @@ class AppSettings {
     return _settings[key];
   }
   ///
-  /// Immediately updates app setting with key [settingName] to new [value]
+  /// Updates app setting with key [key] to new [value]
   /// and save it asynchronously to file.
   ///
-  /// Calls [onSuccess] or [onError] when setting will be saved successfully
-  /// or with error. In case of error returns app setting to its previous value.
+  /// Calls [onSuccess] or [onError] when setting will be updated
+  /// and saved successfully or with error.
   static Future<void> setSetting(
-    String settingName,
+    String key,
     dynamic value, {
     void Function(Failure error)? onError,
     void Function()? onSuccess,
   }) async {
-    if (!_canWriteSetting(settingName)) {
+    if (!_canWriteSetting(key)) {
       final failure = Failure(
-        message: 'Cannot update setting with key "$settingName".',
+        message: 'Setting with key "$key" - is not writable, can\'t be updated',
         stackTrace: StackTrace.current,
       );
       onError?.call(failure);
     } else {
-      final valueBackup = _settings[settingName];
-      _settings[settingName] = value;
       final storedMap = await _getWritableSettings();
-      storedMap[settingName] = value;
+      storedMap[key] = value;
       await _store
         .write(json.encode(storedMap)).then(
           (_) {
+            _settings[key] = value;
             onSuccess?.call();
           },
         ).catchError(
           (error, stackTrace) {
             final failure = Failure(
-              message: 'Failed to save setting "$settingName", $error.',
+              message: 'Failed to save setting "$key", $error.',
               stackTrace: stackTrace,
             );
             _log.warning(failure.message);
-            _settings[settingName] = valueBackup;
             onError?.call(failure);
           },
         );

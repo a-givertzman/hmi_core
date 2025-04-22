@@ -44,10 +44,10 @@ class Setting {
     return double.parse('$value') * _factor;
   }
   ///
-  /// Immediately updates app setting to new [value] and save it asynchronously.
+  /// Updates app setting to new [value] and save it asynchronously to file.
   ///
-  /// Calls [onSuccess] or [onError] when setting will be saved successfully
-  /// or with error. In case of error returns app setting to its previous value.
+  /// Calls [onSuccess] or [onError] when setting will be updated
+  /// and saved successfully or with error.
   Future<void> update(
     dynamic value, {
     void Function(Failure error)? onError,
