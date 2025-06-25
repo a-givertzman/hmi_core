@@ -33,10 +33,7 @@ extension OptionExtract<V> on Option<V> {
   V unwrap() {
     return switch (this) {
       Some(:final V value) => value,
-      None() => throw Failure(
-          message: "Called unwrap() on None",
-          stackTrace: StackTrace.current,
-        ),
+      None() => throw Failure("$runtimeType.unwrap() | Called on None"),
     };
   }
   ///
@@ -64,10 +61,7 @@ extension OptionExtract<V> on Option<V> {
   V expect(String message) {
     return switch (this) {
       Some(:final V value) => value,
-      None() => throw Failure(
-          message: message,
-          stackTrace: StackTrace.current,
-        ),
+      None() => throw Failure(message),
     };
   }
 

@@ -105,10 +105,7 @@ class _SettingValue implements Setting {
     void Function(Failure error)? onError,
     void Function()? onSuccess,
   }) async {
-    onError?.call(Failure(
-      message: 'Cannot update setting created during app runtime',
-      stackTrace: StackTrace.current,
-    ));
+    onError?.call(Failure('$runtimeType.update | Cannot update setting created during app runtime'));
   }
   //
   @override
