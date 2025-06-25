@@ -8,7 +8,7 @@ void main() {
   group('Result data', () {
     const resultWithData = Result(data: 'test');
     final resultWithError = Result(
-      error: Failure(message: '', stackTrace: StackTrace.current),
+      error: Failure(''),
     );
     test('throws if no data', () {
       expect(() => resultWithError.data, throwsA(isA<Exception>()));

@@ -76,11 +76,7 @@ class DsDataPoint<T> implements IDataPoint {
     DsCot.reqCon ||
     DsCot.actCon => Ok(this),
     DsCot.reqErr || DsCot.actErr => Err(
-      Failure(
-        message: value, 
-        stackTrace: 
-        StackTrace.current,
-      ),
+      Failure(value),
     )
   };
 }

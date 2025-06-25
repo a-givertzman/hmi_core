@@ -34,8 +34,7 @@ extension ResultExtract<V, E> on Result<V, E> {
     return switch (this) {
       Ok(:final V value) => value,
       Err(:final E error) => throw Failure(
-          message: "Called unwrap() on Result with error: $error",
-          stackTrace: StackTrace.current,
+          'Called unwrap() on Result with error: $error',
         ),
     };
   }
@@ -70,8 +69,7 @@ extension ResultExtract<V, E> on Result<V, E> {
     return switch (this) {
       Ok(:final V value) => value,
       Err(:final E error) => throw Failure(
-          message: "$message: $error",
-          stackTrace: StackTrace.current,
+          '$message: $error',
         ),
     };
   }
@@ -98,8 +96,7 @@ extension ResultExtract<V, E> on Result<V, E> {
   E unwrapErr() {
     return switch (this) {
       Ok(:final V value) => throw Failure(
-          message: "Called unwrapErr() on Result with value: $value",
-          stackTrace: StackTrace.current,
+          'Called unwrapErr() on Result with value: $value',
         ),
       Err(:final E error) => error,
     };
@@ -130,8 +127,7 @@ extension ResultExtract<V, E> on Result<V, E> {
   E expectErr(String message) {
     return switch (this) {
       Ok(:final V value) => throw Failure(
-          message: "$message: $value",
-          stackTrace: StackTrace.current,
+          '$message: $value',
         ),
       Err(:final E error) => error,
     };

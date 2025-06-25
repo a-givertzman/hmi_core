@@ -41,9 +41,8 @@ enum DsDataType {
     final lvalue = value.toLowerCase();
     final dataType = _valueMapping[lvalue];
     if (dataType == null) {
-      throw Failure.connection(
-        message: 'Ошибка в методе $DsDataType._extract: неизвестный тип данных $value',
-        stackTrace: StackTrace.current,
+      throw Failure(
+        'Ошибка в методе $DsDataType._extract: неизвестный тип данных $value',
       );
     }
     return dataType;

@@ -55,11 +55,8 @@ class JsonMap<T> {
               try {
                 final decodedJson = const JsonCodec().decode(content) as Map<String, dynamic>;
                 return Ok(map..addAll(decodedJson.cast<String, T>()));
-              } catch (error, stackTrace) {
-                return Err(Failure(
-                  message: '$error',
-                  stackTrace: stackTrace,
-                ));
+              } catch (error, _) {
+                return Err(Failure('$runtimeType.get | $error'));
               }
             }),
           ),

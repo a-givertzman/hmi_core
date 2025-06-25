@@ -33,9 +33,8 @@ enum DsDataClass {
   factory DsDataClass.fromString(String value) {
     final dataClass = _valueMapping[value];
     if (dataClass == null) {
-      throw Failure.connection(
-        message: 'Ошибка в методе $DsDataClass.fromString: неизвестный класс комманды "$value"',
-        stackTrace: StackTrace.current,
+      throw Failure(
+        'Ошибка в методе $DsDataClass.fromString: неизвестный класс комманды "$value"',
       );
     }
     return dataClass;

@@ -15,7 +15,7 @@ void main() {
       for(final value in testData) {
         expect(
           () => Err(
-            Failure(message: value, stackTrace: StackTrace.current),
+            Failure(value),
           ), 
           returnsNormally,
         );

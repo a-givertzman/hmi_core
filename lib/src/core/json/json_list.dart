@@ -55,11 +55,8 @@ class JsonList<T> {
               try {
                 final decodedJson = const JsonCodec().decode(content) as List<dynamic>;
                 return Ok(list..addAll(decodedJson.cast<T>()));
-              } catch (error, stackTrace) {
-                return Err(Failure(
-                  message: '$error',
-                  stackTrace: stackTrace,
-                ));
+              } catch (error, _) {
+                return Err(Failure('$runtimeType.get | $error'));
               }
             }),
           ),

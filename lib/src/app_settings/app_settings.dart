@@ -112,10 +112,7 @@ class AppSettings {
     dynamic Function(Failure err)? onError,
   }) {
     if (!_settings.containsKey(key)) {
-      final err = Failure(
-        message: '$AppSettings.getSetting | Not found key "$key"',
-        stackTrace: StackTrace.current,
-      );
+      final err = Failure('$AppSettings.getSetting | Not found key "$key"');
       if (onError != null) {
         return onError(err);
       }
@@ -136,10 +133,7 @@ class AppSettings {
     void Function()? onSuccess,
   }) async {
     if (!_canWriteSetting(key)) {
-      final failure = Failure(
-        message: 'Setting with key "$key" - is not writable, can\'t be updated',
-        stackTrace: StackTrace.current,
-      );
+      final failure = Failure('AppSettings.setSetting | Setting "$key" - is not writable, can\'t be updated');
       onError?.call(failure);
     } else {
       final writableSettings = _getWritableSettings();
@@ -152,11 +146,8 @@ class AppSettings {
           },
         ).catchError(
           (error, stackTrace) {
-            final failure = Failure(
-              message: 'Failed to save setting "$key", $error.',
-              stackTrace: stackTrace,
-            );
-            _log.warning(failure.message);
+            final failure = Failure('AppSettings.setSetting | Failed to save setting "$key", $error.');
+            _log.warning(failure);
             onError?.call(failure);
           },
         );

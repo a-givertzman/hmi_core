@@ -8,7 +8,7 @@ void main() {
   group('Result hasError', () {
     const resultWithData = Result(data: 'test');
     final resultWithError = Result(
-      error: Failure(message: '', stackTrace: StackTrace.current),
+      error: Failure(''),
     );
     test('returns true if error is provided', () {
       expect(resultWithError.hasError, true);

@@ -13,10 +13,7 @@ void main() {
     ];
     for(final message in errorMessages) {
        expect(
-        Failure(
-          message: message, 
-          stackTrace: StackTrace.current,
-        ).toString(),
+        Failure(message).toString(),
         equals(message.toString()),
       );
     }

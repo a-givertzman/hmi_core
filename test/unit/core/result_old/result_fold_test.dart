@@ -8,11 +8,11 @@ void main() {
   group('Result fold', () {
     const resultWithData = Result(data: 'test');
     final resultWithError = Result(
-      error: Failure(message: '', stackTrace: StackTrace.current),
+      error: Failure(''),
     );
     final resultWithDataAndError = Result(
       data: 'test',
-      error: Failure(message: '', stackTrace: StackTrace.current),
+      error: Failure(''),
     );
     const valueIfData = 1;
     const valueIfError = 0;

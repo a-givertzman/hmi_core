@@ -19,10 +19,8 @@ enum DsStatus {
     if (parsedValue != null) {
       return DsStatus.fromValue(parsedValue);
     } else {
-      throw Failure.connection(
-        message:
-            'Ошибка в методе $DsStatus.fromString: int.parse.error значение: "$rawValue"',
-        stackTrace: StackTrace.current,
+      throw Failure(
+        'Ошибка в методе $DsStatus.fromString: int.parse.error значение: "$rawValue"',
       );
     }
   }
@@ -30,10 +28,8 @@ enum DsStatus {
   factory DsStatus.fromValue(int code) {
     final status = _valueMapping[code];
       if (status == null) {
-        throw Failure.connection(
-          message:
-              'Ошибка в методе $DsStatus.fromValue: неизвестный статус "$code"',
-          stackTrace: StackTrace.current,
+        throw Failure(
+          'Ошибка в методе $DsStatus.fromValue: неизвестный статус "$code"',
         );
       }
       return status;

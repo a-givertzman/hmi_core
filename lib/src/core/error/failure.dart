@@ -1,66 +1,33 @@
-import 'package:hmi_core/src/core/log/log.dart';
-
-class Failure<T> {
-  static const _log = Log('Failure');
-  final T message;
 ///
 /// Ganeral Failures
-  Failure({
-    required this.message, 
-    required StackTrace stackTrace,
-  }) {
-    _log.warning(message, this, stackTrace);
+/// - `Failure('Me.area | Error message')` - error happens locally
+/// - `Failure.pass('Me.area |', error)` - error in some dependency returned from Me.area
+/// - `Failure.pass('Me.area | message', error)` - error in some dependency returned from Me.area with additional message
+class Failure<T> {
+  // static const _log = Log('Failure');
+  final T message;
+  final dynamic _child;
+  ///
+  /// Ganeral Failures
+  Failure(this.message) : _child = null;
+  ///
+  /// Ganeral Failures passing incoming error with message
+  Failure.pass(this.message, dynamic err) : _child = err;
+  ///
+  /// Converts all children errors into single string
+  String _join(int depth) {
+    if (_child != null) {
+      if (_child is Failure) {
+        final tab = List.filled(depth, '\t').join();
+        return '$message \n$tab${_child?._join(depth + 1)}';
+      }
+      return '$message \n\t$_child';
+    }
+    return '';
   }
   //
-  // dataSource failure
-  factory Failure.dataSource({
-    required T message,
-    required StackTrace stackTrace,
-  }) => Failure(message: message, stackTrace: stackTrace);
-  //
-  // dataObject failure
-  factory Failure.dataObject({
-    required T message,
-    required StackTrace stackTrace,
-  }) => Failure(message: message, stackTrace: stackTrace);
-  //
-  // dataCollection failure
-  factory Failure.dataCollection({
-    required T message,
-    required StackTrace stackTrace,
-  }) => Failure(message: message, stackTrace: stackTrace);
-  //
-  // auth failure
-  factory Failure.auth({
-    required T message,
-    required StackTrace stackTrace,
-  }) => Failure(message: message, stackTrace: stackTrace);
-  //
-  // convertion failure
-  factory Failure.convertion({
-    required T message,
-    required StackTrace stackTrace,
-  }) => Failure(message: message, stackTrace: stackTrace);
-  //
-  // Connection failure
-  factory Failure.connection({
-    required T message,
-    required StackTrace stackTrace,
-  }) => Failure(message: message, stackTrace: stackTrace);
-  // Translation failure
-  factory Failure.translation({
-    required T message,
-    required StackTrace stackTrace,
-  }) => Failure(message: message, stackTrace: stackTrace);
-  //
-  // Unexpected failure
-  factory Failure.unexpected({
-    required T message,
-    required StackTrace stackTrace,
-  }) => Failure(message: message, stackTrace: stackTrace);
-
   @override
   String toString() {
-    return message.toString();
+    return '$message${_join(0)}';
   }
 }

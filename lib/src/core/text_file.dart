@@ -37,10 +37,7 @@ class _PathTextFile implements TextFile {
       case false:
         _log.warning('Failed to read from file.');
         return Err(
-          Failure(
-            message: 'File $_filePath does not exist.', 
-            stackTrace: StackTrace.current,
-          ),
+          Failure('File $_filePath does not exist.'),
         );
     }
   }
@@ -61,10 +58,7 @@ class _AssetTextFile implements TextFile {
       .catchError((error) {
         _log.warning('Failed to read from asset.');
         return Err<String, Failure>(
-          Failure(
-            message: error.toString(),
-            stackTrace: StackTrace.current,
-          ),
+          Failure.pass('$runtimeType.get |', error),
         );
       });
   }
