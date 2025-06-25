@@ -19,9 +19,9 @@ class Failure<T> {
     if (_child != null) {
       if (_child is Failure) {
         final tab = List.filled(depth, '\t').join();
-        return '$message \n$tab${_child?._join(depth + 1)}';
+        return '$message |\n$tab${_child?._join(depth + 1)}';
       }
-      return '$message \n\t$_child';
+      return '$message |\n\t$_child';
     }
     return '';
   }
