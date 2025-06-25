@@ -2,9 +2,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hmi_core/src/core/json/json_list.dart';
 import 'package:hmi_core/src/core/log/log.dart';
 import 'package:hmi_core/src/core/result/result.dart';
+//
 void main() {
   Log.initialize();
-  group('JsonList decoded', () {
+  group('JsonList.fromString decoded', () {
     test('returns valid List<int> on valid jsons', () async {
       final validIntJsons = [
         {
@@ -22,12 +23,12 @@ void main() {
         final jsonList = JsonList<int>.fromString(textJson);
         final result = await jsonList.decoded;
         expect(result, isA<Ok>());
-        final decodedJson =  (await jsonList.decoded as Ok).value;
+        final decodedJson = (await jsonList.decoded as Ok).value;
         expect(decodedJson, equals(parsedList));
       }
     });
     test('returns valid List<bool> on valid jsons', () async {
-      final validIntJsons = [
+      final validBoolJsons = [
         {
           'text_json': '[true,false,true]',
           'parsed_list': [true, false, true],
@@ -37,18 +38,18 @@ void main() {
           'parsed_list': [false, false, false],
         },
       ];
-      for (final validData in validIntJsons) {
+      for (final validData in validBoolJsons) {
         final textJson = validData['text_json'] as String;
         final parsedList = validData['parsed_list']! as List<bool>;
         final jsonList = JsonList<bool>.fromString(textJson);
         final result = await jsonList.decoded;
         expect(result, isA<Ok>());
-        final decodedJson =  (await jsonList.decoded as Ok).value;
+        final decodedJson = (await jsonList.decoded as Ok).value;
         expect(decodedJson, equals(parsedList));
       }
     });
     test('returns valid List<double> on valid jsons', () async {
-      final validIntJsons = [
+      final validDoubleJsons = [
         {
           'text_json': '[0.0,123.45,-1.80e308]',
           'parsed_list': [0.0, 123.45, -1.80e308],
@@ -58,18 +59,18 @@ void main() {
           'parsed_list': [2.23e-308, -2.23e-308, 1.80e308],
         },
       ];
-      for (final validData in validIntJsons) {
+      for (final validData in validDoubleJsons) {
         final textJson = validData['text_json'] as String;
         final parsedList = validData['parsed_list']! as List<double>;
         final jsonList = JsonList<double>.fromString(textJson);
         final result = await jsonList.decoded;
         expect(result, isA<Ok>());
-        final decodedJson =  (await jsonList.decoded as Ok).value;
+        final decodedJson = (await jsonList.decoded as Ok).value;
         expect(decodedJson, equals(parsedList));
       }
     });
     test('returns valid List<String> on valid jsons', () async {
-      final validIntJsons = [
+      final validStringJsons = [
         {
           'text_json': '["0.0","123.45","-1.80e308"]',
           'parsed_list': ["0.0", "123.45", "-1.80e308"],
@@ -79,35 +80,35 @@ void main() {
           'parsed_list': ["abcdefghijklmnopqrstuvwxyz", "1234567890", "!@#\$%^&*()_+-="],
         },
       ];
-      for (final validData in validIntJsons) {
+      for (final validData in validStringJsons) {
         final textJson = validData['text_json'] as String;
         final parsedList = validData['parsed_list']! as List<String>;
         final jsonList = JsonList<String>.fromString(textJson);
         final result = await jsonList.decoded;
         expect(result, isA<Ok>());
-        final decodedJson =  (await jsonList.decoded as Ok).value;
+        final decodedJson = (await jsonList.decoded as Ok).value;
         expect(decodedJson, equals(parsedList));
       }
     });
     test('returns Err on invalid jsons', () async {
       final invalidJsons = [
-      {
-        'text_json': '{',
-      },
-      {
-        'text_json': 'asd',
-      },
-      {
-        'text_json': '{"test":123',
-      },
-      {
-        'text_json': '[',
-      },
-    ];
+        {
+          'text_json': '{',
+        },
+        {
+          'text_json': 'asd',
+        },
+        {
+          'text_json': '{"test":123',
+        },
+        {
+          'text_json': '[',
+        },
+      ];
       for (final invalidJson in invalidJsons) {
         final textJson = invalidJson['text_json']!;
-        final jsonMap = JsonList.fromString(textJson);
-        final result = await jsonMap.decoded;
+        final jsonList = JsonList.fromString(textJson);
+        final result = await jsonList.decoded;
         expect(result, isA<Err>());
       }
     });

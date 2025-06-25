@@ -24,16 +24,14 @@ class DsPointName {
       }
     }
     throw Failure(
-      message: 'Ошибка в методе $DsPointName._findLastSeparatorIndex: неверный формат пути: "$source"',
-      stackTrace: StackTrace.current,
+      'Ошибка в методе $DsPointName._findLastSeparatorIndex: неверный формат пути: "$source"',
     );
   }
   ///
   static bool _validatePath(String source) {
     if (source[0] != '/') {
       throw Failure(
-        message: 'Ошибка в методе $DsPointName._validatePath: неверный формат пути: "$source"\n\tДолжен начинаться с "/"',
-        stackTrace: StackTrace.current,
+        'Ошибка в методе $DsPointName._validatePath: неверный формат пути: "$source"\n\tДолжен начинаться с "/"',
       );
     }
     return true;

@@ -14,7 +14,7 @@ void main() {
     test('completes if error is provided', () {
       expect(
         () => Result(
-          error: Failure(message: '', stackTrace: StackTrace.current),
+          error: Failure(''),
         ), 
         returnsNormally,
       );

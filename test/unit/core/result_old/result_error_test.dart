@@ -8,7 +8,7 @@ void main() {
   group('Result error', () {
     const resultWithData = Result(data: 'test');
     final resultWithError = Result(
-      error: Failure(message: '', stackTrace: StackTrace.current),
+      error: Failure(''),
     );
     test('throws if object created without error', () {
       expect(() => resultWithData.error, throwsA(isA<Exception>()));

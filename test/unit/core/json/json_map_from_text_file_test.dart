@@ -1,10 +1,34 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hmi_core/hmi_core_failure.dart';
+import 'package:hmi_core/hmi_core_text_file.dart';
 import 'package:hmi_core/src/core/json/json_map.dart';
 import 'package:hmi_core/src/core/log/log.dart';
 import 'package:hmi_core/src/core/result/result.dart';
+///
+/// Fake implementation of [TextFile]
+class FakeTextFile implements TextFile {
+  ResultF<String> _content;
+  final Future<void> Function(String value)? writeFuture;
+  ///
+  /// Creates [FakeTextFile] with a given [content] if provided.
+  FakeTextFile(ResultF<String> content, {this.writeFuture})
+      : _content = content;
+  //
+  @override
+  Future<ResultF<String>> get content async {
+    return _content;
+  }
+  //
+  @override
+  Future<void> write(String text) async {
+    await writeFuture?.call(text);
+    _content = Ok(text);
+  }
+}
+//
 void main() {
   Log.initialize();
-  group('JsonMap decoded', () {
+  group('JsonMap.fromTextFile decoded', () {
     test('returns valid Map<String, int> on valid jsons', () async {
       final validIntJsons = [
         {
@@ -27,10 +51,10 @@ void main() {
       for (final validData in validIntJsons) {
         final textJson = validData['text_json'] as String;
         final parsedMap = validData['parsed_map']! as Map<String, int>;
-        final jsonMap = JsonMap<int>.fromString(textJson);
+        final jsonMap = JsonMap<int>.fromTextFile(FakeTextFile(Ok(textJson)));
         final result = await jsonMap.decoded;
         expect(result, isA<Ok>());
-        final decodedJson =  (await jsonMap.decoded as Ok).value;
+        final decodedJson = (await jsonMap.decoded as Ok).value;
         expect(decodedJson, equals(parsedMap));
       }
     });
@@ -56,10 +80,10 @@ void main() {
       for (final validData in validIntJsons) {
         final textJson = validData['text_json'] as String;
         final parsedMap = validData['parsed_map']! as Map<String, bool>;
-        final jsonMap = JsonMap<bool>.fromString(textJson);
+        final jsonMap = JsonMap<bool>.fromTextFile(FakeTextFile(Ok(textJson)));
         final result = await jsonMap.decoded;
         expect(result, isA<Ok>());
-        final decodedJson =  (await jsonMap.decoded as Ok).value;
+        final decodedJson = (await jsonMap.decoded as Ok).value;
         expect(decodedJson, equals(parsedMap));
       }
     });
@@ -85,10 +109,11 @@ void main() {
       for (final validData in validIntJsons) {
         final textJson = validData['text_json'] as String;
         final parsedMap = validData['parsed_map']! as Map<String, double>;
-        final jsonMap = JsonMap<double>.fromString(textJson);
+        final jsonMap =
+            JsonMap<double>.fromTextFile(FakeTextFile(Ok(textJson)));
         final result = await jsonMap.decoded;
         expect(result, isA<Ok>());
-        final decodedJson =  (await jsonMap.decoded as Ok).value;
+        final decodedJson = (await jsonMap.decoded as Ok).value;
         expect(decodedJson, equals(parsedMap));
       }
     });
@@ -114,34 +139,100 @@ void main() {
       for (final validData in validIntJsons) {
         final textJson = validData['text_json'] as String;
         final parsedMap = validData['parsed_map']! as Map<String, String>;
-        final jsonMap = JsonMap<String>.fromString(textJson);
+        final jsonMap = JsonMap<String>.fromTextFile(FakeTextFile(Ok(textJson)));
         final result = await jsonMap.decoded;
         expect(result, isA<Ok>());
-        final decodedJson =  (await jsonMap.decoded as Ok).value;
+        final decodedJson = (await jsonMap.decoded as Ok).value;
         expect(decodedJson, equals(parsedMap));
       }
     });
     test('returns Err on invalid jsons', () async {
       final invalidJsons = [
-      {
-        'text_json': '{',
-      },
-      {
-        'text_json': 'asd',
-      },
-      {
-        'text_json': '{"test":123',
-      },
-      {
-        'text_json': '[',
-      },
-    ];
+        {
+          'text_json': '{',
+        },
+        {
+          'text_json': 'asd',
+        },
+        {
+          'text_json': '{"test":123',
+        },
+        {
+          'text_json': '[',
+        },
+      ];
       for (final invalidJson in invalidJsons) {
         final textJson = invalidJson['text_json']!;
-        final jsonMap = JsonMap.fromString(textJson);
+        final jsonMap = JsonMap.fromTextFile(FakeTextFile(Ok(textJson)));
         final result = await jsonMap.decoded;
         expect(result, isA<Err>());
       }
     });
+    //
+    test('returns Err on valid non-map jsons', () async {
+      final invalidMapJsons = [
+        {
+          'text_json': '[]',
+        },
+        {
+          'text_json': 'true',
+        },
+        {
+          'text_json': 'false',
+        },
+        {
+          'text_json': 'null',
+        },
+        {
+          'text_json': '"valid"',
+        },
+        {
+          'text_json': '123',
+        },
+        {
+          'text_json': '123.45',
+        },
+      ];
+      for (final invalidJson in invalidMapJsons) {
+        final textJson = invalidJson['text_json']!;
+        final jsonMap = JsonMap.fromTextFile(FakeTextFile(Ok(textJson)));
+        final result = await jsonMap.decoded;
+        expect(result, isA<Err>());
+      }
+    });
+    test('returns Err on TextFile error', () async {
+      final filesWithError = [
+        FakeTextFile(Err(Failure(
+          message: null,
+          stackTrace: StackTrace.current,
+        ))),
+        FakeTextFile(Err(Failure(
+          message: '',
+          stackTrace: StackTrace.current,
+        ))),
+        FakeTextFile(Err(Failure(
+          message: '{"validJson":true}',
+          stackTrace: StackTrace.current,
+        ))),
+      ];
+      for (final file in filesWithError) {
+        final jsonMap = JsonMap.fromTextFile(file);
+        final result = await jsonMap.decoded;
+        expect(result, isA<Err>());
+      }
+    });
+  });
+  test('does not write to input file', () async {
+    bool isWritten = false;
+    final jsonMap = JsonMap.fromTextFile(
+      FakeTextFile(
+        const Ok('{"validJson":true}'),
+        writeFuture: (_) async {
+          isWritten = true;
+        },
+      ),
+    );
+    await jsonMap.decoded;
+    expect(isWritten, isFalse);
   });
 }

@@ -280,4 +280,12 @@ class Localizations {
     }
     return translations[_appLang.index];
   }
+  ///
+  /// Returns current App lang
+  AppLang get appLang => _appLang;
+  ///
+  /// Returns list of available languages
+  List<AppLang> get languages {
+    return AppLang.values;
+  }
 }
