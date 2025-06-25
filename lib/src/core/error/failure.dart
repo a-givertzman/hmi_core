@@ -28,6 +28,6 @@ class Failure<T> {
   //
   @override
   String toString() {
-    return '$message${_join(0)}';
+    return '$message${_join(1)}';
   }
 }
