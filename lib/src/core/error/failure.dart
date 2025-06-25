@@ -17,11 +17,11 @@ class Failure<T> {
   /// Converts all children errors into single string
   String _join(int depth) {
     if (_child != null) {
+      final tab = List.filled(depth, '\t').join();
       if (_child is Failure) {
-        final tab = List.filled(depth, '\t').join();
         return '$message |\n$tab${_child?._join(depth + 1)}';
       }
-      return '$message |\n\t$_child';
+      return '$message |\n$tab$_child';
     }
     return '';
   }
